@@ -1,0 +1,621 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Covenant</title>
+    <style>
+        /* --- RESET & BASIC SETUP --- */
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        :root {
+            --bg-color: #000000;
+            --text-color: #ffffff;
+            --accent-color: #ffffff;
+            --overlay-dark: rgba(0, 0, 0, 0.5);
+            --overlay-darker: rgba(0, 0, 0, 0.7);
+            /* Using a technical, clean font stack */
+            --font-main: 'DIN Alternate', 'D-DIN', 'Roboto', 'Helvetica Neue', Helvetica, Arial, sans-serif;
+        }
+
+        body {
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            font-family: var(--font-main);
+            overflow-x: hidden;
+            -webkit-font-smoothing: antialiased;
+            line-height: 1.4;
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+        }
+
+        a {
+            text-decoration: none;
+            color: var(--text-color);
+            transition: opacity 0.3s ease;
+        }
+
+        a:hover {
+            opacity: 0.7;
+        }
+
+        ul {
+            list-style: none;
+        }
+
+        h1, h2, h3 {
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        /* --- HEADER & NAVIGATION --- */
+        header {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            padding: 25px 40px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            z-index: 1000;
+            background: linear-gradient(to bottom, rgba(0,0,0,0.7), transparent);
+        }
+
+        .logo {
+            font-size: 26px;
+            letter-spacing: 6px;
+            font-weight: 800;
+            text-transform: uppercase;
+        }
+
+        nav ul {
+            display: flex;
+            gap: 30px;
+        }
+
+        nav a {
+            text-transform: uppercase;
+            font-size: 13px;
+            font-weight: 600;
+            letter-spacing: 1.5px;
+        }
+
+        .hamburger {
+            display: none;
+            flex-direction: column;
+            gap: 6px;
+            cursor: pointer;
+            z-index: 1001;
+        }
+
+        .hamburger div {
+            width: 25px;
+            height: 2px;
+            background-color: white;
+        }
+
+        /* --- HERO SECTION --- */
+        .hero {
+            position: relative;
+            min-height: 100vh;
+            width: 100%;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            padding: 100px 20px 50px;
+            background: 
+                linear-gradient(var(--overlay-dark), var(--overlay-dark)),
+                url('https://images.unsplash.com/photo-1617706566713-7025152d95ae?q=80&w=2070&auto=format&fit=crop') center/cover no-repeat;
+        }
+
+        .hero h1 {
+            font-size: 4rem;
+            margin-bottom: 10px;
+            line-height: 1;
+        }
+
+        .hero .sub-h1 {
+            font-size: 1.5rem;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            font-weight: 700;
+            margin-bottom: 1.5rem;
+            opacity: 0.9;
+        }
+
+        .hero p {
+            font-size: 1.2rem;
+            margin-bottom: 2.5rem;
+            font-weight: 400;
+            max-width: 700px;
+            opacity: 0.8;
+        }
+
+        .btn-main {
+            background-color: white;
+            color: black;
+            border: none;
+            padding: 18px 40px;
+            font-weight: 700;
+            text-transform: uppercase;
+            font-size: 1rem;
+            cursor: pointer;
+            letter-spacing: 1px;
+            transition: transform 0.2s, background-color 0.2s;
+            display: inline-block;
+        }
+
+        .btn-main:hover {
+            transform: translateY(-2px);
+            background-color: #f0f0f0;
+            opacity: 1;
+        }
+
+        /* --- INFO PANELS (Shared Styles) --- */
+        .panel {
+            min-height: 90vh;
+            display: flex;
+            align-items: center;
+            padding: 100px 8%;
+            position: relative;
+            background-size: cover;
+            background-position: center;
+            background-attachment: fixed; /* Parallax effect */
+        }
+
+        .panel-content {
+            max-width: 650px;
+            z-index: 2;
+            background: rgba(0,0,0,0.6); /* Readability boost */
+            padding: 40px;
+            backdrop-filter: blur(5px);
+            border: 1px solid rgba(255,255,255,0.1);
+        }
+
+        .panel h2 {
+            font-size: 2rem;
+            margin-bottom: 25px;
+            color: white;
+            border-bottom: 2px solid white;
+            display: inline-block;
+            padding-bottom: 5px;
+        }
+        
+        .panel h3 {
+            font-size: 1.3rem;
+            margin-top: 30px;
+            margin-bottom: 15px;
+            opacity: 0.9;
+        }
+
+        /* Custom Lists for Value/Differentiators */
+        .feature-list li {
+            margin-bottom: 15px;
+            padding-left: 25px;
+            position: relative;
+            font-size: 1.05rem;
+            opacity: 0.9;
+        }
+
+        .feature-list li::before {
+            content: '›';
+            position: absolute;
+            left: 0;
+            color: white;
+            font-weight: bold;
+            font-size: 1.2rem;
+            line-height: 1.3;
+        }
+
+        /* --- Technical Specs Grid Styling --- */
+        .spec-grid {
+            display: grid;
+            grid-template-columns: auto 1fr;
+            gap: 12px 25px;
+            text-align: left;
+            margin-top: 30px;
+        }
+
+        .spec-label {
+            font-weight: 700;
+            text-transform: uppercase;
+            font-size: 0.9rem;
+            opacity: 0.7;
+            letter-spacing: 1px;
+            align-self: start;
+        }
+
+        .spec-value {
+            font-size: 1rem;
+            opacity: 0.95;
+        }
+
+        /* --- Ideal For Tags Styling --- */
+        .tags-container {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin-top: 20px;
+        }
+
+        .tag {
+            background: rgba(255,255,255,0.1);
+            border: 1px solid rgba(255,255,255,0.3);
+            padding: 8px 16px;
+            text-transform: uppercase;
+            font-size: 0.85rem;
+            letter-spacing: 1px;
+            font-weight: 600;
+        }
+
+        /* Specific Panel Backgrounds */
+        #value-prop {
+            /* Image: Remote deployment / dusk */
+            background-image: linear-gradient(to right, var(--overlay-darker), var(--overlay-dark)), url('https://images.unsplash.com/photo-1499988923262-9199107c5c6a?q=80&w=2069&auto=format&fit=crop');
+        }
+
+        #specs {
+            /* Image: Technical / Industrial */
+            background-image: linear-gradient(to left, var(--overlay-darker), var(--overlay-dark)), url('https://images.unsplash.com/photo-1558999386-d5449344c056?q=80&w=2070&auto=format&fit=crop');
+            justify-content: flex-end;
+        }
+
+        #ideal-for {
+            /* Image: Construction / Infrastructure */
+            background-image: linear-gradient(to right, var(--overlay-darker), var(--overlay-dark)), url('https://images.unsplash.com/photo-1541888946425-d03df1329b7a?q=80&w=2070&auto=format&fit=crop');
+        }
+
+        /* --- 30 DAY TRIAL SECTION --- */
+        .trial-section {
+            background-color: #000000;
+            color: #ffffff;
+            padding: 120px 20px;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            border-bottom: 1px solid #1a1a1a;
+        }
+
+        /* Faint topo-like lines on the right */
+        .trial-section::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            right: -10%;
+            bottom: 0;
+            width: 60%;
+            /* Abstract tech lines to mimic topography */
+            background-image: url('https://images.unsplash.com/photo-1451187580459-43490279c0fa?q=80&w=2072&auto=format&fit=crop');
+            background-size: cover;
+            opacity: 0.15;
+            /* Mask to fade it out towards the left */
+            -webkit-mask-image: linear-gradient(to left, black, transparent);
+            mask-image: linear-gradient(to left, black, transparent);
+            pointer-events: none;
+        }
+
+        .trial-content {
+            z-index: 2;
+            max-width: 700px;
+        }
+
+        .trial-section h2 {
+            font-size: 2.5rem;
+            font-weight: 800;
+            margin-bottom: 15px;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+        }
+
+        .trial-section p {
+            font-size: 1rem;
+            margin-bottom: 35px;
+            color: #cccccc;
+            font-weight: 400;
+        }
+
+        /* --- CONTACT SECTION --- */
+        .contact-section {
+            background-color: #0a0a0a;
+            padding: 80px 20px;
+            text-align: center;
+            border-bottom: 1px solid #1a1a1a;
+        }
+
+        .footer-cta {
+            font-size: 1.4rem;
+            text-transform: uppercase;
+            font-weight: 700;
+            margin-bottom: 30px;
+            letter-spacing: 1px;
+        }
+
+        .contact-links {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+            margin-bottom: 40px;
+        }
+
+        .contact-links a.email-link {
+            font-size: 1.2rem;
+            color: white;
+            font-weight: 700;
+        }
+        
+        .contact-links span {
+             color: #888;
+             text-transform: uppercase;
+             letter-spacing: 1px;
+             font-weight: 600;
+        }
+
+        .confidential {
+            color: #555;
+            font-size: 0.8rem;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            margin-top: 50px;
+        }
+
+
+        .footer {
+            background-color: #000000;
+            color: #ffffff;
+            padding: 30px 40px;
+            width: 100%;
+            font-size: 12px;
+            letter-spacing: 0.2px;
+            font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif; 
+        }
+
+        .footer-content {
+            max-width: 1400px;
+            width: 100%;
+            margin: 0 auto;
+        }
+
+        /* Top Row Links */
+        .footer-links {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 25px;
+            margin-bottom: 18px;
+        }
+
+        .footer-links a {
+            color: #ffffff;
+            text-decoration: none;
+            font-weight: 700;
+            transition: color 0.2s ease;
+        }
+
+        .footer-links a:hover {
+            color: #cccccc;
+            opacity: 1;
+        }
+
+        /* Bottom Row Info */
+        .footer-info {
+            display: flex;
+            align-items: center;
+            flex-wrap: wrap;
+            color: #aaaaaa;
+            font-weight: 400;
+        }
+
+        /* X Logo styling */
+        .social-icon {
+            display: flex;
+            align-items: center;
+            margin-right: 15px;
+        }
+
+        .social-icon svg {
+            width: 14px;
+            height: 14px;
+            fill: white;
+        }
+
+        /* Copyright text */
+        .copyright {
+            color: #ffffff;
+            margin-right: 25px;
+        }
+
+        /* Division text */
+        .division-text {
+            color: #ffffff;
+        }
+
+        .division-text strong {
+            font-weight: 700;
+            color: #ffffff;
+        }
+
+        /* --- RESPONSIVE --- */
+        @media (max-width: 768px) {
+            header { padding: 20px; }
+            nav { display: none; } /* Hide regular menu on mobile */
+            .hamburger { display: flex; }
+            
+            .hero h1 { font-size: 3rem; }
+            .hero .sub-h1 { font-size: 1.2rem; }
+            
+            .panel { padding: 80px 20px; justify-content: center !important; }
+            .panel-content { width: 100%; padding: 30px 20px; }
+            
+            .spec-grid { grid-template-columns: 1fr; gap: 5px; margin-bottom: 20px;}
+            .spec-label { margin-top: 15px; }
+
+
+            .footer-links {
+                flex-direction: column;
+                gap: 15px;
+            }
+            
+            .footer-info {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 10px;
+            }
+
+            /* Trial section text size on mobile */
+            .trial-section h2 { font-size: 2rem; }
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <div class="logo">COVENANT</div>
+        
+        <nav>
+            <ul>
+                <li><a href="#value-prop">Value</a></li>
+                <li><a href="#specs">Specs</a></li>
+                <li><a href="#ideal-for">Use Cases</a></li>
+                <li><a href="#contact">Contact</a></li>
+            </ul>
+        </nav>
+
+        <div class="hamburger">
+            <div></div>
+            <div></div>
+            <div></div>
+        </div>
+    </header>
+
+    <section class="hero">
+        <h1>Argus One</h1>
+        <div class="sub-h1">Rapid-Deployment Autonomous Off-Grid AI Surveillance Node</div>
+        <p>Professional-Grade Security · Deployed in Under 10 Minutes</p>
+        
+        <a href="#contact" class="btn-main">Request Pricing & Demo</a>
+    </section>
+
+    <section id="value-prop" class="panel">
+        <div class="panel-content">
+            <h2>Core Value Proposition</h2>
+            <ul class="feature-list">
+                <li>One person + ladder = fully operational persistent surveillance node in ≤10 minutes.</li>
+                <li>No trenching, no electrician, no concrete, no permits in most jurisdictions.</li>
+                <li>Fully solar/battery autonomous with Starlink-native connectivity and on-device AI.</li>
+            </ul>
+
+            <h3>Key Differentiators</h3>
+            <ul class="feature-list">
+                <li>10-minute installation (single technician, no special tools)</li>
+                <li>100% off-grid (400–800 W solar, 2.5–10 kWh LiFePO4, 2000 W inverter)</li>
+                <li>Edge AI intelligence (NVIDIA Jetson Orin 16–64 TOPS) – zero cloud dependency for detection</li>
+                <li>Native Starlink integration + 5G/LTE failover</li>
+                <li>Active deterrence: 4× 4K PTZ/dome cameras, 110 dB siren, high-intensity strobe, two-way audio, blue beacon</li>
+                <li>Enterprise integrations: Verkada/Axon/Milestone/ONVIF/RTSP/API/SOC 2 cloud portal</li>
+            </ul>
+        </div>
+    </section>
+
+    <section id="specs" class="panel">
+        <div class="panel-content">
+            <h2>Technical Specifications</h2>
+            
+            <div class="spec-grid">
+
+                <div class="spec-label">Power system</div>
+                <div class="spec-value">400–800 W solar · 2.5–10 kWh LiFePO4 · 2000 W pure sine inverter</div>
+
+                <div class="spec-label">Compute</div>
+                <div class="spec-value">NVIDIA Jetson Orin NX/AGX (16–64 TOPS)</div>
+
+                <div class="spec-label">Cameras</div>
+                <div class="spec-value">4× 4K color-vu, IR + thermal options</div>
+
+                <div class="spec-label">Audio</div>
+                <div class="spec-value">110 dB siren + 30 W loudspeaker + microphone</div>
+
+                <div class="spec-label">Connectivity</div>
+                <div class="spec-value">Starlink-ready mount · Cat-12 5G/LTE · Wi-Fi 6 AP</div>
+
+                <div class="spec-label">Storage</div>
+                <div class="spec-value">2–8 TB NVMe (30–120+ days 4K)</div>
+
+                <div class="spec-label">Operating range</div>
+                <div class="spec-value">–40°C to +60°C · IP67 electronics bay</div>
+
+                <div class="spec-label">Weight</div>
+                <div class="spec-value">∼5 kg complete system</div>
+
+                <div class="spec-label">Certifications</div>
+                <div class="spec-value">NDAA · FCC · CE · IK10 · UL 2593 ready</div>
+            </div>
+        </div>
+    </section>
+
+    <section id="ideal-for" class="panel">
+        <div class="panel-content">
+            <h2>Ideal For</h2>
+            <div class="tags-container">
+                <div class="tag">Law enforcement</div>
+                <div class="tag">Critical infrastructure</div>
+                <div class="tag">Construction sites</div>
+                <div class="tag">Events</div>
+                <div class="tag">Parking lots</div>
+                <div class="tag">Neighborhoods</div>
+                <div class="tag">Farms</div>
+                <div class="tag">Remote assets</div>
+                <div class="tag">Disaster response</div>
+                <div class="tag">Temporary perimeters</div>
+            </div>
+        </div>
+    </section>
+
+    <section class="trial-section">
+        <div class="trial-content">
+            <h2>30 Day Trial</h2>
+            <p>If not satisfied, return Argus One for a full refund.</p>
+            <a href="#contact" class="btn-main">Place Order</a>
+        </div>
+    </section>
+
+    <footer class="footer">
+        <div class="footer-content">
+            
+            <nav class="footer-links">
+                <a href="#">Careers</a>
+                <a href="#">Authorized Reseller</a>
+                <a href="#">Privacy & Legal</a>
+                <a href="#">Privacy Preferences</a>
+            </nav>
+
+            <div class="footer-info">
+                <a href="#" class="social-icon" aria-label="X">
+                    <svg viewBox="0 0 24 24" aria-hidden="true">
+                        <path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"></path>
+                    </svg>
+                </a>
+
+                <span class="copyright">Covenant &copy; 2025</span>
+                
+                <span class="division-text">
+                    Argus is a division of Covenant. Visit us at <strong>covenant.space</strong>
+                </span>
+            </div>
+
+        </div>
+    </footer>
+
+</body>
+</html>

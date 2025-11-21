@@ -1,0 +1,352 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Starlink | High-Speed Internet</title>
+    <style>
+        /* --- RESET & BASIC SETUP --- */
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        :root {
+            --bg-color: #000000;
+            --text-color: #ffffff;
+            --accent-color: #ffffff;
+            --overlay-dark: rgba(0, 0, 0, 0.4);
+            --font-main: 'DIN Alternate', 'D-DIN', 'Arial Narrow', 'Helvetica Neue', Helvetica, Arial, sans-serif;
+        }
+
+        body {
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            font-family: var(--font-main);
+            overflow-x: hidden;
+            -webkit-font-smoothing: antialiased;
+        }
+
+        a {
+            text-decoration: none;
+            color: var(--text-color);
+            transition: opacity 0.3s ease;
+        }
+
+        a:hover {
+            opacity: 0.7;
+        }
+
+        ul {
+            list-style: none;
+        }
+
+        /* --- HEADER & NAVIGATION --- */
+        header {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            padding: 30px 40px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            z-index: 1000;
+            background: linear-gradient(to bottom, rgba(0,0,0,0.5), transparent);
+        }
+
+        .logo {
+            font-size: 24px;
+            letter-spacing: 4px;
+            font-weight: 700;
+            text-transform: uppercase;
+            position: relative;
+            z-index: 1001;
+        }
+
+        /* The iconic Starlink "swoosh" in the logo text */
+        .logo span {
+            display: inline-block;
+            transform: scaleX(1.1);
+        }
+
+        nav ul {
+            display: flex;
+            gap: 30px;
+        }
+
+        nav a {
+            text-transform: uppercase;
+            font-size: 13px;
+            font-weight: 600;
+            letter-spacing: 1.5px;
+        }
+
+        .hamburger {
+            display: none;
+            flex-direction: column;
+            gap: 6px;
+            cursor: pointer;
+            z-index: 1001;
+        }
+
+        .hamburger div {
+            width: 25px;
+            height: 2px;
+            background-color: white;
+        }
+
+        /* --- HERO SECTION --- */
+        .hero {
+            position: relative;
+            height: 100vh;
+            width: 100%;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            padding: 0 20px;
+            /* Placeholder Background - Replace url() with a real image/video */
+            background: 
+                linear-gradient(rgba(0,0,0,0.2), rgba(0,0,0,0.6)),
+                url('https://images.unsplash.com/photo-1451187580459-43490279c0fa?q=80&w=2072&auto=format&fit=crop') center/cover no-repeat;
+        }
+
+        .hero h1 {
+            font-size: 3.5rem;
+            text-transform: uppercase;
+            font-weight: 700;
+            letter-spacing: 2px;
+            margin-bottom: 1.5rem;
+            max-width: 800px;
+            line-height: 1.1;
+            text-shadow: 0 2px 10px rgba(0,0,0,0.5);
+        }
+
+        .hero p {
+            font-size: 1.1rem;
+            margin-bottom: 2.5rem;
+            font-weight: 400;
+            max-width: 600px;
+            line-height: 1.5;
+        }
+
+        /* --- SEARCH / ORDER MODULE --- */
+        .order-module {
+            background: rgba(0, 0, 0, 0.6);
+            backdrop-filter: blur(10px);
+            padding: 10px;
+            border: 1px solid rgba(255,255,255,0.2);
+            display: flex;
+            align-items: center;
+            width: 100%;
+            max-width: 500px;
+        }
+
+        .order-module input {
+            background: transparent;
+            border: none;
+            color: white;
+            padding: 15px;
+            font-size: 1rem;
+            width: 100%;
+            outline: none;
+            font-family: var(--font-main);
+        }
+
+        .order-module input::placeholder {
+            color: rgba(255,255,255,0.7);
+        }
+
+        .order-module button {
+            background-color: white;
+            color: black;
+            border: none;
+            padding: 15px 30px;
+            font-weight: 700;
+            text-transform: uppercase;
+            font-size: 0.9rem;
+            cursor: pointer;
+            letter-spacing: 1px;
+            transition: transform 0.2s;
+            white-space: nowrap;
+        }
+
+        .order-module button:hover {
+            transform: translateY(-1px);
+        }
+
+        /* --- INFO PANELS (Simulating the scroll sections) --- */
+        .panel {
+            min-height: 80vh;
+            display: flex;
+            align-items: center;
+            justify-content: flex-start; /* Align text to left */
+            padding: 100px 8%;
+            position: relative;
+            background-size: cover;
+            background-position: center;
+        }
+
+        .panel-content {
+            max-width: 450px;
+            z-index: 2;
+        }
+
+        .panel h2 {
+            font-size: 2.5rem;
+            text-transform: uppercase;
+            margin-bottom: 20px;
+            line-height: 1.1;
+        }
+
+        .panel p {
+            font-size: 1rem;
+            line-height: 1.6;
+            margin-bottom: 30px;
+            opacity: 0.9;
+        }
+
+        .btn-outline {
+            display: inline-block;
+            border: 2px solid white;
+            padding: 12px 40px;
+            text-transform: uppercase;
+            font-weight: 700;
+            letter-spacing: 1px;
+            font-size: 0.8rem;
+            background: transparent;
+            cursor: pointer;
+        }
+
+        .btn-outline:hover {
+            background: white;
+            color: black;
+            opacity: 1;
+        }
+
+        /* Specific Panel Backgrounds */
+        #residential {
+            /* Image of a home setup */
+            background-image: linear-gradient(to right, rgba(0,0,0,0.8) 0%, rgba(0,0,0,0) 60%), url('https://images.unsplash.com/photo-1516937941344-00b4ec277c1b?q=80&w=2070&auto=format&fit=crop');
+        }
+
+        #roam {
+            /* Image of an RV/Camping setup */
+            background-image: linear-gradient(to right, rgba(0,0,0,0.8) 0%, rgba(0,0,0,0) 60%), url('https://images.unsplash.com/photo-1523987355523-c7b5b0dd90a7?q=80&w=2070&auto=format&fit=crop');
+            justify-content: flex-end; /* Align text to right for variety */
+            text-align: right;
+        }
+        
+        /* Modifying text alignment for right-side layout */
+        #roam .panel-content {
+            text-align: right;
+        }
+
+        /* --- FOOTER --- */
+        footer {
+            background-color: #000;
+            padding: 60px 20px;
+            text-align: center;
+            font-size: 12px;
+            color: #888;
+        }
+
+        .footer-links {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            flex-wrap: wrap;
+            margin-bottom: 20px;
+        }
+
+        .footer-links a {
+            color: #888;
+            text-transform: uppercase;
+            font-weight: 600;
+        }
+
+        /* --- RESPONSIVE --- */
+        @media (max-width: 768px) {
+            header { padding: 20px; }
+            nav { display: none; } /* Hide regular menu on mobile */
+            .hamburger { display: flex; }
+            
+            .hero h1 { font-size: 2.2rem; }
+            .order-module { flex-direction: column; }
+            .order-module button { width: 100%; margin-top: 10px; }
+            
+            .panel { justify-content: center; text-align: center; }
+            #roam { justify-content: center; text-align: center; }
+            #roam .panel-content { text-align: center; }
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <div class="logo">Starlink</div>
+        
+        <nav>
+            <ul>
+                <li><a href="#">Residential</a></li>
+                <li><a href="#">Business</a></li>
+                <li><a href="#">Roam</a></li>
+                <li><a href="#">Aviation</a></li>
+                <li><a href="#">Marine</a></li>
+            </ul>
+        </nav>
+
+        <div class="hamburger">
+            <div></div>
+            <div></div>
+            <div></div>
+        </div>
+    </header>
+
+    <section class="hero">
+        <h1>High-Speed Internet Available Almost Anywhere</h1>
+        <p>Unlimited high-speed data for home, business, and travel.</p>
+        
+        <div class="order-module">
+            <input type="text" placeholder="SERVICE ADDRESS">
+            <button>Order Now</button>
+        </div>
+    </section>
+
+    <section id="residential" class="panel">
+        <div class="panel-content">
+            <h2>Reliable High-Speed Internet</h2>
+            <p>
+                Engage in activities that have historically been impossible with satellite internet. 
+                Made possible via the world's largest constellation of highly advanced satellites operating in a low orbit around the Earth.
+            </p>
+            <a href="#" class="btn-outline">Learn More</a>
+        </div>
+    </section>
+
+    <section id="roam" class="panel">
+        <div class="panel-content">
+            <h2>Travel With Starlink</h2>
+            <p>
+                From van life to camping, Starlink Roam allows you to take your high-speed, low-latency internet service with you wherever you go.
+                Pause and un-pause service at any time.
+            </p>
+            <a href="#" class="btn-outline">View Roam Plans</a>
+        </div>
+    </section>
+
+    <footer>
+        <div class="footer-links">
+            <a href="#">Starlink &copy; 2024</a>
+            <a href="#">Privacy Policy</a>
+            <a href="#">Terms of Service</a>
+            <a href="#">Satellite Map</a>
+        </div>
+        <p>Starlink is a division of SpaceX. Visit us at spacex.com</p>
+    </footer>
+
+</body>
+</html>
