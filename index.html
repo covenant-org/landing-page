@@ -201,7 +201,7 @@
             display: grid;
             grid-template-columns: 1fr 1fr;
             gap: 40px;
-            align-items: start;
+            align-items: stretch;
             justify-content: center;
         }
 
@@ -211,6 +211,8 @@
             padding: 30px;
             background: rgba(0,0,0,0.3);
             backdrop-filter: blur(5px);
+            display: flex;
+            flex-direction: column;
         }
 
         .panel h2 {
@@ -254,7 +256,6 @@
             grid-template-columns: auto 1fr;
             gap: 12px 25px;
             text-align: left;
-            margin-top: 30px;
         }
 
         .spec-label {
