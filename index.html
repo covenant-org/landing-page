@@ -75,10 +75,13 @@
         }
 
         .logo {
-            font-size: 26px;
-            letter-spacing: 6px;
-            font-weight: 800;
-            text-transform: uppercase;
+            display: flex;
+            align-items: center;
+        }
+
+        .logo img {
+            height: 40px;
+            width: auto;
         }
 
         nav ul {
@@ -118,7 +121,7 @@
             align-items: center;
             text-align: center;
             padding: 100px 20px 50px;
-            background: url('./assets/images/hero.png') center/cover no-repeat;
+            background: url('./assets/images/hero-noche.png') center/cover no-repeat;
         }
 
         .hero h1 {
@@ -583,7 +586,9 @@
 <body>
 
     <header>
-        <div class="logo">COVENANT</div>
+        <div class="logo">
+            <img src="./assets/images/logo.svg" alt="Covenant">
+        </div>
         
         <nav>
             <ul>
