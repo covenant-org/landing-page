@@ -274,10 +274,11 @@
         }
 
         #ideal-for {
-            background-image: linear-gradient(to right, var(--overlay-darker), var(--overlay-dark)), url('./assets/images/construciton-site.png');
-            background-size: cover;
-            background-position: center;
-            background-attachment: fixed;
+            background: rgba(255, 255, 255, 0.03);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
         }
 
         /* --- DEPLOYMENT SECTION (CLONED SECTION) --- */
