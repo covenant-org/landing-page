@@ -189,17 +189,24 @@
 
         .unified-section {
             max-width: 1400px;
+            margin: 0 auto;
+            width: 100%;
         }
 
         .two-column-grid {
             display: grid;
             grid-template-columns: 1fr 1fr;
-            gap: 60px;
+            gap: 40px;
             align-items: start;
+            justify-content: center;
         }
 
         .two-column-grid .column {
             min-width: 0;
+            border: 1px solid rgba(255,255,255,0.2);
+            padding: 30px;
+            background: rgba(0,0,0,0.3);
+            backdrop-filter: blur(5px);
         }
 
         .panel h2 {
@@ -740,7 +747,6 @@
         <div class="footer-content">
             <nav class="footer-links">
                 <a href="#">Careers</a>
-                <a href="#">Satellite Operators</a>
                 <a href="#">Authorized Reseller</a>
                 <a href="#">Privacy & Legal</a>
                 <a href="#">Privacy Preferences</a>
