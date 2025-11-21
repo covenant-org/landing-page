@@ -1,14 +1,13 @@
-<svg xmlns="http://www.w3.org/2000/svg" version="1.1" xmlns:xlink="http://www.w3.org/1999/xlink" width="480.66" height="400"><svg id="SvgjsSvg1040" data-name="Capa 1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 480.66 400">
+<svg xmlns="http://www.w3.org/2000/svg" version="1.1" xmlns:xlink="http://www.w3.org/1999/xlink" width="1000" height="1000"><g clip-path="url(#SvgjsClipPath1136)"><rect width="1000" height="1000" fill="#000000"></rect><g transform="matrix(0.9765625,0,0,0.9765625,250,250)"><svg xmlns="http://www.w3.org/2000/svg" version="1.1" xmlns:xlink="http://www.w3.org/1999/xlink" width="512" height="512"><svg id="Capa_1" xmlns="http://www.w3.org/2000/svg" version="1.1" viewBox="0 0 512 512">
+  <!-- Generator: Adobe Illustrator 30.0.0, SVG Export Plug-In . SVG Version: 2.1.1 Build 123)  -->
   <defs>
     <style>
-      .cls-1 {
-        fill: none;
+      .st0 {
+        fill: #fff;
       }
     </style>
-  </defs>
-  <polygon class="cls-1" points="157.03 48.55 156.98 48.55 160.66 56.9 157.03 48.55"></polygon>
-  <polygon points="369.77 275.61 336.02 275.61 233.74 35.99 151.45 35.99 156.98 48.55 157.03 48.55 160.66 56.9 163.65 63.68 163.62 63.7 187.71 119.12 72.14 339.4 141.69 339.4 220.44 187.7 289.99 339.4 395.34 339.4 369.77 275.61"></polygon>
-  <polygon points="160.66 56.9 163.62 63.7 163.65 63.68 160.66 56.9"></polygon>
-</svg><style>@media (prefers-color-scheme: light) { :root { filter: none; } }
-@media (prefers-color-scheme: dark) { :root { filter: none; } }
-</style></svg>
+  <clipPath id="SvgjsClipPath1136"><rect width="1000" height="1000" x="0" y="0" rx="150" ry="150"></rect></clipPath></defs>
+  <polygon class="st0" points="135.58 37.56 135.5 37.56 141.29 50.68 135.58 37.56"></polygon>
+  <polygon class="st0" points="469.54 394 416.56 394 256 17.86 126.82 17.86 135.5 37.56 135.58 37.56 141.29 50.68 145.98 61.33 145.93 61.35 183.75 148.35 2.32 494.14 111.5 494.14 235.13 256 344.31 494.14 509.68 494.14 469.54 394"></polygon>
+  <polygon class="st0" points="141.29 50.68 145.93 61.35 145.98 61.33 141.29 50.68"></polygon>
+</svg></svg></g></g></svg>
