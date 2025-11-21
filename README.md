@@ -7,8 +7,10 @@ A minimalist landing page with a clean structure.
 ```
 .
 ├── index.html           # Main landing page
+├── assets/
+│   └── images/          # Image assets
 ├── favicon/             # Favicon assets (SVG, ICO, PNG formats)
-└── station.JPG          # Background image
+└── README.md
 ```
 
 ## Local Development
