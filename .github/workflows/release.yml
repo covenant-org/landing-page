@@ -1,0 +1,40 @@
+name: Release Website
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    environment: ${{ github.ref == 'refs/heads/main' && 'main' }}
+
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v3
+
+      - name: Setup ZeroTier
+        uses: zerotier/github-action@v1.0.1
+        with:
+          network_id: ${{ secrets.ZEROTIER_NETWORK_ID }}
+          auth_token: ${{ secrets.ZEROTIER_CENTRAL_TOKEN }}
+
+      - name: Confirm connection to server
+        run: .github/utils/wait-for-ping.sh ${{ secrets.SERVER_IP }}
+
+      - name: SSH connection
+        uses: appleboy/ssh-action@v1
+        env:
+          BRANCH: ${{ github.ref_name }}
+        with:
+          host: ${{ secrets.SERVER_IP }}
+          username: ${{ secrets.SERVER_HOST }}
+          key: ${{ secrets.SERVER_PRIVATE_KEY }}
+          envs: BRANCH
+          script: |
+            cd ${{ vars.PROJECT_DIR }}
+            docker compose down
+            GIT_SSH_COMMAND="ssh -i ~/.ssh/release-action -o StrictHostKeyChecking=no" git fetch origin && git reset --hard origin/$BRANCH
+            docker compose up -d --build
+
