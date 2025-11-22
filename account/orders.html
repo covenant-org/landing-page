@@ -3,19 +3,15 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Covenant - Subscriptions</title>
+    <title>Covenant - Orders</title>
     <link rel="stylesheet" href="shared-nav.css">
     <style>
-        /* Page-specific styles for subscriptions */
-        :root {
-            --accent-red: #e57373;
-        }
-
+        /* Page-specific styles for orders */
         .content-container {
             width: 100%;
         }
 
-        /* Page Header (Title + Button) */
+        /* Page Header */
         .page-header {
             display: flex;
             justify-content: space-between;
@@ -29,93 +25,140 @@
             color: white;
         }
 
-        .btn-add {
-            background: transparent;
-            border: 1px solid #555;
-            color: white;
-            padding: 10px 20px;
-            font-size: 13px;
-            font-weight: 600;
-            border-radius: 4px;
-            cursor: pointer;
-            transition: background 0.2s;
+        /* Search Bar */
+        .search-container {
+            position: relative;
+            width: 300px;
         }
-        .btn-add:hover { background: #222; }
 
-        /* --- DATA TABLE STYLING --- */
+        .search-icon {
+            position: absolute;
+            right: 12px;
+            top: 50%;
+            transform: translateY(-50%);
+            width: 16px;
+            height: 16px;
+            stroke: #666;
+        }
+
+        .search-input {
+            width: 100%;
+            background: transparent;
+            border: 1px solid var(--card-border);
+            padding: 10px 40px 10px 12px;
+            border-radius: 4px;
+            color: white;
+            font-size: 13px;
+            font-family: var(--font-stack);
+        }
+        .search-input::placeholder {
+            color: #666;
+        }
+        .search-input:focus { outline: none; border-color: #555; }
+
+        /* Table */
         .table-container {
+            width: 100%;
             background-color: var(--card-bg);
             border: 1px solid var(--card-border);
             border-radius: 4px;
             overflow: hidden;
+            font-size: 12px;
         }
 
         .table-header {
             display: grid;
-            grid-template-columns: 2fr 2fr 1fr 40px;
+            grid-template-columns: 1fr 1fr 2fr 2fr 2fr 1.5fr 40px;
             padding: 15px 20px;
             background-color: rgba(0,0,0,0.3);
-            border-bottom: 1px solid var(--card-border);
-            font-size: 12px;
             color: var(--text-muted);
             font-weight: 600;
+            border-bottom: 1px solid var(--card-border);
         }
 
         .table-row {
             display: grid;
-            grid-template-columns: 2fr 2fr 1fr 40px;
+            grid-template-columns: 1fr 1fr 2fr 2fr 2fr 1.5fr 40px;
             padding: 20px 20px;
             border-bottom: 1px solid var(--card-border);
             align-items: center;
-            cursor: pointer;
             font-size: 14px;
             transition: background 0.1s;
+            cursor: pointer;
         }
+        .table-row:hover { background-color: rgba(255,255,255,0.04); }
+        .table-row:last-child { border-bottom: none; }
 
-        .table-row:hover {
-            background-color: rgba(255,255,255,0.04);
-        }
-
-        .table-row:last-child {
-            border-bottom: none;
-        }
-
-        .cell-main {
-            font-size: 14px;
+        .order-date {
             color: #ddd;
         }
 
-        .cell-sub {
-            font-size: 14px;
-            color: #aaa;
-        }
-
-        /* Status Pills */
+        /* Status Pill */
         .status-pill {
             display: inline-block;
-            padding: 2px 12px;
+            padding: 4px 12px;
             border-radius: 12px;
             font-size: 11px;
             font-weight: 500;
-            text-transform: capitalize; /* Use text content casing */
-            width: fit-content;
-        }
-
-        .status-active {
             border: 1px solid var(--accent-green);
             color: var(--accent-green);
         }
 
-        .status-inactive {
-            border: 1px solid var(--accent-red);
-            color: var(--accent-red);
+        /* Items Cell */
+        .items-cell {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .item-icon {
+            width: 40px;
+            height: 40px;
+            background: #222;
+            border-radius: 4px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .item-icon svg {
+            width: 20px;
+            height: 20px;
+            stroke: white;
+            fill: none;
+        }
+
+        .item-name {
+            color: #ddd;
+        }
+
+        .order-number {
+            color: #ddd;
+        }
+
+        .tracking-number {
+            color: #ddd;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .link-icon {
+            width: 14px;
+            height: 14px;
+            stroke: #888;
+        }
+
+        .delivery-date {
+            color: #ddd;
         }
 
         .arrow-icon {
             opacity: 0.5;
+            text-align: right;
         }
 
-        /* Table Footer / Pagination */
+        /* Table Footer */
         .table-footer {
             display: flex;
             justify-content: flex-end;
@@ -137,7 +180,16 @@
         .page-arrow {
             cursor: pointer;
         }
-        .page-arrow:hover { color: white; }
+        .page-arrow:hover {
+            color: white;
+        }
+
+        /* Mobile */
+        @media (max-width: 768px) {
+            .table-container { overflow-x: auto; }
+            .table-header, .table-row { min-width: 900px; }
+            .search-container { width: 100%; }
+        }
     </style>
 </head>
 <body>
@@ -151,11 +203,11 @@
                 <svg viewBox="0 0 24 24"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path><polyline points="9 22 9 12 15 12 15 22"></polyline></svg>
                 <span>Dashboard</span>
             </a>
-            <a href="subscriptions.html" class="nav-item active">
+            <a href="subscriptions.html" class="nav-item">
                 <svg viewBox="0 0 24 24"><line x1="2" y1="2" x2="22" y2="22"></line><path d="M17 7A9 9 0 0 0 7 17"></path></svg>
                 <span>Subscriptions</span>
             </a>
-            <a href="orders.html" class="nav-item">
+            <a href="orders.html" class="nav-item active">
                 <svg viewBox="0 0 24 24"><path d="M6 2L3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"></path><line x1="3" y1="6" x2="21" y2="6"></line><path d="M16 10a4 4 0 0 1-8 0"></path></svg>
                 <span>Orders</span>
             </a>
@@ -179,7 +231,7 @@
         <header>
             <nav class="header-nav">
                 <a href="../index.html">Home</a>
-                <a href="subscriptions.html" class="active">Account</a>
+                <a href="orders.html" class="active">Account</a>
             </nav>
             <div class="header-icons">
                 <svg class="header-icon" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2">
@@ -193,57 +245,60 @@
         <main>
             <div class="content-container">
                 <div class="page-header">
-                    <h1>Subscriptions</h1>
-                    <button class="btn-add">Add Subscription</button>
+                    <h1>Orders</h1>
+                    <div class="search-container">
+                        <input type="text" class="search-input" placeholder="Search by order number">
+                        <svg class="search-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <circle cx="11" cy="11" r="8"></circle>
+                            <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+                        </svg>
+                    </div>
                 </div>
 
                 <div class="table-container">
                     <div class="table-header">
-                        <div>Subscription</div>
-                        <div>Service Location</div>
+                        <div>Placed</div>
                         <div>Status</div>
-                        <div></div> </div>
-
-                    <div class="table-row">
-                        <div class="cell-main">Madre Tierra</div>
-                        <div class="cell-sub">Vía sin nombre</div>
-                        <div><span class="status-pill status-inactive">Inactive</span></div>
-                        <div class="arrow-icon">
-                            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2"><polyline points="9 18 15 12 9 6"></polyline></svg>
-                        </div>
+                        <div>Items</div>
+                        <div>Order Number</div>
+                        <div>Tracking Number</div>
+                        <div>Estimated Delivery</div>
+                        <div></div>
                     </div>
 
                     <div class="table-row">
-                        <div class="cell-main">Covenant pruebas en sitio</div>
-                        <div class="cell-sub">PGPW+V4</div>
-                        <div><span class="status-pill status-active">Active</span></div>
-                        <div class="arrow-icon">
-                            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2"><polyline points="9 18 15 12 9 6"></polyline></svg>
+                        <div class="order-date">7/12/2022</div>
+                        <div><span class="status-pill">Shipped</span></div>
+                        <div class="items-cell">
+                            <div class="item-icon">
+                                <svg viewBox="0 0 24 24" stroke-width="2">
+                                    <path d="M6 2L3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"></path>
+                                    <line x1="3" y1="6" x2="21" y2="6"></line>
+                                    <path d="M16 10a4 4 0 0 1-8 0"></path>
+                                </svg>
+                            </div>
+                            <span class="item-name">Starlink Standard Actuated Kit</span>
                         </div>
-                    </div>
-
-                    <div class="table-row">
-                        <div class="cell-main">Covenant Oficina</div>
-                        <div class="cell-sub">Vía sin nombre</div>
-                        <div><span class="status-pill status-active">Active</span></div>
-                        <div class="arrow-icon">
-                            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2"><polyline points="9 18 15 12 9 6"></polyline></svg>
+                        <div class="order-number">ORD-55493D4-70292-45</div>
+                        <div class="tracking-number">
+                            ORD-55493D4-70292-45
+                            <svg class="link-icon" viewBox="0 0 24 24" fill="none" stroke-width="2">
+                                <path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path>
+                                <path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path>
+                            </svg>
                         </div>
-                    </div>
-
-                    <div class="table-row">
-                        <div class="cell-main">Starlink Mini Marlon</div>
-                        <div class="cell-sub">Mar Mediterráneo 1118, Country Club, 44610 Guadalajara, Jal., Mexico</div>
-                        <div><span class="status-pill status-active">Active</span></div>
+                        <div class="delivery-date">-</div>
                         <div class="arrow-icon">
-                            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2"><polyline points="9 18 15 12 9 6"></polyline></svg>
+                            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2">
+                                <polyline points="9 18 15 12 9 6"></polyline>
+                            </svg>
                         </div>
                     </div>
 
                     <div class="table-footer">
                         <div>Rows per page: 10 <span style="font-size: 8px; vertical-align: middle;">▼</span></div>
                         <div class="pagination-controls">
-                            <span>1-4 of 4</span>
+                            <span>1-1 of 1</span>
                             <span class="page-arrow">❮</span>
                             <span class="page-arrow">❯</span>
                         </div>
@@ -265,15 +320,6 @@
             </div>
         </footer>
     </div>
-
-    <script>
-        // Make subscription table rows clickable
-        document.querySelectorAll('.table-row').forEach(row => {
-            row.addEventListener('click', () => {
-                window.location.href = 'detail-subs.html';
-            });
-        });
-    </script>
 
 </body>
 </html>
