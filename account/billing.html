@@ -185,6 +185,32 @@
         }
         .download-icon:hover { opacity: 1; }
 
+        /* Table Footer */
+        .table-footer {
+            display: flex;
+            justify-content: flex-end;
+            align-items: center;
+            padding: 12px 20px;
+            font-size: 12px;
+            color: var(--text-muted);
+            border-top: 1px solid var(--card-border);
+            background-color: rgba(0,0,0,0.3);
+            gap: 20px;
+        }
+
+        .pagination-controls {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .page-arrow {
+            cursor: pointer;
+        }
+        .page-arrow:hover {
+            color: white;
+        }
+
         /* Mobile */
         @media (max-width: 768px) {
             .billing-grid { grid-template-columns: 1fr; }
@@ -388,6 +414,15 @@
                         <div style="text-align:right; padding-right:10px;">MX$0.00</div>
                         <div style="text-align:center;"><span class="status-pill">Paid</span></div>
                         <div style="text-align:right;"><svg class="download-icon" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="7 10 12 15 17 10"></polyline><line x1="12" y1="15" x2="12" y2="3"></line></svg></div>
+                    </div>
+
+                    <div class="table-footer">
+                        <div>Rows per page: 10 <span style="font-size: 8px; vertical-align: middle;">▼</span></div>
+                        <div class="pagination-controls">
+                            <span>1-6 of 6</span>
+                            <span class="page-arrow">❮</span>
+                            <span class="page-arrow">❯</span>
+                        </div>
                     </div>
                 </div>
             </div>
