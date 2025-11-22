@@ -3,146 +3,18 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Starlink - Billing</title>
+    <title>Covenant - Billing</title>
+    <link rel="stylesheet" href="shared-nav.css">
     <style>
-        :root {
-            --bg-color: #000000;
-            --card-bg: rgba(255, 255, 255, 0.03);
-            --border-color: #333333;
-            --text-main: #ffffff;
-            --text-muted: #8e8e8e;
-            --accent-green: #4caf50;
-            --font-stack: 'DIN', 'Roboto', Helvetica, Arial, sans-serif;
-            --sidebar-width: 240px; /* Expanded sidebar */
-            --header-height: 70px;
-            --content-max-width: 1200px;
-        }
-
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-
-        body {
-            background-color: var(--bg-color);
-            color: var(--text-main);
-            font-family: var(--font-stack);
-            display: flex;
-            min-height: 100vh;
-            overflow-x: hidden;
-        }
-
-        /* --- SIDEBAR (Expanded) --- */
-        aside {
-            width: var(--sidebar-width);
-            background: black;
-            border-right: 1px solid #222;
-            display: flex;
-            flex-direction: column;
-            padding-top: 90px;
-            position: fixed;
-            height: 100vh;
-            left: 0;
-            top: 0;
-            z-index: 30;
-        }
-
-        .nav-item {
-            width: 100%;
-            height: 50px;
-            display: flex;
-            align-items: center;
-            padding-left: 30px;
-            cursor: pointer;
-            color: var(--text-muted);
-            transition: all 0.2s;
-            font-size: 14px;
-            font-weight: 500;
-            border-left: 3px solid transparent;
-        }
-
-        .nav-item:hover { color: white; }
-        .nav-item.active {
-            color: white;
-            background-color: rgba(255,255,255,0.1);
-            border-left: 3px solid white;
-        }
-        
-        .nav-item svg {
-            width: 18px;
-            height: 18px;
-            margin-right: 15px;
-            stroke: currentColor;
-            stroke-width: 1.5;
-            fill: none;
-        }
-
-        /* --- LAYOUT --- */
-        .layout-wrapper {
-            margin-left: var(--sidebar-width);
-            width: 100%;
-            display: flex;
-            flex-direction: column;
-            min-height: 100vh;
-        }
-
-        /* --- HEADER --- */
-        header {
-            position: sticky;
-            top: 0;
-            width: 100%;
-            height: var(--header-height);
-            display: flex;
-            align-items: center;
-            padding: 0 40px;
-            background-color: var(--bg-color);
-            z-index: 20;
-        }
-
-        .logo {
-            font-size: 20px;
-            font-weight: 700;
-            letter-spacing: 4px;
-            text-transform: uppercase;
-            color: white;
-            position: fixed; 
-            left: 36px;
-            top: 24px;
-            z-index: 40;
-        }
-
-        .top-nav-links {
-            display: flex;
-            gap: 30px;
-            font-size: 12px;
-            font-weight: 700;
-            letter-spacing: 1px;
-            margin-left: 240px; /* Match sidebar offset logic */
-            margin-right: auto;
-        }
-        .top-nav-links a { text-decoration: none; color: white; opacity: 0.9; }
-
-        .top-icons { display: flex; align-items: center; gap: 20px; }
-
-        /* --- MAIN CONTENT --- */
-        main {
-            flex: 1;
-            padding: 40px 40px;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-        }
-
+        /* Page-specific styles for billing */
         .content-container {
             width: 100%;
-            max-width: var(--content-max-width);
         }
 
         h1 { font-size: 28px; font-weight: 600; margin-bottom: 5px; }
         .page-subtitle { color: var(--text-muted); font-size: 14px; margin-bottom: 35px; }
 
-        /* --- TOP GRID (4 CARDS) --- */
+        /* Billing Grid */
         .billing-grid {
             display: grid;
             grid-template-columns: 1fr 1fr;
@@ -152,14 +24,13 @@
 
         .info-card {
             background-color: var(--card-bg);
-            border: 1px solid var(--border-color);
+            border: 1px solid var(--card-border);
             border-radius: 4px;
             padding: 20px 24px;
             min-height: 140px;
             display: flex;
             flex-direction: column;
             justify-content: space-between;
-            position: relative;
         }
 
         .card-top-row {
@@ -170,7 +41,7 @@
         }
 
         .card-label { font-size: 12px; color: var(--text-muted); font-weight: 500; }
-        
+
         .big-amount {
             font-size: 32px;
             display: flex;
@@ -199,14 +70,14 @@
         .text-sub { color: var(--text-muted); margin-top: 4px; font-size: 12px; }
 
         .icon-info {
-            width: 16px; 
-            height: 16px; 
-            stroke: #666; 
+            width: 16px;
+            height: 16px;
+            stroke: #666;
             cursor: pointer;
         }
         .icon-info:hover { stroke: white; }
 
-        /* --- INVOICES SECTION --- */
+        /* Invoices Section */
         .section-header {
             display: flex;
             justify-content: space-between;
@@ -216,7 +87,6 @@
 
         .section-title { font-size: 18px; font-weight: 600; }
 
-        /* Search Bar */
         .search-filter-row {
             display: flex;
             gap: 12px;
@@ -241,7 +111,7 @@
         .search-input {
             width: 100%;
             background: transparent;
-            border: 1px solid var(--border-color);
+            border: 1px solid var(--card-border);
             padding: 10px 10px 10px 40px;
             border-radius: 4px;
             color: white;
@@ -255,7 +125,7 @@
             display: flex;
             justify-content: center;
             align-items: center;
-            border: 1px solid var(--border-color);
+            border: 1px solid var(--card-border);
             border-radius: 4px;
             background: transparent;
             cursor: pointer;
@@ -263,7 +133,7 @@
         .filter-btn svg { stroke: #888; width: 18px; height: 18px; }
         .filter-btn:hover { background: #111; }
 
-        /* --- TABLE --- */
+        /* Table */
         .table-container {
             width: 100%;
             font-size: 12px;
@@ -276,14 +146,14 @@
             background-color: rgba(255,255,255,0.02);
             color: var(--text-muted);
             font-weight: 500;
-            border-bottom: 1px solid var(--border-color);
+            border-bottom: 1px solid var(--card-border);
         }
 
         .table-row {
             display: grid;
             grid-template-columns: 1fr 1fr 1.2fr 2.5fr 0.8fr 1.2fr 1.2fr 0.8fr 40px;
             padding: 16px 16px;
-            border-bottom: 1px solid var(--border-color);
+            border-bottom: 1px solid var(--card-border);
             align-items: center;
             color: #ccc;
             transition: background 0.1s;
@@ -310,36 +180,9 @@
         }
         .download-icon:hover { opacity: 1; }
 
-        /* --- FOOTER --- */
-        footer {
-            width: 100%;
-            border-top: 1px solid #222;
-            padding: 30px 0;
-            margin-top: auto;
-            display: flex;
-            justify-content: center;
-        }
-        .footer-inner {
-            width: 100%;
-            padding: 0 40px;
-            display: flex;
-            flex-wrap: wrap;
-            gap: 20px;
-            color: var(--text-muted);
-            font-size: 11px;
-            font-weight: 600;
-        }
-        footer a { color: white; text-decoration: none; }
-
-        @media (max-width: 1024px) {
-            aside { width: 80px; }
-            .nav-item span { display: none; }
-            .nav-item { padding-left: 0; justify-content: center; }
-            .layout-wrapper { margin-left: 80px; }
-            .top-nav-links { margin-left: 80px; }
-            .logo { left: 20px; }
+        /* Mobile */
+        @media (max-width: 768px) {
             .billing-grid { grid-template-columns: 1fr; }
-            /* Force table horizontal scroll on mobile */
             .table-container { overflow-x: auto; }
             .table-header, .table-row { min-width: 900px; }
         }
@@ -347,48 +190,43 @@
 </head>
 <body>
 
-    <div class="logo">STARLINK</div>
+    <div class="bg-effect"></div>
 
     <aside>
-        <div class="nav-item">
-            <svg viewBox="0 0 24 24"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path><polyline points="9 22 9 12 15 12 15 22"></polyline></svg>
-            <span>Home</span>
-        </div>
-        <div class="nav-item">
-            <svg viewBox="0 0 24 24"><line x1="2" y1="2" x2="22" y2="22"></line><path d="M17 7A9 9 0 0 0 7 17"></path></svg>
-            <span>Subscriptions</span>
-        </div>
-        <div class="nav-item">
-            <svg viewBox="0 0 24 24"><path d="M6 2L3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"></path><line x1="3" y1="6" x2="21" y2="6"></line><path d="M16 10a4 4 0 0 1-8 0"></path></svg>
-            <span>Orders</span>
-        </div>
-        <div class="nav-item active">
-            <svg viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline><line x1="16" y1="13" x2="8" y2="13"></line><line x1="16" y1="17" x2="8" y2="17"></line><polyline points="10 9 9 9 8 9"></polyline></svg>
-            <span>Billing</span>
-        </div>
-        <div class="nav-item">
-            <svg viewBox="0 0 24 24"><path d="M20.2 16.6L16 12.4a2.8 2.8 0 0 0-4 0l-2.4 2.4"></path><path d="M15 10l-1.4-1.4a2.8 2.8 0 0 0-4 0l-4.4 4.4a2 2 0 0 0 0 2.8l1.4 1.4"></path></svg>
-            <span>Referrals</span>
-        </div>
-        <div class="nav-item">
-            <svg viewBox="0 0 24 24"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path><polyline points="22,6 12,13 2,6"></polyline></svg>
-            <span>Messages</span>
-        </div>
-        <div class="nav-item">
-            <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="3"></circle><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"></path></svg>
-            <span>Settings</span>
-        </div>
+        <div class="sidebar-logo">COVENANT</div>
+        <nav class="sidebar-nav">
+            <a href="dashboard.html" class="nav-item">
+                <svg viewBox="0 0 24 24"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path><polyline points="9 22 9 12 15 12 15 22"></polyline></svg>
+                <span>Dashboard</span>
+            </a>
+            <a href="subscriptions.html" class="nav-item">
+                <svg viewBox="0 0 24 24"><line x1="2" y1="2" x2="22" y2="22"></line><path d="M17 7A9 9 0 0 0 7 17"></path></svg>
+                <span>Subscriptions</span>
+            </a>
+            <a href="billing.html" class="nav-item active">
+                <svg viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline><line x1="16" y1="13" x2="8" y2="13"></line><line x1="16" y1="17" x2="8" y2="17"></line><polyline points="10 9 9 9 8 9"></polyline></svg>
+                <span>Billing</span>
+            </a>
+            <a href="devices.html" class="nav-item">
+                <svg viewBox="0 0 24 24"><path d="M20.2 16.6L16 12.4a2.8 2.8 0 0 0-4 0l-2.4 2.4"></path><path d="M15 10l-1.4-1.4a2.8 2.8 0 0 0-4 0l-4.4 4.4a2 2 0 0 0 0 2.8l1.4 1.4"></path></svg>
+                <span>Devices</span>
+            </a>
+            <a href="settings.html" class="nav-item">
+                <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="3"></circle><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"></path></svg>
+                <span>Settings</span>
+            </a>
+        </nav>
     </aside>
 
     <div class="layout-wrapper">
+
         <header>
-            <div class="top-nav-links">
-                <a href="#" class="active">ACCOUNT</a>
-                <a href="#">SHOP</a>
-                <a href="#">HELP CENTER</a>
-            </div>
-            <div class="top-icons">
-                <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2">
+            <nav class="header-nav">
+                <a href="../index.html">Home</a>
+                <a href="billing.html" class="active">Account</a>
+            </nav>
+            <div class="header-icons">
+                <svg class="header-icon" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2">
                     <path d="M9 20a4 4 0 1 0 0-8 4 4 0 0 0 0 8z"></path>
                     <path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"></path>
                 </svg>
@@ -551,18 +389,14 @@
         </main>
 
         <footer>
-            <div class="footer-inner">
-                <a href="#">Careers</a>
-                <a href="#">Satellite Operators</a>
-                <a href="#">Authorized Resellers</a>
-                <a href="#">Privacy & Legal</a>
-                <a href="#">Privacy Preferences</a>
-                <div style="width: 100%; display: flex; justify-content: center; margin-top: 10px; align-items: center; font-weight: 400;">
-                    Starlink © 2025
-                    <svg style="width: 14px; margin-left: 6px; fill: white;" viewBox="0 0 24 24"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"></path></svg>
+            <div class="footer-content">
+                <div class="footer-links">
+                    <a href="#">Privacy Policy</a>
+                    <a href="#">Terms of Service</a>
+                    <a href="#">Support</a>
                 </div>
-                <div style="width: 100%; display: flex; justify-content: center; font-weight: 400; color: #666; margin-top: 5px; font-size: 10px;">
-                    Starlink is a division of SpaceX. Visit us at spacex.com
+                <div class="footer-copyright">
+                    © 2025 Covenant. All rights reserved.
                 </div>
             </div>
         </footer>
