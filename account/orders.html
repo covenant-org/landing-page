@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Covenant - Orders</title>
     <link rel="stylesheet" href="shared-nav.css">
+    <link rel="stylesheet" href="shared-tables.css">
     <style>
         /* Page-specific styles for orders */
         .content-container {
@@ -56,52 +57,20 @@
         }
         .search-input:focus { outline: none; border-color: #555; }
 
-        /* Table */
-        .table-container {
-            width: 100%;
-            background-color: var(--card-bg);
-            border: 1px solid var(--card-border);
-            border-radius: 4px;
-            overflow: hidden;
-            font-size: 12px;
-        }
-
+        /* Table - Page-specific grid layout */
         .table-header {
             display: grid;
             grid-template-columns: 1fr 1fr 2fr 2fr 2fr 1.5fr 40px;
-            padding: 15px 20px;
-            background-color: rgba(0,0,0,0.3);
-            color: var(--text-muted);
-            font-weight: 600;
-            border-bottom: 1px solid var(--card-border);
         }
 
         .table-row {
             display: grid;
             grid-template-columns: 1fr 1fr 2fr 2fr 2fr 1.5fr 40px;
-            padding: 20px 20px;
-            border-bottom: 1px solid var(--card-border);
-            align-items: center;
-            font-size: 14px;
-            transition: background 0.1s;
             cursor: pointer;
         }
-        .table-row:hover { background-color: rgba(255,255,255,0.04); }
-        .table-row:last-child { border-bottom: none; }
 
         .order-date {
             color: #ddd;
-        }
-
-        /* Status Pill */
-        .status-pill {
-            display: inline-block;
-            padding: 4px 12px;
-            border-radius: 12px;
-            font-size: 11px;
-            font-weight: 500;
-            border: 1px solid var(--accent-green);
-            color: var(--accent-green);
         }
 
         /* Items Cell */
@@ -158,36 +127,8 @@
             text-align: right;
         }
 
-        /* Table Footer */
-        .table-footer {
-            display: flex;
-            justify-content: flex-end;
-            align-items: center;
-            padding: 12px 20px;
-            font-size: 12px;
-            color: var(--text-muted);
-            border-top: 1px solid var(--card-border);
-            background-color: rgba(0,0,0,0.3);
-            gap: 20px;
-        }
-
-        .pagination-controls {
-            display: flex;
-            align-items: center;
-            gap: 15px;
-        }
-
-        .page-arrow {
-            cursor: pointer;
-        }
-        .page-arrow:hover {
-            color: white;
-        }
-
         /* Mobile */
         @media (max-width: 768px) {
-            .table-container { overflow-x: auto; }
-            .table-header, .table-row { min-width: 900px; }
             .search-container { width: 100%; }
         }
     </style>

@@ -5,12 +5,11 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Covenant - Subscriptions</title>
     <link rel="stylesheet" href="shared-nav.css">
+    <link rel="stylesheet" href="shared-tables.css">
+    <script src="api-client.js"></script>
+    <script src="subscriptions.js" defer></script>
     <style>
         /* Page-specific styles for subscriptions */
-        :root {
-            --accent-red: #e57373;
-        }
-
         .content-container {
             width: 100%;
         }
@@ -42,42 +41,16 @@
         }
         .btn-add:hover { background: #222; }
 
-        /* --- DATA TABLE STYLING --- */
-        .table-container {
-            background-color: var(--card-bg);
-            border: 1px solid var(--card-border);
-            border-radius: 4px;
-            overflow: hidden;
-        }
-
+        /* --- TABLE - Page-specific grid layout --- */
         .table-header {
             display: grid;
             grid-template-columns: 2fr 2fr 1fr 40px;
-            padding: 15px 20px;
-            background-color: rgba(0,0,0,0.3);
-            border-bottom: 1px solid var(--card-border);
-            font-size: 12px;
-            color: var(--text-muted);
-            font-weight: 600;
         }
 
         .table-row {
             display: grid;
             grid-template-columns: 2fr 2fr 1fr 40px;
-            padding: 20px 20px;
-            border-bottom: 1px solid var(--card-border);
-            align-items: center;
             cursor: pointer;
-            font-size: 14px;
-            transition: background 0.1s;
-        }
-
-        .table-row:hover {
-            background-color: rgba(255,255,255,0.04);
-        }
-
-        .table-row:last-child {
-            border-bottom: none;
         }
 
         .cell-main {
@@ -90,54 +63,9 @@
             color: #aaa;
         }
 
-        /* Status Pills */
-        .status-pill {
-            display: inline-block;
-            padding: 2px 12px;
-            border-radius: 12px;
-            font-size: 11px;
-            font-weight: 500;
-            text-transform: capitalize; /* Use text content casing */
-            width: fit-content;
-        }
-
-        .status-active {
-            border: 1px solid var(--accent-green);
-            color: var(--accent-green);
-        }
-
-        .status-inactive {
-            border: 1px solid var(--accent-red);
-            color: var(--accent-red);
-        }
-
         .arrow-icon {
             opacity: 0.5;
         }
-
-        /* Table Footer / Pagination */
-        .table-footer {
-            display: flex;
-            justify-content: flex-end;
-            align-items: center;
-            padding: 12px 20px;
-            font-size: 12px;
-            color: var(--text-muted);
-            border-top: 1px solid var(--card-border);
-            background-color: rgba(0,0,0,0.3);
-            gap: 20px;
-        }
-
-        .pagination-controls {
-            display: flex;
-            align-items: center;
-            gap: 15px;
-        }
-
-        .page-arrow {
-            cursor: pointer;
-        }
-        .page-arrow:hover { color: white; }
     </style>
 </head>
 <body>
@@ -202,42 +130,11 @@
                         <div>Subscription</div>
                         <div>Service Location</div>
                         <div>Status</div>
-                        <div></div> </div>
-
-                    <div class="table-row">
-                        <div class="cell-main">Madre Tierra</div>
-                        <div class="cell-sub">Vía sin nombre</div>
-                        <div><span class="status-pill status-inactive">Inactive</span></div>
-                        <div class="arrow-icon">
-                            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2"><polyline points="9 18 15 12 9 6"></polyline></svg>
-                        </div>
+                        <div></div>
                     </div>
 
-                    <div class="table-row">
-                        <div class="cell-main">Covenant pruebas en sitio</div>
-                        <div class="cell-sub">PGPW+V4</div>
-                        <div><span class="status-pill status-active">Active</span></div>
-                        <div class="arrow-icon">
-                            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2"><polyline points="9 18 15 12 9 6"></polyline></svg>
-                        </div>
-                    </div>
-
-                    <div class="table-row">
-                        <div class="cell-main">Covenant Oficina</div>
-                        <div class="cell-sub">Vía sin nombre</div>
-                        <div><span class="status-pill status-active">Active</span></div>
-                        <div class="arrow-icon">
-                            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2"><polyline points="9 18 15 12 9 6"></polyline></svg>
-                        </div>
-                    </div>
-
-                    <div class="table-row">
-                        <div class="cell-main">Starlink Mini Marlon</div>
-                        <div class="cell-sub">Mar Mediterráneo 1118, Country Club, 44610 Guadalajara, Jal., Mexico</div>
-                        <div><span class="status-pill status-active">Active</span></div>
-                        <div class="arrow-icon">
-                            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2"><polyline points="9 18 15 12 9 6"></polyline></svg>
-                        </div>
+                    <div id="subscriptions-table-body">
+                        <!-- Subscriptions will be loaded here via JavaScript -->
                     </div>
 
                     <div class="table-footer">
@@ -265,15 +162,6 @@
             </div>
         </footer>
     </div>
-
-    <script>
-        // Make subscription table rows clickable
-        document.querySelectorAll('.table-row').forEach(row => {
-            row.addEventListener('click', () => {
-                window.location.href = 'detail-subs.html';
-            });
-        });
-    </script>
 
 </body>
 </html>
