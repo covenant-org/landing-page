@@ -155,9 +155,367 @@
         }
         .download-icon:hover { opacity: 1; }
 
+        /* Filter Modal */
+        .filter-modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.8);
+            z-index: 2000;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .filter-modal.show {
+            display: flex;
+        }
+
+        .filter-modal-content {
+            background: #1a1a1a;
+            border: 1px solid #333;
+            border-radius: 8px;
+            padding: 30px;
+            width: 90%;
+            max-width: 500px;
+            max-height: 90vh;
+            overflow-y: auto;
+        }
+
+        .filter-group {
+            margin-bottom: 25px;
+        }
+
+        .filter-label {
+            display: block;
+            font-size: 14px;
+            font-weight: 600;
+            color: white;
+            margin-bottom: 10px;
+        }
+
+        .filter-select {
+            width: 100%;
+            background: transparent;
+            border: 1px solid var(--card-border);
+            color: white;
+            padding: 12px 15px;
+            border-radius: 4px;
+            font-size: 14px;
+            font-family: var(--font-stack);
+            cursor: pointer;
+        }
+
+        .filter-select:focus {
+            outline: none;
+            border-color: #555;
+        }
+
+        .filter-actions {
+            display: flex;
+            gap: 10px;
+            margin-top: 30px;
+        }
+
+        .btn-reset {
+            flex: 1;
+            background: transparent;
+            border: 1px solid #555;
+            color: white;
+            padding: 12px 20px;
+            font-size: 14px;
+            font-weight: 600;
+            border-radius: 4px;
+            cursor: pointer;
+            transition: background 0.2s;
+        }
+
+        .btn-reset:hover {
+            background: #222;
+        }
+
+        .btn-apply {
+            flex: 1;
+            background: white;
+            border: none;
+            color: black;
+            padding: 12px 20px;
+            font-size: 14px;
+            font-weight: 600;
+            border-radius: 4px;
+            cursor: pointer;
+            transition: opacity 0.2s;
+        }
+
+        .btn-apply:hover {
+            opacity: 0.9;
+        }
+
+        /* Payment Method Modal */
+        .payment-modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.85);
+            z-index: 3000;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .payment-modal.show {
+            display: flex;
+        }
+
+        .payment-modal-content {
+            background: #1a1a1a;
+            border: 1px solid #333;
+            border-radius: 8px;
+            padding: 35px 40px;
+            width: 90%;
+            max-width: 650px;
+            max-height: 90vh;
+            overflow-y: auto;
+        }
+
+        .payment-modal-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 30px;
+        }
+
+        .payment-modal-title {
+            font-size: 24px;
+            font-weight: 600;
+            color: white;
+            margin: 0;
+        }
+
+        .payment-modal-close {
+            width: 24px;
+            height: 24px;
+            cursor: pointer;
+            opacity: 0.7;
+            transition: opacity 0.2s;
+        }
+
+        .payment-modal-close:hover {
+            opacity: 1;
+        }
+
+        .payment-form-group {
+            margin-bottom: 20px;
+        }
+
+        .payment-form-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 15px;
+            margin-bottom: 20px;
+        }
+
+        .payment-input {
+            width: 100%;
+            background: transparent;
+            border: 1px solid #333;
+            color: white;
+            padding: 15px 18px;
+            border-radius: 4px;
+            font-size: 14px;
+            font-family: var(--font-stack);
+            transition: border-color 0.2s;
+        }
+
+        .payment-input::placeholder {
+            color: #666;
+        }
+
+        .payment-input:focus {
+            outline: none;
+            border-color: #555;
+        }
+
+        .payment-modal-actions {
+            display: flex;
+            gap: 12px;
+            margin-top: 30px;
+            justify-content: flex-end;
+        }
+
+        .btn-cancel {
+            background: transparent;
+            border: 1px solid #555;
+            color: white;
+            padding: 12px 30px;
+            font-size: 14px;
+            font-weight: 600;
+            border-radius: 4px;
+            cursor: pointer;
+            transition: background 0.2s;
+        }
+
+        .btn-cancel:hover {
+            background: #222;
+        }
+
+        .btn-save {
+            background: white;
+            border: none;
+            color: black;
+            padding: 12px 30px;
+            font-size: 14px;
+            font-weight: 600;
+            border-radius: 4px;
+            cursor: pointer;
+            transition: opacity 0.2s;
+        }
+
+        .btn-save:hover {
+            opacity: 0.9;
+        }
+
+        /* Billing Cycle Help Modal */
+        .billing-help-modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.85);
+            z-index: 3000;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .billing-help-modal.show {
+            display: flex;
+        }
+
+        .billing-help-content {
+            background: #4a4a4a;
+            border-radius: 8px;
+            width: 90%;
+            max-width: 700px;
+            max-height: 85vh;
+            color: white;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .help-title {
+            font-size: 22px;
+            font-weight: 600;
+            color: white;
+            margin: 0;
+            padding: 40px 40px 25px 40px;
+            line-height: 1.4;
+            flex-shrink: 0;
+        }
+
+        .help-content-scroll {
+            overflow-y: auto;
+            padding: 0 40px;
+            flex: 1;
+        }
+
+        .help-section {
+            margin-bottom: 25px;
+        }
+
+        .help-section p {
+            font-size: 14px;
+            line-height: 1.7;
+            color: #e8e8e8;
+            margin: 0 0 15px 0;
+        }
+
+        .help-subtitle {
+            font-size: 16px;
+            font-weight: 600;
+            color: white;
+            margin: 0 0 12px 0;
+        }
+
+        .help-list {
+            margin: 12px 0;
+            padding-left: 25px;
+        }
+
+        .help-list li {
+            font-size: 14px;
+            line-height: 1.7;
+            color: #e8e8e8;
+            margin-bottom: 8px;
+        }
+
+        .help-question {
+            font-weight: 600;
+            margin-bottom: 10px;
+        }
+
+        .help-actions {
+            display: flex;
+            justify-content: flex-end;
+            padding: 25px 40px 40px 40px;
+            flex-shrink: 0;
+        }
+
+        .btn-help-ok {
+            background: white;
+            border: none;
+            color: black;
+            padding: 10px 35px;
+            font-size: 14px;
+            font-weight: 600;
+            border-radius: 4px;
+            cursor: pointer;
+            transition: opacity 0.2s;
+        }
+
+        .btn-help-ok:hover {
+            opacity: 0.9;
+        }
+
+        /* Prevent body scroll when modal is open */
+        body.modal-open {
+            overflow: hidden;
+        }
+
         /* Mobile */
         @media (max-width: 768px) {
             .billing-grid { grid-template-columns: 1fr; }
+            .filter-modal-content {
+                width: 95%;
+                padding: 20px;
+            }
+            .payment-modal-content {
+                width: 95%;
+                padding: 25px;
+            }
+            .payment-form-row {
+                grid-template-columns: 1fr;
+                gap: 0;
+            }
+            .billing-help-content {
+                width: 95%;
+                max-height: 90vh;
+            }
+            .help-title {
+                font-size: 18px;
+                padding: 25px 25px 20px 25px;
+            }
+            .help-content-scroll {
+                padding: 0 25px;
+            }
+            .help-actions {
+                padding: 20px 25px 25px 25px;
+            }
         }
     </style>
 </head>
@@ -234,14 +592,14 @@
                     <div class="info-card">
                         <div class="card-top-row">
                             <span class="card-label">Available Credits</span>
-                            <svg class="icon-info" viewBox="0 0 24 24" fill="none" stroke-width="2"><circle cx="12" cy="12" r="10"></circle><line x1="12" y1="16" x2="12" y2="12"></line><line x1="12" y1="8" x2="12.01" y2="8"></line></svg>
+                            <svg class="icon-info" onclick="openCreditsHelpModal()" viewBox="0 0 24 24" fill="none" stroke-width="2"><circle cx="12" cy="12" r="10"></circle><line x1="12" y1="16" x2="12" y2="12"></line><line x1="12" y1="8" x2="12.01" y2="8"></line></svg>
                         </div>
                     </div>
 
                     <div class="info-card">
                         <div class="card-top-row">
                             <span class="card-label">Billing Cycle</span>
-                            <svg class="icon-info" viewBox="0 0 24 24" fill="none" stroke-width="2"><circle cx="12" cy="12" r="10"></circle><line x1="12" y1="16" x2="12" y2="12"></line><line x1="12" y1="8" x2="12.01" y2="8"></line></svg>
+                            <svg class="icon-info" onclick="openBillingHelpModal()" viewBox="0 0 24 24" fill="none" stroke-width="2"><circle cx="12" cy="12" r="10"></circle><line x1="12" y1="16" x2="12" y2="12"></line><line x1="12" y1="8" x2="12.01" y2="8"></line></svg>
                         </div>
                         <div class="card-detail-text">
                             Your billing period is October 27 - November 26.<br>
@@ -252,7 +610,7 @@
                     <div class="info-card">
                         <div class="card-top-row">
                             <span class="card-label">Payment Method</span>
-                            <button class="btn-card">Edit</button>
+                            <button class="btn-card" onclick="openPaymentModal()">Edit</button>
                         </div>
                         <div class="card-detail-text">
                             Cristian Hernandez<br>
@@ -295,11 +653,19 @@
                     </div>
 
                     <div class="table-footer">
-                        <div>Rows per page: 10 <span style="font-size: 8px; vertical-align: middle;">▼</span></div>
+                        <div>
+                            Rows per page:
+                            <select onchange="changeRowsPerPage(this.value)" style="background: transparent; border: 1px solid #333; color: white; padding: 2px 5px; margin: 0 5px; border-radius: 3px; cursor: pointer;">
+                                <option value="5">5</option>
+                                <option value="10" selected>10</option>
+                                <option value="20">20</option>
+                                <option value="50">50</option>
+                            </select>
+                        </div>
                         <div class="pagination-controls">
                             <span>1-6 of 6</span>
-                            <span class="page-arrow">❮</span>
-                            <span class="page-arrow">❯</span>
+                            <span class="page-arrow" onclick="previousPage()" style="cursor: pointer;">❮</span>
+                            <span class="page-arrow" onclick="nextPage()" style="cursor: pointer;">❯</span>
                         </div>
                     </div>
                 </div>
@@ -318,6 +684,168 @@
                 </div>
             </div>
         </footer>
+    </div>
+
+    <!-- Filter Modal -->
+    <div id="filter-modal" class="filter-modal">
+        <div class="filter-modal-content">
+            <div class="filter-group">
+                <label class="filter-label">Status</label>
+                <select id="filter-status" class="filter-select">
+                    <option value="all">All</option>
+                    <option value="paid">Paid</option>
+                    <option value="unpaid">Unpaid</option>
+                </select>
+            </div>
+
+            <div class="filter-group">
+                <label class="filter-label">Sort</label>
+                <select id="filter-sort" class="filter-select">
+                    <option value="invoice_date">Created Date</option>
+                    <option value="total_amount">Total Amount</option>
+                </select>
+            </div>
+
+            <div class="filter-actions">
+                <button class="btn-reset" onclick="resetFilters()">Reset All Filters</button>
+                <button class="btn-apply" onclick="applyFilters()">Apply</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Payment Method Modal -->
+    <div id="payment-modal" class="payment-modal">
+        <div class="payment-modal-content">
+            <div class="payment-modal-header">
+                <h2 class="payment-modal-title">Payment Method</h2>
+                <svg class="payment-modal-close" onclick="closePaymentModal()" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2">
+                    <line x1="18" y1="6" x2="6" y2="18"></line>
+                    <line x1="6" y1="6" x2="18" y2="18"></line>
+                </svg>
+            </div>
+
+            <form id="payment-form" onsubmit="savePaymentMethod(event)">
+                <div class="payment-form-group">
+                    <input type="text" id="card-name" class="payment-input" placeholder="Name (As it appears on card)" required>
+                </div>
+
+                <div class="payment-form-group">
+                    <input type="text" id="card-rfc" class="payment-input" placeholder="CURP/RFC (Optional)">
+                </div>
+
+                <div class="payment-form-group">
+                    <input type="text" id="card-number" class="payment-input" placeholder="Card Number" maxlength="19" required>
+                </div>
+
+                <div class="payment-form-row">
+                    <div class="payment-form-group">
+                        <input type="text" id="card-cvc" class="payment-input" placeholder="CVC" maxlength="4" required>
+                    </div>
+                    <div class="payment-form-group">
+                        <input type="text" id="card-expiry" class="payment-input" placeholder="MM/YY" maxlength="5" required>
+                    </div>
+                </div>
+
+                <div class="payment-form-group">
+                    <input type="text" id="card-zip" class="payment-input" placeholder="Billing Zip / Postal Code" required>
+                </div>
+
+                <div class="payment-modal-actions">
+                    <button type="button" class="btn-cancel" onclick="closePaymentModal()">Cancel</button>
+                    <button type="submit" class="btn-save">Save</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- Billing Cycle Help Modal -->
+    <div id="billing-help-modal" class="billing-help-modal">
+        <div class="billing-help-content">
+            <h2 class="help-title">How does the monthly service billing cycle work?</h2>
+
+            <div class="help-content-scroll">
+                <div class="help-section">
+                    <p>The "Monthly Service Billing Cycle" refers to the one-month period for which you are billed. You can view your billing cycle and payment due date in the <strong>Billing</strong> tab of your Starlink account.</p>
+
+                    <p>Your billing cycle begins on the day your Starlink kit is first activated. Once activated:</p>
+
+                    <ul class="help-list">
+                        <li>Your first invoice will appear in your account.</li>
+                        <li>The payment method on file will be automatically charged.</li>
+                        <li>If you don't activate within 30 days of shipment, your service will be automatically activated.</li>
+                    </ul>
+                </div>
+
+                <div class="help-section">
+                    <h3 class="help-subtitle">Example:</h3>
+                    <p>If you activate on June 28, your billing cycle will run June 28 – July 27.</p>
+                    <ul class="help-list">
+                        <li>You will be billed on June 28, and payment will also be due that day.</li>
+                        <li>Your next cycle would be July 28 – August 27, with billing and payment due July 28.</li>
+                    </ul>
+                    <p>Billing cycles vary per user, so your dates may differ from the example.</p>
+                </div>
+
+                <div class="help-section">
+                    <h3 class="help-subtitle">Important Notes:</h3>
+                    <ul class="help-list">
+                        <li>If you activate service on the 29th, 30th, or 31st, your billing date will adjust to the 28th.</li>
+                        <li>Brazil only: The first invoice has a 7-day payment window from the invoice date. This applies to the first invoice only.</li>
+                    </ul>
+                </div>
+
+                <div class="help-section">
+                    <h3 class="help-subtitle">FAQs:</h3>
+
+                    <p class="help-question"><strong>When is payment due for my monthly subscription?</strong></p>
+                    <p>Your automatic payment date is the first day of your billing cycle. Subscription payments will be automatically charged to the payment method on file on your Payment Due Date. For Mobile Money payments, you will need to log into your account each month on the Payment Due Date to complete your payment. Please note that billing date changes or delays are not supported.</p>
+
+                    <p class="help-question"><strong>Am I able to preview my upcoming charges?</strong></p>
+                    <p>You are able to preview your next monthly service invoice from your account at any time by clicking "Preview Next Invoice". The invoice preview will update each day of the month and will reflect all charges due as of that day, including any applicable overage data usage from your current cycle or recent changes to your service plan.</p>
+
+                    <p class="help-question"><strong>What happens if my Starlink Kit is not delivered within 30 days from shipping?</strong></p>
+                    <p>If you've received a notice that your billing cycle will begin soon and your Starlink Kit has not yet been delivered, your 30-day trial period will be automatically extended by an additional 30 days, and a one-month service credit will be applied to your account.</p>
+                </div>
+
+                <div class="help-section">
+                    <p>Get Starlink email updates here.</p>
+                </div>
+
+                <div class="help-section">
+                    <p class="help-question"><strong>Recommended Topics:</strong></p>
+                    <p>How does billing work for business?</p>
+                </div>
+            </div>
+
+            <div class="help-actions">
+                <button class="btn-help-ok" onclick="closeBillingHelpModal()">OK</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Credits Help Modal -->
+    <div id="credits-help-modal" class="billing-help-modal">
+        <div class="billing-help-content">
+            <h2 class="help-title">Billing - Credits</h2>
+
+            <div class="help-content-scroll">
+                <div class="help-section">
+                    <p>Credits can have 3 types: generic, service, or hardware.</p>
+
+                    <p>Credits are automatically applied to the next bill that appears in your account. For example, if your account had a pending bill at the time the service credit was added, then the service credit will not change the scheduled payment amount, and instead will be applied to your following bill.</p>
+
+                    <p>If you believe a credit should have been included in your most recent bill, or the credit amount is incorrect, please create a support ticket and provide details about the issue. For Enterprise and Premium Business customers, if you believe a credit should apply to an existing invoice, please create a support ticket with the credit number and invoice number.</p>
+
+                    <p>Credits can be viewed in your account by going to starlink.com/account/billing. The credit table is below the invoice table and will show the available balance and the total amount of the credit. There is also a summary of available credits below the account balance box in the upper left corner of the page.</p>
+
+                    <p>Credits are non-refundable, non-transferable, and will not be reimbursed if you discontinue service.</p>
+                </div>
+            </div>
+
+            <div class="help-actions">
+                <button class="btn-help-ok" onclick="closeCreditsHelpModal()">OK</button>
+            </div>
+        </div>
     </div>
 </body>
 </html>
