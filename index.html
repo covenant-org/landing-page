@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <link rel="icon" type="image/png" href="/favicon/favicon-96x96.png" sizes="96x96" />
     <link rel="icon" type="image/svg+xml" href="/favicon/favicon.svg" />
@@ -10,6 +11,18 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Covenant</title>
+
+    <!-- Social Share / Open Graph -->
+    <meta property="og:title" content="Covenant - Argus One" />
+    <meta property="og:description" content="Rapid-Deployment Autonomous Off-Grid AI Surveillance Station" />
+    <meta property="og:image" content="/assets/images/hero-night-social.jpg" />
+    <meta property="og:type" content="website" />
+
+    <!-- Twitter Card -->
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content="Covenant - Argus One" />
+    <meta name="twitter:description" content="Rapid-Deployment Autonomous Off-Grid AI Surveillance Station" />
+    <meta name="twitter:image" content="/assets/images/hero-night-social.jpg" />
     <style>
         /* --- RESET & BASIC SETUP --- */
         * {
@@ -54,7 +67,9 @@
             list-style: none;
         }
 
-        h1, h2, h3 {
+        h1,
+        h2,
+        h3 {
             font-weight: 700;
             text-transform: uppercase;
             letter-spacing: 1px;
@@ -71,7 +86,7 @@
             justify-content: space-between;
             align-items: center;
             z-index: 1000;
-            background: linear-gradient(to bottom, rgba(0,0,0,0.7), transparent);
+            background: linear-gradient(to bottom, rgba(0, 0, 0, 0.7), transparent);
         }
 
         .logo {
@@ -227,16 +242,18 @@
             position: relative;
             background-size: cover;
             background-position: center;
-            background-attachment: fixed; /* Parallax effect */
+            background-attachment: fixed;
+            /* Parallax effect */
         }
 
         .panel-content {
             max-width: 650px;
             z-index: 2;
-            background: rgba(0,0,0,0.6); /* Readability boost */
+            background: rgba(0, 0, 0, 0.6);
+            /* Readability boost */
             padding: 40px;
             backdrop-filter: blur(5px);
-            border: 1px solid rgba(255,255,255,0.1);
+            border: 1px solid rgba(255, 255, 255, 0.1);
         }
 
         .unified-section {
@@ -259,9 +276,9 @@
 
         .two-column-grid .column {
             min-width: 0;
-            border: 1px solid rgba(255,255,255,0.2);
+            border: 1px solid rgba(255, 255, 255, 0.2);
             padding: 30px;
-            background: rgba(0,0,0,0.3);
+            background: rgba(0, 0, 0, 0.3);
             backdrop-filter: blur(5px);
             display: flex;
             flex-direction: column;
@@ -275,7 +292,7 @@
             display: inline-block;
             padding-bottom: 5px;
         }
-        
+
         .panel h3 {
             font-size: 1.3rem;
             margin-top: 30px;
@@ -334,7 +351,7 @@
 
         .tag {
             background: transparent;
-            border: 1px solid rgba(255,255,255,0.5);
+            border: 1px solid rgba(255, 255, 255, 0.5);
             padding: 8px 16px;
             text-transform: uppercase;
             font-size: 0.85rem;
@@ -388,7 +405,7 @@
             width: 100%;
             border-radius: 4px;
             overflow: hidden;
-            box-shadow: 0 20px 50px rgba(0,0,0,0.5);
+            box-shadow: 0 20px 50px rgba(0, 0, 0, 0.5);
         }
 
         .video-wrapper img {
@@ -416,12 +433,12 @@
 
         .play-overlay:hover {
             transform: translate(-50%, -50%) scale(1.1);
-            background: rgba(255,255,255,0.1);
+            background: rgba(255, 255, 255, 0.1);
         }
 
         .play-triangle {
-            width: 0; 
-            height: 0; 
+            width: 0;
+            height: 0;
             border-top: 10px solid transparent;
             border-bottom: 10px solid transparent;
             border-left: 18px solid white;
@@ -448,7 +465,8 @@
             display: flex;
             flex-direction: column;
             gap: 15px;
-            border-left: 1px solid #444; /* The vertical line */
+            border-left: 1px solid #444;
+            /* The vertical line */
             padding-left: 25px;
         }
 
@@ -460,7 +478,7 @@
             display: flex;
             gap: 15px;
         }
-        
+
         .step-number {
             opacity: 0.7;
         }
@@ -537,7 +555,7 @@
             width: 100%;
             font-size: 12px;
             letter-spacing: 0.2px;
-            font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif; 
+            font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
         }
 
         .footer-content {
@@ -601,11 +619,21 @@
 
         /* --- RESPONSIVE --- */
         @media (max-width: 768px) {
-            header { padding: 20px; }
-            nav { display: none; }
-            .hamburger { display: flex; }
+            header {
+                padding: 20px;
+            }
 
-            .logo img { height: 24px; }
+            nav {
+                display: none;
+            }
+
+            .hamburger {
+                display: flex;
+            }
+
+            .logo img {
+                height: 24px;
+            }
 
             .hero {
                 background: url('./assets/images/hero-night-m.png') center/cover no-repeat;
@@ -615,52 +643,89 @@
                 align-items: center;
             }
 
-            .hero h1 { font-size: 2.2rem; }
-            .hero .sub-h1 { font-size: 0.95rem; }
+            .hero h1 {
+                font-size: 2.2rem;
+            }
+
+            .hero .sub-h1 {
+                font-size: 0.95rem;
+            }
 
             #ideal-for {
                 background-image: url('./assets/images/construction-site-m.png');
             }
 
-            .panel { padding: 80px 20px; justify-content: center !important; }
-            .panel-content { width: 100%; padding: 30px 20px; }
+            .panel {
+                padding: 80px 20px;
+                justify-content: center !important;
+            }
 
-            .two-column-grid { grid-template-columns: 1fr; gap: 40px; }
+            .panel-content {
+                width: 100%;
+                padding: 30px 20px;
+            }
 
-            .spec-grid { grid-template-columns: 1fr; gap: 5px; margin-bottom: 20px;}
-            .spec-label { margin-top: 15px; }
+            .two-column-grid {
+                grid-template-columns: 1fr;
+                gap: 40px;
+            }
+
+            .spec-grid {
+                grid-template-columns: 1fr;
+                gap: 5px;
+                margin-bottom: 20px;
+            }
+
+            .spec-label {
+                margin-top: 15px;
+            }
 
             /* Deployment Section Mobile */
             .deploy-grid {
                 grid-template-columns: 1fr;
                 gap: 40px;
             }
+
             .deploy-content h2 {
                 font-size: 2rem;
             }
+
             .step-item {
                 font-size: 1.4rem;
             }
 
-            .footer-links { flex-direction: column; gap: 15px; }
-            .footer-info { flex-direction: column; align-items: flex-start; gap: 10px; }
-            .trial-section h2 { font-size: 2rem; }
+            .footer-links {
+                flex-direction: column;
+                gap: 15px;
+            }
+
+            .footer-info {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 10px;
+            }
+
+            .trial-section h2 {
+                font-size: 2rem;
+            }
         }
     </style>
 </head>
+
 <body>
 
     <header>
         <div class="logo">
             <img src="./assets/images/logo.svg" alt="Covenant">
         </div>
-        
+
         <nav>
             <ul>
                 <li><a href="#value-prop">Features</a></li>
                 <li><a href="#ideal-for">Use Cases</a></li>
                 <li><a href="#deployment">Deploy</a></li>
                 <li><a href="#contact">Contact</a></li>
+                <li><a href="/account/dashboard.html">Dashboard</a></li>
             </ul>
         </nav>
 
@@ -678,15 +743,17 @@
             <a href="#ideal-for">Use Cases</a>
             <a href="#deployment">Deploy</a>
             <a href="#contact">Contact</a>
+            <a href="/account/dashboard.html">Dashboard</a>
         </nav>
     </div>
 
     <section class="hero">
         <h1>Argus One</h1>
-        <div class="sub-h1">Rapid-Deployment Autonomous Off-Grid AI Surveillance Node</div>
+        <div class="sub-h1">Rapid-Deployment Autonomous Off-Grid AI Surveillance Station</div>
         <p>Professional-Grade Security · Deployed in Under 10 Minutes</p>
-        
-        <a href="https://buy.stripe.com/7sY8wQflx99Idwi49W5J605" class="btn-main" target="_blank" rel="noopener">Get started</a>
+
+        <a href="https://buy.stripe.com/7sY8wQflx99Idwi49W5J605" class="btn-main" target="_blank" rel="noopener">Get
+            started</a>
     </section>
 
     <section id="value-prop" class="panel">
@@ -698,7 +765,8 @@
                         <li>10-minute setup (one person, just a ladder)</li>
                         <li>Edge AI (full detection/tracking/alerts on-device)</li>
                         <li>Native Starlink + auto 5G/LTE failover = 100% uptime</li>
-                        <li>Active deterrence: 4× Cameras, 110 dB siren, two-way audio, blue/red rotating beacon & high intense strobe</li>
+                        <li>Active deterrence: 360 camera view, 110 dB siren, two-way audio, blue/red rotating beacon &
+                            high intense strobe</li>
                     </ul>
                 </div>
 
@@ -721,7 +789,7 @@
                         <div class="spec-value">2–8 TB NVMe (30–120+ days 4K)</div>
 
                         <div class="spec-label">Weight</div>
-                        <div class="spec-value">∼5 kg complete system</div>
+                        <div class="spec-value">5∼9 kg complete system</div>
                     </div>
                 </div>
             </div>
@@ -748,7 +816,7 @@
         <div class="deploy-grid">
             <div class="video-wrapper">
                 <img src="./assets/images/station.JPG" alt="Argus One Unit">
-                
+
                 <div class="play-overlay">
                     <div class="play-triangle"></div>
                 </div>
@@ -756,7 +824,7 @@
 
             <div class="deploy-content">
                 <h2>Deploy in Minutes</h2>
-                <p class="deploy-subtext">Deploy Argus One with just two steps. Instructions work in either order:</p>
+                <p class="deploy-subtext">Deploy Argus One with just two steps.</p>
 
                 <div class="step-list">
                     <div class="step-item">
@@ -770,7 +838,8 @@
                 </div>
 
                 <p class="deploy-description">
-                    Argus One requires clear solar access. Download the Covenant app to determine your best install location and monitor status.
+                    Argus One requires clear solar access. Download the Covenant app to determine your best install
+                    location and monitor status.
                 </p>
 
                 <div class="app-links">
@@ -785,10 +854,11 @@
         <div class="trial-content">
             <h2>30 Day Trial</h2>
             <p>If not satisfied, return Argus One for a full refund.</p>
-            <a href="https://buy.stripe.com/7sY8wQflx99Idwi49W5J605" class="btn-main" target="_blank" rel="noopener">Place Order</a>
+            <a href="https://buy.stripe.com/7sY8wQflx99Idwi49W5J605" class="btn-main" target="_blank"
+                rel="noopener">Place Order</a>
         </div>
     </section>
-    
+
     <section id="contact">
     </section>
 
@@ -803,7 +873,9 @@
             <div class="footer-info">
                 <a href="https://x.com" class="social-icon" aria-label="X">
                     <svg viewBox="0 0 24 24" aria-hidden="true">
-                        <path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"></path>
+                        <path
+                            d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z">
+                        </path>
                     </svg>
                 </a>
 
@@ -840,4 +912,5 @@
         });
     </script>
 </body>
+
 </html>
