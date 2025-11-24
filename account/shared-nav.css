@@ -139,6 +139,14 @@ aside {
     letter-spacing: 4px;
     white-space: nowrap;
     overflow: hidden;
+    color: var(--text-main);
+    text-decoration: none;
+    cursor: pointer;
+    transition: opacity 0.2s;
+}
+
+.sidebar-logo:hover {
+    opacity: 0.7;
 }
 
 .sidebar-nav {
