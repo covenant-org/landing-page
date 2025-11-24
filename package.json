@@ -1,0 +1,19 @@
+{
+  "name": "covenant-station",
+  "version": "1.0.0",
+  "description": "Covenant Station Frontend Tests",
+  "scripts": {
+    "test": "jest --coverage",
+    "test:watch": "jest --watch",
+    "test:ci": "jest --ci --coverage --maxWorkers=2"
+  },
+  "keywords": ["covenant", "frontend", "testing"],
+  "author": "",
+  "license": "MIT",
+  "devDependencies": {
+    "@testing-library/dom": "^9.3.3",
+    "@testing-library/jest-dom": "^6.1.5",
+    "jest": "^29.7.0",
+    "jest-environment-jsdom": "^29.7.0"
+  }
+}

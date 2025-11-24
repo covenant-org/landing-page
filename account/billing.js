@@ -426,3 +426,29 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   }
 });
+
+// Export functions for testing
+if (typeof module !== 'undefined' && module.exports) {
+  module.exports = {
+    loadInvoices,
+    applyFiltersAndRender,
+    renderInvoices,
+    updatePagination,
+    previousPage,
+    nextPage,
+    changeRowsPerPage,
+    toggleFilterModal,
+    closeFilterModal,
+    applyFilters,
+    resetFilters,
+    openPaymentModal,
+    closePaymentModal,
+    formatCardNumber,
+    formatExpiry,
+    savePaymentMethod,
+    openBillingHelpModal,
+    closeBillingHelpModal,
+    openCreditsHelpModal,
+    closeCreditsHelpModal
+  };
+}
