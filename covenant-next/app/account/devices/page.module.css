@@ -1,0 +1,266 @@
+/* Container */
+.container {
+  width: 100%;
+}
+
+/* Title */
+.title {
+  font-size: 26px;
+  font-weight: 500;
+  margin-bottom: 30px;
+}
+
+/* Loading */
+.loading {
+  color: var(--text-muted);
+  font-size: 14px;
+}
+
+/* Empty State */
+.empty {
+  padding: 40px 20px;
+  text-align: center;
+  color: var(--text-muted);
+  font-size: 14px;
+  background: var(--bg-card);
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius-sm);
+}
+
+/* Device Card */
+.deviceCard {
+  background: var(--bg-card);
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius-sm);
+  padding: 24px;
+  margin-bottom: 30px;
+}
+
+.deviceHeader {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  margin-bottom: 24px;
+}
+
+.deviceInfo {
+  display: flex;
+  gap: 16px;
+  align-items: center;
+}
+
+.deviceIcon {
+  width: 48px;
+  height: 48px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: var(--bg-primary);
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius-sm);
+}
+
+.deviceIcon svg {
+  width: 24px;
+  height: 24px;
+  color: var(--text-primary);
+}
+
+.deviceName {
+  font-size: 18px;
+  font-weight: 600;
+  margin: 0 0 4px 0;
+}
+
+.deviceType {
+  font-size: 13px;
+  color: var(--text-muted);
+}
+
+.deviceStatus {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.statusDot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: var(--accent-red-bright);
+}
+
+.statusDot.online {
+  background: var(--accent-green);
+  box-shadow: 0 0 6px var(--accent-green);
+}
+
+/* Device Details */
+.deviceDetails {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 20px;
+  padding: 20px 0;
+  border-top: 1px solid var(--border-color);
+  border-bottom: 1px solid var(--border-color);
+}
+
+.detailItem {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.detailLabel {
+  font-size: 11px;
+  color: var(--text-muted);
+  text-transform: uppercase;
+  font-weight: 500;
+}
+
+.detailValue {
+  font-size: 14px;
+  color: var(--text-primary);
+}
+
+/* Device Actions */
+.deviceActions {
+  display: flex;
+  gap: 12px;
+  margin-top: 20px;
+}
+
+/* Metrics Section */
+.metricsSection {
+  margin-top: 30px;
+}
+
+.metricsHeader {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20px;
+}
+
+.metricsHeader h2 {
+  font-size: 18px;
+  font-weight: 600;
+  margin: 0;
+}
+
+/* Time Toggle */
+.timeToggle {
+  display: flex;
+  background: var(--bg-input-alt);
+  border-radius: var(--radius-pill);
+  padding: 4px;
+}
+
+.timeOption {
+  padding: 6px 16px;
+  border-radius: 16px;
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--text-hint);
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  transition: all var(--transition-fast);
+}
+
+.timeOption:hover {
+  color: var(--text-primary);
+}
+
+.timeOption.active {
+  background: var(--border-color);
+  color: var(--text-primary);
+}
+
+/* Metrics Grid */
+.metricsGrid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 16px;
+}
+
+.metricCard {
+  background: var(--bg-card);
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius-sm);
+  padding: 20px;
+  display: flex;
+  gap: 16px;
+  align-items: center;
+}
+
+.metricIcon {
+  width: 40px;
+  height: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: var(--bg-primary);
+  border-radius: var(--radius-sm);
+  flex-shrink: 0;
+}
+
+.metricIcon svg {
+  width: 20px;
+  height: 20px;
+  color: var(--text-muted);
+}
+
+.metricInfo {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.metricLabel {
+  font-size: 12px;
+  color: var(--text-muted);
+}
+
+.metricValue {
+  font-size: 24px;
+  font-weight: 500;
+}
+
+.metricValue small {
+  font-size: 12px;
+  color: var(--text-muted);
+  font-weight: 400;
+}
+
+/* Mobile */
+@media (max-width: 1024px) {
+  .metricsGrid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (max-width: 768px) {
+  .deviceHeader {
+    flex-direction: column;
+    gap: 16px;
+  }
+
+  .deviceDetails {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .metricsHeader {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 16px;
+  }
+
+  .metricsGrid {
+    grid-template-columns: 1fr;
+  }
+
+  .deviceActions {
+    flex-wrap: wrap;
+  }
+}

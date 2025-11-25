@@ -1,0 +1,88 @@
+/* Table Container */
+.container {
+  width: 100%;
+  background-color: var(--bg-card);
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius-sm);
+  overflow: hidden;
+  font-size: 12px;
+}
+
+/* Table Header */
+.header {
+  display: grid;
+  padding: 15px 20px;
+  background-color: var(--bg-header);
+  color: var(--text-muted);
+  font-weight: 600;
+  font-size: 12px;
+  border-bottom: 1px solid var(--border-color);
+  align-items: center;
+}
+
+/* Table Row */
+.row {
+  display: grid;
+  padding: 20px;
+  border-bottom: 1px solid var(--border-color);
+  align-items: center;
+  color: var(--text-secondary);
+  font-size: 14px;
+  transition: background var(--transition-fast);
+}
+
+.row:last-child {
+  border-bottom: none;
+}
+
+.row:hover {
+  background-color: var(--bg-card-hover);
+}
+
+.row.clickable {
+  cursor: pointer;
+}
+
+/* Table Cell */
+.cell {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+/* Table Footer */
+.footer {
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  padding: 12px 20px;
+  font-size: 12px;
+  color: var(--text-muted);
+  border-top: 1px solid var(--border-color);
+  background-color: var(--bg-header);
+  gap: 20px;
+}
+
+/* Arrow Icon */
+.arrow {
+  width: 16px;
+  height: 16px;
+  color: var(--text-muted);
+  transition: color var(--transition-fast);
+}
+
+.row:hover .arrow {
+  color: var(--text-primary);
+}
+
+/* Mobile Responsive */
+@media (max-width: 768px) {
+  .container {
+    overflow-x: auto;
+  }
+
+  .header,
+  .row {
+    min-width: 900px;
+  }
+}

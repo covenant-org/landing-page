@@ -1,0 +1,43 @@
+/* Container */
+.container {
+  width: 100%;
+}
+
+/* Title */
+.title {
+  font-size: 26px;
+  font-weight: 500;
+  margin-bottom: 30px;
+}
+
+/* Loading */
+.loading {
+  color: var(--text-muted);
+  font-size: 14px;
+}
+
+/* Empty State */
+.empty {
+  padding: 40px 20px;
+  text-align: center;
+  color: var(--text-muted);
+  font-size: 14px;
+}
+
+/* Tracking Link */
+.trackingLink {
+  color: var(--accent-blue);
+  text-decoration: none;
+  font-size: 13px;
+  transition: color var(--transition-fast);
+}
+
+.trackingLink:hover {
+  color: var(--text-primary);
+  text-decoration: underline;
+}
+
+.noTracking {
+  color: var(--text-muted);
+  font-size: 13px;
+}

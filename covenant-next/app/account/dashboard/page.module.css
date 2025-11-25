@@ -1,0 +1,122 @@
+/* Dashboard Container */
+.container {
+  width: 100%;
+}
+
+/* Title */
+.title {
+  font-size: 26px;
+  font-weight: 500;
+  margin-bottom: 4px;
+}
+
+/* Sub Header */
+.subHeader {
+  color: var(--text-muted);
+  font-size: 14px;
+  margin-bottom: 35px;
+}
+
+/* Grid */
+.grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 16px;
+}
+
+/* Card */
+.card {
+  background-color: var(--bg-card);
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius-sm);
+  padding: 24px;
+  display: flex;
+  align-items: center;
+  transition: border-color var(--transition-fast);
+  cursor: pointer;
+  text-decoration: none;
+  color: inherit;
+}
+
+.card:hover {
+  border-color: var(--border-hover);
+}
+
+.fullWidth {
+  grid-column: 1 / -1;
+  display: block;
+}
+
+/* Balance Card */
+.balanceHeader {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  margin-bottom: 12px;
+}
+
+.balanceLabel {
+  color: var(--text-muted);
+  font-size: 13px;
+}
+
+.balanceAmount {
+  font-size: 34px;
+  font-weight: 400;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.btnPay {
+  background: transparent;
+  border: 1px solid var(--gray-medium);
+  color: var(--text-primary);
+  padding: 6px 20px;
+  border-radius: var(--radius-sm);
+  font-size: 12px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background var(--transition-fast);
+  text-decoration: none;
+}
+
+.btnPay:hover {
+  background: var(--bg-hover);
+}
+
+/* Action Cards */
+.actionCardContent {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+  width: 100%;
+}
+
+.cardIcon {
+  width: 22px;
+  height: 22px;
+  stroke: var(--text-primary);
+  stroke-width: 1.5;
+  fill: none;
+  flex-shrink: 0;
+}
+
+.cardText h3 {
+  font-size: 15px;
+  font-weight: 600;
+  margin-bottom: 4px;
+}
+
+.cardText p {
+  color: var(--text-muted);
+  font-size: 13px;
+  margin: 0;
+}
+
+/* Mobile */
+@media (max-width: 768px) {
+  .grid {
+    grid-template-columns: 1fr;
+  }
+}

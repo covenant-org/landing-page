@@ -1,0 +1,37 @@
+/* Layout Wrapper */
+.layoutWrapper {
+  margin-left: var(--sidebar-width);
+  width: calc(100% - var(--sidebar-width));
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+/* Main Content */
+.main {
+  flex: 1;
+  padding: calc(var(--header-height) + 40px) var(--content-padding) 60px;
+  max-width: var(--content-max-width);
+  margin: 0 auto;
+  width: 100%;
+}
+
+/* Tablet */
+@media (max-width: 1024px) {
+  .layoutWrapper {
+    margin-left: var(--sidebar-collapsed);
+    width: calc(100% - var(--sidebar-collapsed));
+  }
+}
+
+/* Mobile */
+@media (max-width: 768px) {
+  .layoutWrapper {
+    margin-left: 0;
+    width: 100%;
+  }
+
+  .main {
+    padding: calc(var(--header-height) + 20px) var(--content-padding-mobile) 40px;
+  }
+}

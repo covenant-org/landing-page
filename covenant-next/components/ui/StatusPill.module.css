@@ -1,0 +1,31 @@
+/* Status Pill Base */
+.pill {
+  display: inline-block;
+  padding: 3px 10px;
+  border-radius: var(--radius-lg);
+  font-size: 11px;
+  font-weight: 500;
+  text-transform: capitalize;
+  border: 1px solid transparent;
+}
+
+/* Active Status (green) */
+.active {
+  color: var(--accent-green);
+  border-color: var(--accent-green);
+  background: transparent;
+}
+
+/* Inactive Status (red) */
+.inactive {
+  color: var(--accent-red);
+  border-color: var(--accent-red);
+  background: transparent;
+}
+
+/* Pending Status (gray/neutral) */
+.pending {
+  color: var(--text-muted);
+  border-color: var(--border-color);
+  background: transparent;
+}

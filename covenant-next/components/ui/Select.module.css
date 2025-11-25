@@ -1,0 +1,67 @@
+/* Select Wrapper */
+.wrapper {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+/* Label */
+.label {
+  font-size: 12px;
+  font-weight: 500;
+  color: var(--text-muted);
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+/* Select Container */
+.selectWrapper {
+  position: relative;
+}
+
+/* Select */
+.select {
+  appearance: none;
+  background: var(--bg-input);
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius-sm);
+  color: var(--text-primary);
+  padding: 12px 40px 12px 16px;
+  font-size: 14px;
+  font-family: inherit;
+  transition: border-color var(--transition-fast);
+  width: 100%;
+  cursor: pointer;
+}
+
+.select:focus {
+  outline: none;
+  border-color: var(--border-focus);
+}
+
+.select:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+/* Arrow Icon */
+.arrow {
+  position: absolute;
+  right: 12px;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 16px;
+  height: 16px;
+  color: var(--text-muted);
+  pointer-events: none;
+}
+
+/* Error State */
+.select.error {
+  border-color: var(--accent-red);
+}
+
+.errorText {
+  font-size: 12px;
+  color: var(--accent-red);
+}

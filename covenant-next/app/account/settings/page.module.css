@@ -1,0 +1,350 @@
+/* Container */
+.container {
+  width: 100%;
+}
+
+/* Title */
+.title {
+  font-size: 26px;
+  font-weight: 500;
+  margin-bottom: 30px;
+}
+
+/* Loading */
+.loading {
+  color: var(--text-muted);
+  font-size: 14px;
+}
+
+/* Section */
+.section {
+  margin-bottom: 30px;
+}
+
+.sectionHeader {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 16px;
+}
+
+.sectionHeader h2 {
+  font-size: 18px;
+  font-weight: 600;
+  margin: 0;
+}
+
+/* Card */
+.card {
+  background: var(--bg-card);
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius-sm);
+  padding: 24px;
+}
+
+/* Profile Grid */
+.profileGrid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 24px;
+}
+
+.profileItem {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.label {
+  font-size: 11px;
+  color: var(--text-muted);
+  text-transform: uppercase;
+  font-weight: 500;
+  letter-spacing: 0.5px;
+}
+
+.value {
+  font-size: 14px;
+  color: var(--text-primary);
+}
+
+/* Address Content */
+.addressContent {
+  line-height: 1.6;
+}
+
+.addressContent p {
+  margin: 0;
+  font-size: 14px;
+}
+
+.muted {
+  color: var(--text-muted);
+}
+
+/* Users Table */
+.usersTable {
+  display: flex;
+  flex-direction: column;
+}
+
+.usersHeader {
+  display: grid;
+  grid-template-columns: 2fr 1fr 50px;
+  padding: 12px 0;
+  font-size: 11px;
+  color: var(--text-muted);
+  text-transform: uppercase;
+  font-weight: 600;
+  border-bottom: 1px solid var(--border-color);
+}
+
+.usersRow {
+  display: grid;
+  grid-template-columns: 2fr 1fr 50px;
+  padding: 16px 0;
+  align-items: center;
+  border-bottom: 1px solid var(--border-color);
+}
+
+.usersRow:last-child {
+  border-bottom: none;
+}
+
+.userInfo {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.userAvatar {
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  background: var(--gray-avatar);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--text-primary);
+}
+
+.userName {
+  font-size: 14px;
+  font-weight: 500;
+  margin-bottom: 2px;
+}
+
+.userEmail {
+  font-size: 12px;
+  color: var(--text-muted);
+}
+
+.roleBadge {
+  display: inline-block;
+  padding: 4px 12px;
+  background: var(--border-color);
+  border-radius: var(--radius-lg);
+  font-size: 11px;
+  font-weight: 600;
+  color: var(--text-light);
+  text-transform: capitalize;
+}
+
+/* Modal Form */
+.modalForm {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.modalActions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 12px;
+  margin-top: 10px;
+}
+
+/* Add User Form */
+.addUserForm {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.formRow {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 16px;
+}
+
+.inputWrapper {
+  position: relative;
+}
+
+.formInput {
+  width: 100%;
+  padding: 18px 16px;
+  background: var(--bg-card);
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius-sm);
+  font-size: 14px;
+  color: var(--text-primary);
+  outline: none;
+  transition: border-color var(--transition-fast);
+}
+
+.formInput::placeholder {
+  color: var(--text-muted);
+}
+
+.formInput:focus {
+  border-color: var(--text-muted);
+}
+
+/* Roles Dropdown */
+.rolesDropdownContainer {
+  position: relative;
+}
+
+.rolesDropdownButton {
+  width: 100%;
+  padding: 18px 16px;
+  background: var(--bg-card);
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius-sm);
+  font-size: 14px;
+  color: var(--text-primary);
+  text-align: left;
+  cursor: pointer;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  transition: border-color var(--transition-fast);
+}
+
+.rolesDropdownButton:hover,
+.rolesDropdownButton:focus {
+  border-color: var(--text-muted);
+}
+
+.rolesDropdownButton .placeholder {
+  color: var(--text-muted);
+}
+
+.dropdownIcon {
+  width: 20px;
+  height: 20px;
+  color: var(--text-muted);
+  transition: transform var(--transition-fast);
+}
+
+.dropdownIcon.open {
+  transform: rotate(180deg);
+}
+
+.rolesDropdownMenu {
+  position: absolute;
+  top: calc(100% + 4px);
+  left: 0;
+  right: 0;
+  background: #1a1a1a;
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius-sm);
+  z-index: 100;
+  overflow: hidden;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.5);
+}
+
+.roleOption {
+  padding: 14px 16px;
+  cursor: pointer;
+  transition: background var(--transition-fast);
+}
+
+.roleOption:hover {
+  background: var(--bg-hover);
+}
+
+/* Roles Info Link */
+.rolesInfoLink {
+  background: none;
+  border: none;
+  padding: 0;
+  font-size: 14px;
+  color: var(--text-muted);
+  text-decoration: underline;
+  cursor: pointer;
+  text-align: left;
+  transition: color var(--transition-fast);
+}
+
+.rolesInfoLink:hover {
+  color: var(--text-primary);
+}
+
+/* Consent Text */
+.consentText {
+  font-size: 13px;
+  color: var(--text-muted);
+  line-height: 1.6;
+  margin: 8px 0;
+}
+
+/* Add User Actions */
+.addUserActions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 12px;
+  margin-top: 16px;
+}
+
+/* Roles Info Content */
+.rolesInfoContent {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.roleInfoItem h4 {
+  font-size: 14px;
+  font-weight: 600;
+  margin: 0 0 6px 0;
+}
+
+.roleInfoItem p {
+  font-size: 13px;
+  color: var(--text-muted);
+  margin: 0;
+  line-height: 1.5;
+}
+
+/* Mobile */
+@media (max-width: 768px) {
+  .profileGrid {
+    grid-template-columns: 1fr;
+  }
+
+  .usersHeader,
+  .usersRow {
+    grid-template-columns: 1fr auto;
+  }
+
+  .usersHeader > div:last-child,
+  .usersRow > div:last-child {
+    display: none;
+  }
+
+  .formRow {
+    grid-template-columns: 1fr;
+  }
+
+  .addUserActions {
+    flex-direction: column-reverse;
+  }
+
+  .addUserActions button {
+    width: 100%;
+  }
+}

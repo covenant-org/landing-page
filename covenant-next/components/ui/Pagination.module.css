@@ -1,0 +1,39 @@
+/* Pagination Container */
+.pagination {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+}
+
+/* Page Info */
+.info {
+  color: var(--text-muted);
+  font-size: 12px;
+}
+
+/* Controls Container */
+.controls {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+}
+
+/* Arrow Buttons */
+.arrow {
+  background: transparent;
+  border: none;
+  color: var(--text-muted);
+  cursor: pointer;
+  font-size: 12px;
+  padding: 4px 8px;
+  transition: color var(--transition-fast);
+}
+
+.arrow:hover:not(:disabled) {
+  color: var(--text-primary);
+}
+
+.arrow:disabled {
+  opacity: 0.3;
+  cursor: not-allowed;
+}

@@ -1,0 +1,323 @@
+/* Container */
+.container {
+  width: 100%;
+  max-width: 800px;
+}
+
+/* Back Link */
+.backLink {
+  display: flex;
+  align-items: center;
+  color: var(--text-muted);
+  font-size: 13px;
+  text-decoration: none;
+  margin-bottom: 10px;
+  cursor: pointer;
+  transition: color var(--transition-fast);
+}
+
+.backLink:hover {
+  color: var(--text-primary);
+}
+
+.backLink svg {
+  width: 14px;
+  height: 14px;
+  margin-right: 5px;
+}
+
+/* Title */
+.title {
+  font-size: 32px;
+  font-weight: 500;
+  margin-bottom: 24px;
+}
+
+/* Loading */
+.loading {
+  color: var(--text-muted);
+  font-size: 14px;
+}
+
+/* Info Card */
+.infoCard {
+  background-color: var(--bg-card);
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius-sm);
+  padding: 24px;
+  margin-bottom: 16px;
+}
+
+.infoGrid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 24px;
+}
+
+.infoItem {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.label {
+  font-size: 12px;
+  color: var(--text-muted);
+  font-weight: 400;
+}
+
+.value {
+  font-size: 15px;
+  color: var(--text-primary);
+}
+
+.orderNumberRow {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.copyButton {
+  background: none;
+  border: none;
+  padding: 4px;
+  cursor: pointer;
+  color: var(--text-muted);
+  transition: color var(--transition-fast);
+}
+
+.copyButton:hover {
+  color: var(--text-primary);
+}
+
+.copyButton svg {
+  width: 16px;
+  height: 16px;
+}
+
+/* Tracking Link */
+.trackingLink {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  color: var(--accent-blue);
+  text-decoration: underline;
+  font-size: 15px;
+  transition: color var(--transition-fast);
+}
+
+.trackingLink:hover {
+  color: var(--text-primary);
+}
+
+.trackingLink svg {
+  width: 14px;
+  height: 14px;
+}
+
+/* Address Card */
+.addressCard {
+  background-color: var(--bg-card);
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius-sm);
+  padding: 20px 24px;
+  margin-bottom: 32px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.addressContent {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.infoButton {
+  background: none;
+  border: none;
+  padding: 4px;
+  cursor: pointer;
+  color: var(--text-muted);
+  transition: color var(--transition-fast);
+}
+
+.infoButton:hover {
+  color: var(--text-primary);
+}
+
+.infoButton svg {
+  width: 20px;
+  height: 20px;
+}
+
+/* Order Details Section */
+.orderDetailsSection {
+  margin-bottom: 16px;
+}
+
+.sectionHeader {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 16px;
+}
+
+.sectionTitle {
+  font-size: 18px;
+  font-weight: 600;
+  margin: 0;
+}
+
+.sectionActions {
+  display: flex;
+  gap: 12px;
+}
+
+/* Items Card */
+.itemsCard {
+  background-color: var(--bg-card);
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius-sm);
+  padding: 0;
+}
+
+.itemRow {
+  display: grid;
+  grid-template-columns: 60px 1fr auto auto;
+  align-items: center;
+  gap: 16px;
+  padding: 20px 24px;
+}
+
+.itemBorder {
+  border-top: 1px solid var(--border-color);
+}
+
+.itemIcon {
+  width: 48px;
+  height: 48px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--text-muted);
+}
+
+.itemIcon svg {
+  width: 40px;
+  height: 40px;
+}
+
+.itemDetails {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.itemName {
+  font-size: 15px;
+  font-weight: 500;
+  color: var(--text-primary);
+}
+
+.itemId {
+  font-size: 13px;
+  color: var(--accent-blue);
+  text-decoration: underline;
+}
+
+.itemId:hover {
+  color: var(--text-primary);
+}
+
+.itemPrice {
+  font-size: 15px;
+  color: var(--text-primary);
+  text-align: right;
+  min-width: 120px;
+}
+
+.itemStatus {
+  min-width: 80px;
+  text-align: right;
+}
+
+/* Payment Card */
+.paymentCard {
+  background-color: var(--bg-card);
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius-sm);
+  padding: 24px;
+  margin-bottom: 24px;
+}
+
+.paymentCard .label {
+  display: block;
+  margin-bottom: 20px;
+}
+
+.summaryRow {
+  display: flex;
+  justify-content: space-between;
+  padding: 12px 0;
+  font-size: 14px;
+  color: var(--text-primary);
+}
+
+.totalRow {
+  font-weight: 600;
+  border-top: 1px solid var(--border-color);
+  margin-top: 8px;
+  padding-top: 20px;
+}
+
+/* FAQ Text */
+.faqText {
+  font-size: 14px;
+  color: var(--text-primary);
+}
+
+.faqLink {
+  color: var(--text-primary);
+  text-decoration: underline;
+}
+
+.faqLink:hover {
+  color: var(--text-muted);
+}
+
+/* Mobile */
+@media (max-width: 768px) {
+  .infoGrid {
+    grid-template-columns: 1fr;
+    gap: 20px;
+  }
+
+  .itemRow {
+    grid-template-columns: 48px 1fr;
+    gap: 12px;
+  }
+
+  .itemPrice,
+  .itemStatus {
+    grid-column: 2;
+    text-align: left;
+    min-width: auto;
+  }
+
+  .sectionHeader {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 12px;
+  }
+
+  .addressCard {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 16px;
+  }
+
+  .infoButton {
+    align-self: flex-end;
+  }
+}
