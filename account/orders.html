@@ -194,7 +194,7 @@
                 <div class="page-header">
                     <h1>Orders</h1>
                     <div class="search-container">
-                        <input type="text" class="search-input" placeholder="Search by order number">
+                        <input type="text" id="orders-search-input" class="search-input" placeholder="Search by order number" oninput="searchOrders(this.value)">
                         <svg class="search-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                             <circle cx="11" cy="11" r="8"></circle>
                             <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
@@ -257,6 +257,8 @@
         let currentOrdersPage = 1;
         let ordersRowsPerPage = 10;
         let allOrders = [];
+        let filteredOrders = [];
+        let searchQuery = '';
 
         // Load orders on page load
         document.addEventListener('DOMContentLoaded', async () => {
@@ -275,6 +277,7 @@
                 }
 
                 allOrders = await response.json();
+                filteredOrders = allOrders; // Initialize filtered orders
 
                 if (!allOrders || allOrders.length === 0) {
                     tableBody.innerHTML = `
@@ -304,9 +307,19 @@
             const tableBody = document.getElementById('orders-table-body');
             const paginationText = document.getElementById('orders-pagination-text');
 
+            if (filteredOrders.length === 0) {
+                tableBody.innerHTML = `
+                    <div style="text-align: center; padding: 40px; color: #888; grid-column: 1 / -1;">
+                        ${searchQuery ? 'No orders match your search.' : 'No orders found.'}
+                    </div>
+                `;
+                paginationText.textContent = '0-0 of 0';
+                return;
+            }
+
             const startIndex = (currentOrdersPage - 1) * ordersRowsPerPage;
-            const endIndex = Math.min(startIndex + ordersRowsPerPage, allOrders.length);
-            const ordersToShow = allOrders.slice(startIndex, endIndex);
+            const endIndex = Math.min(startIndex + ordersRowsPerPage, filteredOrders.length);
+            const ordersToShow = filteredOrders.slice(startIndex, endIndex);
 
             // Render orders
             tableBody.innerHTML = ordersToShow.map(order => `
@@ -345,7 +358,7 @@
             `).join('');
 
             // Update pagination text
-            const total = allOrders.length;
+            const total = filteredOrders.length;
             paginationText.textContent = `${startIndex + 1}-${endIndex} of ${total}`;
         }
 
@@ -379,11 +392,36 @@
 
         // Go to next page
         function nextOrdersPage() {
-            const totalPages = Math.ceil(allOrders.length / ordersRowsPerPage);
+            const totalPages = Math.ceil(filteredOrders.length / ordersRowsPerPage);
             if (currentOrdersPage < totalPages) {
                 currentOrdersPage++;
                 renderOrdersPage();
             }
+        }
+
+        // Search orders
+        function searchOrders(query) {
+            searchQuery = query.toLowerCase().trim();
+
+            if (searchQuery === '') {
+                // Show all orders if search is empty
+                filteredOrders = allOrders;
+            } else {
+                // Filter orders by order number, tracking number, or item name
+                filteredOrders = allOrders.filter(order => {
+                    const orderNumber = order.order_number ? order.order_number.toLowerCase() : '';
+                    const trackingNumber = order.tracking_number ? order.tracking_number.toLowerCase() : '';
+                    const itemName = order.item_name ? order.item_name.toLowerCase() : '';
+
+                    return orderNumber.includes(searchQuery) ||
+                           trackingNumber.includes(searchQuery) ||
+                           itemName.includes(searchQuery);
+                });
+            }
+
+            // Reset to first page when searching
+            currentOrdersPage = 1;
+            renderOrdersPage();
         }
     </script>
 </body>
