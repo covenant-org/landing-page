@@ -79,6 +79,7 @@
     <div class="bg-effect"></div>
 
     <aside>
+        <div class="sidebar-close"></div>
         <a href="../index.html" class="sidebar-logo">COVENANT</a>
         <nav class="sidebar-nav">
             <a href="dashboard.html" class="nav-item">
@@ -111,6 +112,7 @@
     <div class="layout-wrapper">
 
         <header>
+            <div class="mobile-logo">COVENANT</div>
             <nav class="header-nav">
                 <a href="../index.html">Home</a>
                 <a href="subscriptions.html" class="active">Account</a>
@@ -121,8 +123,16 @@
                     <path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"></path>
                 </svg>
                 <div style="width: 30px; height: 30px; background: #444; border-radius: 50%; display: flex; justify-content: center; align-items: center; font-size: 10px; font-weight: bold;">ME</div>
+                <div class="hamburger">
+                    <div></div>
+                    <div></div>
+                    <div></div>
+                </div>
             </div>
         </header>
+
+        <!-- Mobile Overlay -->
+        <div class="mobile-overlay"></div>
 
         <main>
             <div class="content-container">
@@ -144,11 +154,19 @@
                     </div>
 
                     <div class="table-footer">
-                        <div>Rows per page: 10 <span style="font-size: 8px; vertical-align: middle;">▼</span></div>
+                        <div>
+                            Rows per page:
+                            <select id="subs-rows-per-page" onchange="changeSubsRowsPerPage(this.value)" style="background: transparent; border: 1px solid #333; color: white; padding: 2px 5px; margin: 0 5px; border-radius: 3px; cursor: pointer;">
+                                <option value="5">5</option>
+                                <option value="10" selected>10</option>
+                                <option value="20">20</option>
+                                <option value="50">50</option>
+                            </select>
+                        </div>
                         <div class="pagination-controls">
-                            <span>1-4 of 4</span>
-                            <span class="page-arrow">❮</span>
-                            <span class="page-arrow">❯</span>
+                            <span id="subs-pagination-text">0-0 of 0</span>
+                            <span class="page-arrow" onclick="previousSubsPage()" style="cursor: pointer;">❮</span>
+                            <span class="page-arrow" onclick="nextSubsPage()" style="cursor: pointer;">❯</span>
                         </div>
                     </div>
                 </div>
@@ -169,5 +187,42 @@
         </footer>
     </div>
 
+    <script>
+        // Mobile menu toggle
+        const hamburger = document.querySelector('.hamburger');
+        const sidebar = document.querySelector('aside');
+        const mobileOverlay = document.querySelector('.mobile-overlay');
+        const sidebarClose = document.querySelector('.sidebar-close');
+
+        hamburger.addEventListener('click', () => {
+            hamburger.classList.toggle('active');
+            sidebar.classList.toggle('mobile-open');
+            mobileOverlay.classList.toggle('active');
+        });
+
+        // Close mobile menu when clicking close button
+        sidebarClose.addEventListener('click', () => {
+            hamburger.classList.remove('active');
+            sidebar.classList.remove('mobile-open');
+            mobileOverlay.classList.remove('active');
+        });
+
+        // Close mobile menu when clicking overlay
+        mobileOverlay.addEventListener('click', () => {
+            hamburger.classList.remove('active');
+            sidebar.classList.remove('mobile-open');
+            mobileOverlay.classList.remove('active');
+        });
+
+        // Close mobile menu when clicking a nav item
+        const navItems = document.querySelectorAll('.nav-item');
+        navItems.forEach(item => {
+            item.addEventListener('click', () => {
+                hamburger.classList.remove('active');
+                sidebar.classList.remove('mobile-open');
+                mobileOverlay.classList.remove('active');
+            });
+        });
+    </script>
 </body>
 </html>

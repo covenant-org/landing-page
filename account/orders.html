@@ -135,7 +135,15 @@
 
         /* Mobile */
         @media (max-width: 768px) {
-            .search-container { width: 100%; }
+            .page-header {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 15px;
+            }
+
+            .search-container {
+                width: 100%;
+            }
         }
     </style>
 </head>
@@ -144,6 +152,7 @@
     <div class="bg-effect"></div>
 
     <aside>
+        <div class="sidebar-close"></div>
         <a href="../index.html" class="sidebar-logo">COVENANT</a>
         <nav class="sidebar-nav">
             <a href="dashboard.html" class="nav-item">
@@ -176,6 +185,7 @@
     <div class="layout-wrapper">
 
         <header>
+            <div class="mobile-logo">COVENANT</div>
             <nav class="header-nav">
                 <a href="../index.html">Home</a>
                 <a href="orders.html" class="active">Account</a>
@@ -186,15 +196,23 @@
                     <path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"></path>
                 </svg>
                 <div style="width: 30px; height: 30px; background: #444; border-radius: 50%; display: flex; justify-content: center; align-items: center; font-size: 10px; font-weight: bold;">ME</div>
+                <div class="hamburger">
+                    <div></div>
+                    <div></div>
+                    <div></div>
+                </div>
             </div>
         </header>
+
+        <!-- Mobile Overlay -->
+        <div class="mobile-overlay"></div>
 
         <main>
             <div class="content-container">
                 <div class="page-header">
                     <h1>Orders</h1>
                     <div class="search-container">
-                        <input type="text" class="search-input" placeholder="Search by order number">
+                        <input type="text" id="orders-search-input" class="search-input" placeholder="Search by order number" oninput="searchOrders(this.value)">
                         <svg class="search-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                             <circle cx="11" cy="11" r="8"></circle>
                             <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
@@ -213,41 +231,24 @@
                         <div></div>
                     </div>
 
-                    <div class="table-row">
-                        <div class="order-date">7/12/2022</div>
-                        <div><span class="status-pill">Shipped</span></div>
-                        <div class="items-cell">
-                            <div class="item-icon">
-                                <svg viewBox="0 0 24 24" stroke-width="2">
-                                    <path d="M6 2L3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"></path>
-                                    <line x1="3" y1="6" x2="21" y2="6"></line>
-                                    <path d="M16 10a4 4 0 0 1-8 0"></path>
-                                </svg>
-                            </div>
-                            <span class="item-name">Starlink Standard Actuated Kit</span>
-                        </div>
-                        <div class="order-number">ORD-55493D4-70292-45</div>
-                        <div class="tracking-number">
-                            ORD-55493D4-70292-45
-                            <svg class="link-icon" viewBox="0 0 24 24" fill="none" stroke-width="2">
-                                <path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path>
-                                <path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path>
-                            </svg>
-                        </div>
-                        <div class="delivery-date">-</div>
-                        <div class="arrow-icon">
-                            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2">
-                                <polyline points="9 18 15 12 9 6"></polyline>
-                            </svg>
-                        </div>
+                    <div id="orders-table-body">
+                        <!-- Orders will be loaded dynamically -->
                     </div>
 
                     <div class="table-footer">
-                        <div>Rows per page: 10 <span style="font-size: 8px; vertical-align: middle;">▼</span></div>
+                        <div>
+                            Rows per page:
+                            <select id="orders-rows-per-page" onchange="changeOrdersRowsPerPage(this.value)" style="background: transparent; border: 1px solid #333; color: white; padding: 2px 5px; margin: 0 5px; border-radius: 3px; cursor: pointer;">
+                                <option value="5">5</option>
+                                <option value="10" selected>10</option>
+                                <option value="20">20</option>
+                                <option value="50">50</option>
+                            </select>
+                        </div>
                         <div class="pagination-controls">
-                            <span>1-1 of 1</span>
-                            <span class="page-arrow">❮</span>
-                            <span class="page-arrow">❯</span>
+                            <span id="orders-pagination-text">0-0 of 0</span>
+                            <span class="page-arrow" onclick="previousOrdersPage()" style="cursor: pointer;">❮</span>
+                            <span class="page-arrow" onclick="nextOrdersPage()" style="cursor: pointer;">❯</span>
                         </div>
                     </div>
                 </div>
@@ -268,5 +269,214 @@
         </footer>
     </div>
 
+    <script src="api-client.js"></script>
+    <script>
+        // Pagination state
+        let currentOrdersPage = 1;
+        let ordersRowsPerPage = 10;
+        let allOrders = [];
+        let filteredOrders = [];
+        let searchQuery = '';
+
+        // Load orders on page load
+        document.addEventListener('DOMContentLoaded', async () => {
+            await loadOrders();
+        });
+
+        // Load orders from API
+        async function loadOrders() {
+            const tableBody = document.getElementById('orders-table-body');
+            const paginationText = document.getElementById('orders-pagination-text');
+
+            try {
+                const response = await fetch('http://localhost:3001/api/orders');
+                if (!response.ok) {
+                    throw new Error('Failed to fetch orders');
+                }
+
+                allOrders = await response.json();
+                filteredOrders = allOrders; // Initialize filtered orders
+
+                if (!allOrders || allOrders.length === 0) {
+                    tableBody.innerHTML = `
+                        <div style="text-align: center; padding: 40px; color: #888; grid-column: 1 / -1;">
+                            No orders found.
+                        </div>
+                    `;
+                    paginationText.textContent = '0-0 of 0';
+                    return;
+                }
+
+                // Render current page
+                renderOrdersPage();
+
+            } catch (error) {
+                console.error('Error loading orders:', error);
+                tableBody.innerHTML = `
+                    <div style="text-align: center; padding: 40px; color: #f88; grid-column: 1 / -1;">
+                        Failed to load orders. Make sure the API server is running.
+                    </div>
+                `;
+            }
+        }
+
+        // Render orders for the current page
+        function renderOrdersPage() {
+            const tableBody = document.getElementById('orders-table-body');
+            const paginationText = document.getElementById('orders-pagination-text');
+
+            if (filteredOrders.length === 0) {
+                tableBody.innerHTML = `
+                    <div style="text-align: center; padding: 40px; color: #888; grid-column: 1 / -1;">
+                        ${searchQuery ? 'No orders match your search.' : 'No orders found.'}
+                    </div>
+                `;
+                paginationText.textContent = '0-0 of 0';
+                return;
+            }
+
+            const startIndex = (currentOrdersPage - 1) * ordersRowsPerPage;
+            const endIndex = Math.min(startIndex + ordersRowsPerPage, filteredOrders.length);
+            const ordersToShow = filteredOrders.slice(startIndex, endIndex);
+
+            // Render orders
+            tableBody.innerHTML = ordersToShow.map(order => `
+                <div class="table-row">
+                    <div class="order-date">${formatDate(order.order_date)}</div>
+                    <div><span class="status-pill">${formatStatus(order.status)}</span></div>
+                    <div class="items-cell">
+                        <div class="item-icon">
+                            <svg viewBox="0 0 24 24" stroke-width="2">
+                                <path d="M6 2L3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"></path>
+                                <line x1="3" y1="6" x2="21" y2="6"></line>
+                                <path d="M16 10a4 4 0 0 1-8 0"></path>
+                            </svg>
+                        </div>
+                        <span class="item-name">${order.item_name || 'N/A'}</span>
+                    </div>
+                    <div class="order-number">${order.order_number}</div>
+                    <div class="tracking-number">
+                        ${order.tracking_number || 'N/A'}
+                        ${order.tracking_url ? `
+                            <a href="${order.tracking_url}" target="_blank" style="display: inline-flex; align-items: center;">
+                                <svg class="link-icon" viewBox="0 0 24 24" fill="none" stroke-width="2">
+                                    <path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path>
+                                    <path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path>
+                                </svg>
+                            </a>
+                        ` : ''}
+                    </div>
+                    <div class="delivery-date">${order.estimated_delivery ? formatDate(order.estimated_delivery) : '-'}</div>
+                    <div class="arrow-icon">
+                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2">
+                            <polyline points="9 18 15 12 9 6"></polyline>
+                        </svg>
+                    </div>
+                </div>
+            `).join('');
+
+            // Update pagination text
+            const total = filteredOrders.length;
+            paginationText.textContent = `${startIndex + 1}-${endIndex} of ${total}`;
+        }
+
+        // Format date helper
+        function formatDate(dateString) {
+            if (!dateString) return 'N/A';
+            const date = new Date(dateString);
+            return `${date.getMonth() + 1}/${date.getDate()}/${date.getFullYear()}`;
+        }
+
+        // Format status helper
+        function formatStatus(status) {
+            if (!status) return 'Unknown';
+            return status.charAt(0).toUpperCase() + status.slice(1).toLowerCase();
+        }
+
+        // Change rows per page
+        function changeOrdersRowsPerPage(value) {
+            ordersRowsPerPage = parseInt(value);
+            currentOrdersPage = 1;
+            renderOrdersPage();
+        }
+
+        // Go to previous page
+        function previousOrdersPage() {
+            if (currentOrdersPage > 1) {
+                currentOrdersPage--;
+                renderOrdersPage();
+            }
+        }
+
+        // Go to next page
+        function nextOrdersPage() {
+            const totalPages = Math.ceil(filteredOrders.length / ordersRowsPerPage);
+            if (currentOrdersPage < totalPages) {
+                currentOrdersPage++;
+                renderOrdersPage();
+            }
+        }
+
+        // Search orders
+        function searchOrders(query) {
+            searchQuery = query.toLowerCase().trim();
+
+            if (searchQuery === '') {
+                // Show all orders if search is empty
+                filteredOrders = allOrders;
+            } else {
+                // Filter orders by order number, tracking number, or item name
+                filteredOrders = allOrders.filter(order => {
+                    const orderNumber = order.order_number ? order.order_number.toLowerCase() : '';
+                    const trackingNumber = order.tracking_number ? order.tracking_number.toLowerCase() : '';
+                    const itemName = order.item_name ? order.item_name.toLowerCase() : '';
+
+                    return orderNumber.includes(searchQuery) ||
+                           trackingNumber.includes(searchQuery) ||
+                           itemName.includes(searchQuery);
+                });
+            }
+
+            // Reset to first page when searching
+            currentOrdersPage = 1;
+            renderOrdersPage();
+        }
+
+        // Mobile menu toggle
+        const hamburger = document.querySelector('.hamburger');
+        const sidebar = document.querySelector('aside');
+        const mobileOverlay = document.querySelector('.mobile-overlay');
+        const sidebarClose = document.querySelector('.sidebar-close');
+
+        hamburger.addEventListener('click', () => {
+            hamburger.classList.toggle('active');
+            sidebar.classList.toggle('mobile-open');
+            mobileOverlay.classList.toggle('active');
+        });
+
+        // Close mobile menu when clicking close button
+        sidebarClose.addEventListener('click', () => {
+            hamburger.classList.remove('active');
+            sidebar.classList.remove('mobile-open');
+            mobileOverlay.classList.remove('active');
+        });
+
+        // Close mobile menu when clicking overlay
+        mobileOverlay.addEventListener('click', () => {
+            hamburger.classList.remove('active');
+            sidebar.classList.remove('mobile-open');
+            mobileOverlay.classList.remove('active');
+        });
+
+        // Close mobile menu when clicking a nav item
+        const navItems = document.querySelectorAll('.nav-item');
+        navItems.forEach(item => {
+            item.addEventListener('click', () => {
+                hamburger.classList.remove('active');
+                sidebar.classList.remove('mobile-open');
+                mobileOverlay.classList.remove('active');
+            });
+        });
+    </script>
 </body>
 </html>
