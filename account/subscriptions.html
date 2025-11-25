@@ -154,11 +154,19 @@
                     </div>
 
                     <div class="table-footer">
-                        <div>Rows per page: 10 <span style="font-size: 8px; vertical-align: middle;">▼</span></div>
+                        <div>
+                            Rows per page:
+                            <select id="subs-rows-per-page" onchange="changeSubsRowsPerPage(this.value)" style="background: transparent; border: 1px solid #333; color: white; padding: 2px 5px; margin: 0 5px; border-radius: 3px; cursor: pointer;">
+                                <option value="5">5</option>
+                                <option value="10" selected>10</option>
+                                <option value="20">20</option>
+                                <option value="50">50</option>
+                            </select>
+                        </div>
                         <div class="pagination-controls">
-                            <span>1-4 of 4</span>
-                            <span class="page-arrow">❮</span>
-                            <span class="page-arrow">❯</span>
+                            <span id="subs-pagination-text">0-0 of 0</span>
+                            <span class="page-arrow" onclick="previousSubsPage()" style="cursor: pointer;">❮</span>
+                            <span class="page-arrow" onclick="nextSubsPage()" style="cursor: pointer;">❯</span>
                         </div>
                     </div>
                 </div>
