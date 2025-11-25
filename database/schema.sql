@@ -5,18 +5,20 @@
 CREATE EXTENSION IF NOT EXISTS "uuid-ossp";
 
 -- Users table
+-- Roles: owner, admin, user, viewer
 CREATE TABLE users (
     id UUID PRIMARY KEY DEFAULT uuid_generate_v4(),
     email VARCHAR(255) UNIQUE NOT NULL,
     name VARCHAR(255) NOT NULL,
     phone VARCHAR(50),
     role VARCHAR(50) DEFAULT 'user',
+    is_owner BOOLEAN DEFAULT false,
     shipping_address_line1 VARCHAR(255),
     shipping_address_line2 VARCHAR(255),
     shipping_city VARCHAR(100),
     shipping_state VARCHAR(100),
     shipping_zip VARCHAR(20),
-    shipping_country VARCHAR(2),
+    shipping_country VARCHAR(100),
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );

@@ -393,7 +393,7 @@
                     <h2 class="section-title">Profile</h2>
                     <div class="section-controls">
                         <a href="#" class="text-link">Notification Preferences</a>
-                        <button class="btn-outline">Edit Profile</button>
+                        <button class="btn-outline" onclick="openEditProfileModal()">Edit Profile</button>
                     </div>
                 </div>
 
@@ -401,30 +401,26 @@
                     <div>
                         <div class="field-group">
                             <div class="label">Name</div>
-                            <div class="value">Marlon Espinosa Perez</div>
+                            <div class="value" id="profile-display-name">Loading...</div>
                         </div>
                         <div class="field-group">
                             <div class="label">Email</div>
-                            <div class="value">marlon@nuclea.solutions</div>
+                            <div class="value" id="profile-display-email">Loading...</div>
                         </div>
                         <div class="field-group">
                             <div class="label">Shipping Address</div>
-                            <div class="value">
-                                Mar Mediterraneo 1118, Country club<br>
-                                GUADALAJARA, JA 44610<br>
-                                MX
-                            </div>
+                            <div class="value" id="profile-display-address">Loading...</div>
                         </div>
                     </div>
 
                     <div>
                         <div class="field-group">
                             <div class="label">Phone Number</div>
-                            <div class="value">+523331298269</div>
+                            <div class="value" id="profile-display-phone">Loading...</div>
                         </div>
                         <div class="field-group">
                             <div class="label">Roles</div>
-                            <span class="pill-gray">Admin</span>
+                            <span class="pill-gray" id="profile-display-role">Loading...</span>
                         </div>
                     </div>
                 </div>
@@ -446,11 +442,19 @@
                     </div>
 
                     <div class="table-footer">
-                        <div>Rows per page: 10 <span style="font-size: 8px; vertical-align: middle;">▼</span></div>
+                        <div>
+                            Rows per page:
+                            <select id="users-rows-per-page" onchange="changeUsersRowsPerPage(this.value)" style="background: transparent; border: 1px solid #333; color: white; padding: 2px 5px; margin: 0 5px; border-radius: 3px; cursor: pointer;">
+                                <option value="5">5</option>
+                                <option value="10" selected>10</option>
+                                <option value="20">20</option>
+                                <option value="50">50</option>
+                            </select>
+                        </div>
                         <div class="pagination-controls">
                             <span id="users-pagination-text">0-0 of 0</span>
-                            <span class="page-arrow">❮</span>
-                            <span class="page-arrow">❯</span>
+                            <span class="page-arrow" onclick="previousUsersPage()" style="cursor: pointer;">❮</span>
+                            <span class="page-arrow" onclick="nextUsersPage()" style="cursor: pointer;">❯</span>
                         </div>
                     </div>
                 </div>
@@ -504,11 +508,12 @@
                     <label class="form-label" for="user-role">Roles</label>
                     <select id="user-role" class="form-select" required>
                         <option value="">Roles</option>
+                        <option value="owner">Owner</option>
                         <option value="admin">Admin</option>
                         <option value="user">User</option>
                         <option value="viewer">Viewer</option>
                     </select>
-                    <a class="form-link" onclick="alert('Roles define user permissions:\n\nAdmin - Full access to all features\nUser - Standard access to subscription and billing\nViewer - Read-only access')">What are roles?</a>
+                    <a class="form-link" onclick="alert('Roles define user permissions:\n\nOwner - Full ownership and control of the organization\nAdmin - Full access to all features\nUser - Standard access to subscription and billing\nViewer - Read-only access')">What are roles?</a>
                 </div>
 
                 <div class="form-consent">
@@ -539,11 +544,12 @@
                     <label class="form-label" for="edit-user-role">Roles</label>
                     <select id="edit-user-role" class="form-select" required>
                         <option value="">Roles</option>
+                        <option value="owner">Owner</option>
                         <option value="admin">Admin</option>
                         <option value="user">User</option>
                         <option value="viewer">Viewer</option>
                     </select>
-                    <a class="form-link" onclick="alert('Roles define user permissions:\n\nAdmin - Full access to all features\nUser - Standard access to subscription and billing\nViewer - Read-only access')">What are roles?</a>
+                    <a class="form-link" onclick="alert('Roles define user permissions:\n\nOwner - Full ownership and control of the organization\nAdmin - Full access to all features\nUser - Standard access to subscription and billing\nViewer - Read-only access')">What are roles?</a>
                 </div>
 
                 <div class="modal-actions">
@@ -567,12 +573,161 @@
         </div>
     </div>
 
+    <!-- Edit Profile Modal -->
+    <div id="edit-profile-modal" class="modal">
+        <div class="modal-content" style="max-width: 700px;">
+            <h2 class="modal-header">Edit Profile</h2>
+            <form id="edit-profile-form">
+                <div class="form-grid">
+                    <div class="form-group">
+                        <label class="form-label" for="profile-first-name">First Name</label>
+                        <input type="text" id="profile-first-name" class="form-input" placeholder="First Name" required>
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label" for="profile-last-name">Last Name</label>
+                        <input type="text" id="profile-last-name" class="form-input" placeholder="Last Name" required>
+                    </div>
+                </div>
+
+                <div class="form-grid">
+                    <div class="form-group">
+                        <label class="form-label" for="profile-email">Email</label>
+                        <input type="email" id="profile-email" class="form-input" placeholder="Email" required>
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label" for="profile-phone">Phone Number</label>
+                        <input type="tel" id="profile-phone" class="form-input" placeholder="Phone Number">
+                    </div>
+                </div>
+
+                <div class="form-group full-width">
+                    <label class="form-label" for="profile-role">Roles</label>
+                    <select id="profile-role" class="form-select" required disabled>
+                        <option value="">Roles</option>
+                        <option value="owner">Owner</option>
+                        <option value="admin">Admin</option>
+                        <option value="user">User</option>
+                        <option value="viewer">Viewer</option>
+                    </select>
+                    <a class="form-link" onclick="alert('Roles define user permissions:\n\nOwner - Full ownership and control of the organization\nAdmin - Full access to all features\nUser - Standard access to subscription and billing\nViewer - Read-only access')">What are roles?</a>
+                </div>
+
+                <details style="margin: 30px 0; cursor: pointer;">
+                    <summary style="color: white; font-size: 13px; user-select: none;">
+                        ▸ For more information on how to enter your shipping address click here
+                    </summary>
+                    <div style="margin-top: 20px; padding-left: 20px; font-size: 12px; color: #888; line-height: 1.6;">
+                        Enter your complete shipping address where you want to receive orders and equipment. This address will be used for all future shipments.
+                    </div>
+                </details>
+
+                <div class="form-group full-width">
+                    <label class="form-label" for="profile-address-line1">Shipping Address Line 1 *</label>
+                    <input type="text" id="profile-address-line1" class="form-input" placeholder="Street address" required>
+                </div>
+
+                <div class="form-grid">
+                    <div class="form-group">
+                        <label class="form-label" for="profile-address-line2">Shipping Address Line 2 (Optional, E.G. Apt / Building)</label>
+                        <input type="text" id="profile-address-line2" class="form-input" placeholder="Apt, Suite, Building">
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label" for="profile-address-line3">Shipping Address Line 3 (Optional)</label>
+                        <input type="text" id="profile-address-line3" class="form-input" placeholder="Additional info">
+                    </div>
+                </div>
+
+                <div class="form-grid">
+                    <div class="form-group">
+                        <label class="form-label" for="profile-city">City</label>
+                        <input type="text" id="profile-city" class="form-input" placeholder="City" required>
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label" for="profile-state">State / Province</label>
+                        <input type="text" id="profile-state" class="form-input" placeholder="State" required>
+                    </div>
+                </div>
+
+                <div class="form-grid">
+                    <div class="form-group">
+                        <label class="form-label" for="profile-country">Country *</label>
+                        <input type="text" id="profile-country" class="form-input" placeholder="Country" required>
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label" for="profile-zip">Zip / Postal Code</label>
+                        <input type="text" id="profile-zip" class="form-input" placeholder="Postal Code" required>
+                    </div>
+                </div>
+
+                <p style="color: #888; font-size: 12px; margin: 20px 0;">
+                    Update will not impact previous orders.
+                </p>
+
+                <div class="modal-actions">
+                    <button type="button" class="btn-cancel" onclick="closeEditProfileModal()">Cancel</button>
+                    <button type="submit" class="btn-primary">Save</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
     <script src="api-client.js"></script>
     <script>
-        // Load users on page load
+        // Pagination state
+        let currentUsersPage = 1;
+        let usersRowsPerPage = 10;
+        let allUsers = [];
+
+        // Load users and profile on page load
         document.addEventListener('DOMContentLoaded', async () => {
+            await loadProfile();
             await loadUsers();
         });
+
+        // Load and display profile data
+        async function loadProfile() {
+            try {
+                const response = await fetch('http://localhost:3001/api/users/profile/owner');
+                if (!response.ok) {
+                    throw new Error('Failed to fetch profile data');
+                }
+
+                const profile = await response.json();
+
+                // Update profile display
+                document.getElementById('profile-display-name').textContent = profile.name || 'N/A';
+                document.getElementById('profile-display-email').textContent = profile.email || 'N/A';
+                document.getElementById('profile-display-phone').textContent = profile.phone || 'N/A';
+                document.getElementById('profile-display-role').textContent = capitalizeRole(profile.role);
+
+                // Format address
+                let addressLines = [];
+                if (profile.shipping_address_line1) {
+                    let line1 = profile.shipping_address_line1;
+                    if (profile.shipping_address_line2) {
+                        line1 += ', ' + profile.shipping_address_line2;
+                    }
+                    addressLines.push(line1);
+                }
+                if (profile.shipping_city || profile.shipping_state || profile.shipping_zip) {
+                    let line2 = '';
+                    if (profile.shipping_city) line2 += profile.shipping_city;
+                    if (profile.shipping_state) line2 += (line2 ? ', ' : '') + profile.shipping_state;
+                    if (profile.shipping_zip) line2 += ' ' + profile.shipping_zip;
+                    addressLines.push(line2);
+                }
+                if (profile.shipping_country) {
+                    addressLines.push(profile.shipping_country);
+                }
+
+                document.getElementById('profile-display-address').innerHTML =
+                    addressLines.length > 0 ? addressLines.join('<br>') : 'N/A';
+
+            } catch (error) {
+                console.error('Error loading profile:', error);
+                document.getElementById('profile-display-name').textContent = 'Error loading profile';
+            }
+        }
 
         // Load users from API
         async function loadUsers() {
@@ -580,16 +735,14 @@
             const paginationText = document.getElementById('users-pagination-text');
 
             try {
-                showLoading(tableBody);
-
                 const response = await fetch('http://localhost:3001/api/users');
                 if (!response.ok) {
                     throw new Error('Failed to fetch users');
                 }
 
-                const users = await response.json();
+                allUsers = await response.json();
 
-                if (!users || users.length === 0) {
+                if (!allUsers || allUsers.length === 0) {
                     tableBody.innerHTML = `
                         <div style="text-align: center; padding: 40px; color: #888; grid-column: 1 / -1;">
                             No users found.
@@ -599,28 +752,69 @@
                     return;
                 }
 
-                // Render users
-                tableBody.innerHTML = users.map(user => `
-                    <div class="table-row">
-                        <div>${user.email}</div>
-                        <div><span class="pill-gray">${capitalizeRole(user.role)}</span></div>
-                        <div class="menu-icon" onclick="toggleUserMenu(event, '${user.id}')">
-                            ...
-                            <div class="dropdown-menu" id="menu-${user.id}">
-                                <div class="dropdown-item" onclick="openEditUserModal('${user.id}', '${user.email}', '${user.role}')">Edit</div>
-                                <div class="dropdown-item danger" onclick="deleteUser('${user.id}', '${user.email}')">Remove</div>
-                            </div>
-                        </div>
-                    </div>
-                `).join('');
-
-                // Update pagination
-                const total = users.length;
-                paginationText.textContent = `1-${total} of ${total}`;
+                // Render current page
+                renderUsersPage();
 
             } catch (error) {
                 console.error('Error loading users:', error);
-                showError(tableBody, 'Failed to load users. Make sure the API server is running.');
+                tableBody.innerHTML = `
+                    <div style="text-align: center; padding: 40px; color: #f88; grid-column: 1 / -1;">
+                        Failed to load users. Make sure the API server is running.
+                    </div>
+                `;
+            }
+        }
+
+        // Render users for the current page
+        function renderUsersPage() {
+            const tableBody = document.getElementById('users-table-body');
+            const paginationText = document.getElementById('users-pagination-text');
+
+            const startIndex = (currentUsersPage - 1) * usersRowsPerPage;
+            const endIndex = Math.min(startIndex + usersRowsPerPage, allUsers.length);
+            const usersToShow = allUsers.slice(startIndex, endIndex);
+
+            // Render users
+            tableBody.innerHTML = usersToShow.map(user => `
+                <div class="table-row">
+                    <div>${user.email}</div>
+                    <div><span class="pill-gray">${capitalizeRole(user.role)}</span></div>
+                    <div class="menu-icon" onclick="toggleUserMenu(event, '${user.id}')">
+                        ...
+                        <div class="dropdown-menu" id="menu-${user.id}">
+                            <div class="dropdown-item" onclick="openEditUserModal('${user.id}', '${user.email}', '${user.role}')">Edit</div>
+                            <div class="dropdown-item danger" onclick="deleteUser('${user.id}', '${user.email}')">Remove</div>
+                        </div>
+                    </div>
+                </div>
+            `).join('');
+
+            // Update pagination text
+            const total = allUsers.length;
+            paginationText.textContent = `${startIndex + 1}-${endIndex} of ${total}`;
+        }
+
+        // Change rows per page
+        function changeUsersRowsPerPage(value) {
+            usersRowsPerPage = parseInt(value);
+            currentUsersPage = 1;
+            renderUsersPage();
+        }
+
+        // Go to previous page
+        function previousUsersPage() {
+            if (currentUsersPage > 1) {
+                currentUsersPage--;
+                renderUsersPage();
+            }
+        }
+
+        // Go to next page
+        function nextUsersPage() {
+            const totalPages = Math.ceil(allUsers.length / usersRowsPerPage);
+            if (currentUsersPage < totalPages) {
+                currentUsersPage++;
+                renderUsersPage();
             }
         }
 
@@ -819,6 +1013,116 @@
                 alert('Failed to remove user. Please try again.');
             }
         }
+
+        // Edit Profile Modal Functions
+        async function openEditProfileModal() {
+            try {
+                // Fetch the organization owner
+                const response = await fetch('http://localhost:3001/api/users/profile/owner');
+                if (!response.ok) {
+                    throw new Error('Failed to fetch profile data');
+                }
+
+                const profile = await response.json();
+
+                // Split name into first and last name
+                const nameParts = profile.name ? profile.name.split(' ') : ['', ''];
+                const firstName = nameParts[0] || '';
+                const lastName = nameParts.slice(1).join(' ') || '';
+
+                // Populate form fields
+                document.getElementById('profile-first-name').value = firstName;
+                document.getElementById('profile-last-name').value = lastName;
+                document.getElementById('profile-email').value = profile.email || '';
+                document.getElementById('profile-phone').value = profile.phone || '';
+                document.getElementById('profile-role').value = profile.role || 'user';
+                document.getElementById('profile-address-line1').value = profile.shipping_address_line1 || '';
+                document.getElementById('profile-address-line2').value = profile.shipping_address_line2 || '';
+                document.getElementById('profile-address-line3').value = ''; // Not in DB schema
+                document.getElementById('profile-city').value = profile.shipping_city || '';
+                document.getElementById('profile-state').value = profile.shipping_state || '';
+                document.getElementById('profile-country').value = profile.shipping_country || '';
+                document.getElementById('profile-zip').value = profile.shipping_zip || '';
+
+                // Store user ID for update
+                document.getElementById('edit-profile-form').dataset.userId = profile.id;
+
+                // Open modal
+                document.getElementById('edit-profile-modal').classList.add('show');
+                document.body.classList.add('modal-open');
+            } catch (error) {
+                console.error('Error loading profile:', error);
+                alert('Failed to load profile data');
+            }
+        }
+
+        function closeEditProfileModal() {
+            document.getElementById('edit-profile-modal').classList.remove('show');
+            document.body.classList.remove('modal-open');
+        }
+
+        // Close edit profile modal when clicking outside
+        document.getElementById('edit-profile-modal').addEventListener('click', (e) => {
+            if (e.target === document.getElementById('edit-profile-modal')) {
+                closeEditProfileModal();
+            }
+        });
+
+        // Handle edit profile form submission
+        document.getElementById('edit-profile-form').addEventListener('submit', async (e) => {
+            e.preventDefault();
+
+            const userId = e.target.dataset.userId;
+            const firstName = document.getElementById('profile-first-name').value.trim();
+            const lastName = document.getElementById('profile-last-name').value.trim();
+            const email = document.getElementById('profile-email').value.trim();
+            const phone = document.getElementById('profile-phone').value.trim();
+            const addressLine1 = document.getElementById('profile-address-line1').value.trim();
+            const addressLine2 = document.getElementById('profile-address-line2').value.trim();
+            const city = document.getElementById('profile-city').value.trim();
+            const state = document.getElementById('profile-state').value.trim();
+            const country = document.getElementById('profile-country').value.trim();
+            const zip = document.getElementById('profile-zip').value.trim();
+
+            const profileData = {
+                name: `${firstName} ${lastName}`,
+                email: email,
+                phone: phone,
+                shipping_address_line1: addressLine1,
+                shipping_address_line2: addressLine2,
+                shipping_city: city,
+                shipping_state: state,
+                shipping_country: country,
+                shipping_zip: zip
+            };
+
+            try {
+                const response = await fetch(`http://localhost:3001/api/users/${userId}`, {
+                    method: 'PUT',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify(profileData)
+                });
+
+                if (!response.ok) {
+                    throw new Error('Failed to update profile');
+                }
+
+                const updatedProfile = await response.json();
+                console.log('Profile updated successfully:', updatedProfile);
+
+                alert('Profile updated successfully!');
+                closeEditProfileModal();
+
+                // Reload both profile and users table to show updates
+                await loadProfile();
+                await loadUsers();
+            } catch (error) {
+                console.error('Error updating profile:', error);
+                alert('Failed to update profile. Please try again.');
+            }
+        });
     </script>
 </body>
 </html>

@@ -15,6 +15,24 @@ router.get('/', async (req, res) => {
   }
 });
 
+// GET owner user
+router.get('/profile/owner', async (req, res) => {
+  try {
+    const result = await db.query(
+      'SELECT * FROM users WHERE is_owner = true LIMIT 1'
+    );
+
+    if (result.rows.length === 0) {
+      return res.status(404).json({ error: 'Owner user not found' });
+    }
+
+    res.json(result.rows[0]);
+  } catch (error) {
+    console.error('Error fetching owner user:', error);
+    res.status(500).json({ error: 'Internal server error' });
+  }
+});
+
 // GET single user by ID
 router.get('/:id', async (req, res) => {
   try {
@@ -73,6 +91,7 @@ router.put('/:id', async (req, res) => {
   try {
     const { id } = req.params;
     const {
+      email,
       name,
       phone,
       role,
@@ -86,18 +105,19 @@ router.put('/:id', async (req, res) => {
 
     const result = await db.query(
       `UPDATE users
-       SET name = COALESCE($1, name),
-           phone = COALESCE($2, phone),
-           role = COALESCE($3, role),
-           shipping_address_line1 = COALESCE($4, shipping_address_line1),
-           shipping_address_line2 = COALESCE($5, shipping_address_line2),
-           shipping_city = COALESCE($6, shipping_city),
-           shipping_state = COALESCE($7, shipping_state),
-           shipping_zip = COALESCE($8, shipping_zip),
-           shipping_country = COALESCE($9, shipping_country)
-       WHERE id = $10
+       SET email = COALESCE($1, email),
+           name = COALESCE($2, name),
+           phone = COALESCE($3, phone),
+           role = COALESCE($4, role),
+           shipping_address_line1 = COALESCE($5, shipping_address_line1),
+           shipping_address_line2 = COALESCE($6, shipping_address_line2),
+           shipping_city = COALESCE($7, shipping_city),
+           shipping_state = COALESCE($8, shipping_state),
+           shipping_zip = COALESCE($9, shipping_zip),
+           shipping_country = COALESCE($10, shipping_country)
+       WHERE id = $11
        RETURNING *`,
-      [name, phone, role, shipping_address_line1, shipping_address_line2,
+      [email, name, phone, role, shipping_address_line1, shipping_address_line2,
        shipping_city, shipping_state, shipping_zip, shipping_country, id]
     );
 
