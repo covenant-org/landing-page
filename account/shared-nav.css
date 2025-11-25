@@ -260,6 +260,12 @@ aside {
     opacity: 1;
 }
 
+/* Hide Shop and Help Center in desktop sidebar */
+.sidebar-nav .nav-item:nth-last-child(1),
+.sidebar-nav .nav-item:nth-last-child(2) {
+    display: none;
+}
+
 /* ==============================================
    LAYOUT WRAPPER
    ============================================== */
@@ -419,6 +425,12 @@ footer {
     /* Show text in sidebar on mobile */
     .nav-item span {
         display: block !important;
+    }
+
+    /* Show Shop and Help Center in mobile sidebar */
+    .sidebar-nav .nav-item:nth-last-child(1),
+    .sidebar-nav .nav-item:nth-last-child(2) {
+        display: flex;
     }
 
     header {
