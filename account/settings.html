@@ -128,12 +128,208 @@
             font-weight: bold;
             font-size: 18px;
             letter-spacing: 1px;
+            position: relative;
         }
         .menu-icon:hover { color: white; }
+
+        /* Dropdown menu */
+        .dropdown-menu {
+            display: none;
+            position: absolute;
+            right: 0;
+            top: 100%;
+            background: #1a1a1a;
+            border: 1px solid #333;
+            border-radius: 4px;
+            min-width: 120px;
+            z-index: 100;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.5);
+        }
+
+        .dropdown-menu.show {
+            display: block;
+        }
+
+        .dropdown-item {
+            padding: 10px 16px;
+            color: white;
+            cursor: pointer;
+            font-size: 13px;
+            transition: background 0.2s;
+        }
+
+        .dropdown-item:hover {
+            background: #222;
+        }
+
+        .dropdown-item:first-child {
+            border-top-left-radius: 4px;
+            border-top-right-radius: 4px;
+        }
+
+        .dropdown-item:last-child {
+            border-bottom-left-radius: 4px;
+            border-bottom-right-radius: 4px;
+        }
+
+        .dropdown-item.danger {
+            color: #ff6b6b;
+        }
+
+        .dropdown-item.danger:hover {
+            background: #2a1515;
+        }
 
         /* Mobile */
         @media (max-width: 768px) {
             .profile-card {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        /* --- ADD USER MODAL --- */
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.8);
+            z-index: 1000;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .modal.show {
+            display: flex;
+        }
+
+        .modal-content {
+            background: #1a1a1a;
+            border: 1px solid #333;
+            border-radius: 8px;
+            padding: 40px;
+            max-width: 600px;
+            width: 90%;
+            max-height: 90vh;
+            overflow-y: auto;
+        }
+
+        .modal-header {
+            font-size: 20px;
+            font-weight: 600;
+            margin-bottom: 30px;
+        }
+
+        .form-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+            margin-bottom: 20px;
+        }
+
+        .form-group {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .form-group.full-width {
+            grid-column: 1 / -1;
+        }
+
+        .form-label {
+            font-size: 13px;
+            color: #aaa;
+            margin-bottom: 8px;
+            font-weight: 500;
+        }
+
+        .form-input,
+        .form-select {
+            background: #0a0a0a;
+            border: 1px solid #333;
+            border-radius: 4px;
+            padding: 12px 16px;
+            color: white;
+            font-size: 14px;
+            font-family: inherit;
+        }
+
+        .form-input:focus,
+        .form-select:focus {
+            outline: none;
+            border-color: #555;
+        }
+
+        .form-select {
+            cursor: pointer;
+            appearance: none;
+            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 12 12'%3E%3Cpath fill='%23888' d='M6 9L1 4h10z'/%3E%3C/svg%3E");
+            background-repeat: no-repeat;
+            background-position: right 12px center;
+            padding-right: 36px;
+        }
+
+        .form-link {
+            font-size: 12px;
+            color: white;
+            text-decoration: underline;
+            margin-top: 8px;
+            cursor: pointer;
+        }
+
+        .form-consent {
+            font-size: 11px;
+            color: #888;
+            line-height: 1.6;
+            margin: 20px 0;
+            padding: 16px;
+            background: rgba(255, 255, 255, 0.02);
+            border-radius: 4px;
+        }
+
+        .modal-actions {
+            display: flex;
+            justify-content: flex-end;
+            gap: 12px;
+            margin-top: 30px;
+        }
+
+        .btn-cancel {
+            background: transparent;
+            border: 1px solid #444;
+            color: white;
+            padding: 10px 24px;
+            font-size: 13px;
+            font-weight: 600;
+            border-radius: 4px;
+            cursor: pointer;
+            transition: background 0.2s;
+        }
+
+        .btn-cancel:hover {
+            background: #222;
+        }
+
+        .btn-primary {
+            background: white;
+            border: none;
+            color: black;
+            padding: 10px 24px;
+            font-size: 13px;
+            font-weight: 600;
+            border-radius: 4px;
+            cursor: pointer;
+            transition: background 0.2s;
+        }
+
+        .btn-primary:hover {
+            background: #e0e0e0;
+        }
+
+        @media (max-width: 600px) {
+            .form-grid {
                 grid-template-columns: 1fr;
             }
         }
@@ -235,7 +431,7 @@
 
                 <div class="section-header">
                     <h2 class="section-title">Users</h2>
-                    <button class="btn-outline">Add User</button>
+                    <button class="btn-outline" onclick="openAddUserModal()">Add User</button>
                 </div>
 
                 <div class="table-container">
@@ -245,28 +441,14 @@
                         <div></div>
                     </div>
 
-                    <div class="table-row">
-                        <div>marlon@nuclea.solutions</div>
-                        <div><span class="pill-gray">Admin</span></div>
-                        <div class="menu-icon">...</div>
-                    </div>
-
-                    <div class="table-row">
-                        <div>cristian@nuclea.solutions</div>
-                        <div><span class="pill-gray">Admin</span></div>
-                        <div class="menu-icon">...</div>
-                    </div>
-
-                    <div class="table-row">
-                        <div>eduardo@nuclea.solutions</div>
-                        <div><span class="pill-gray">Admin</span></div>
-                        <div class="menu-icon">...</div>
+                    <div id="users-table-body">
+                        <!-- Users will be loaded dynamically -->
                     </div>
 
                     <div class="table-footer">
                         <div>Rows per page: 10 <span style="font-size: 8px; vertical-align: middle;">▼</span></div>
                         <div class="pagination-controls">
-                            <span>1-3 of 3</span>
+                            <span id="users-pagination-text">0-0 of 0</span>
                             <span class="page-arrow">❮</span>
                             <span class="page-arrow">❯</span>
                         </div>
@@ -290,5 +472,353 @@
         </footer>
 
     </div>
+
+    <!-- Add User Modal -->
+    <div id="add-user-modal" class="modal">
+        <div class="modal-content">
+            <h2 class="modal-header">Add User</h2>
+            <form id="add-user-form">
+                <div class="form-grid">
+                    <div class="form-group">
+                        <label class="form-label" for="first-name">First Name</label>
+                        <input type="text" id="first-name" class="form-input" placeholder="First Name" required>
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label" for="last-name">Last Name</label>
+                        <input type="text" id="last-name" class="form-input" placeholder="Last Name" required>
+                    </div>
+                </div>
+
+                <div class="form-grid">
+                    <div class="form-group">
+                        <label class="form-label" for="user-email">Email</label>
+                        <input type="email" id="user-email" class="form-input" placeholder="Email" required>
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label" for="user-phone">Phone Number</label>
+                        <input type="tel" id="user-phone" class="form-input" placeholder="Phone Number">
+                    </div>
+                </div>
+
+                <div class="form-group full-width">
+                    <label class="form-label" for="user-role">Roles</label>
+                    <select id="user-role" class="form-select" required>
+                        <option value="">Roles</option>
+                        <option value="admin">Admin</option>
+                        <option value="user">User</option>
+                        <option value="viewer">Viewer</option>
+                    </select>
+                    <a class="form-link" onclick="alert('Roles define user permissions:\n\nAdmin - Full access to all features\nUser - Standard access to subscription and billing\nViewer - Read-only access')">What are roles?</a>
+                </div>
+
+                <div class="form-consent">
+                    By adding users, you affirm that you consent and have obtained their consent to share your personal information within the same account, as set forth in Starlink's Privacy Policy.
+                </div>
+
+                <div class="modal-actions">
+                    <button type="button" class="btn-cancel" onclick="closeAddUserModal()">Cancel</button>
+                    <button type="submit" class="btn-primary">Add User</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- Edit User Modal -->
+    <div id="edit-user-modal" class="modal">
+        <div class="modal-content">
+            <h2 class="modal-header">Edit User</h2>
+            <form id="edit-user-form">
+                <input type="hidden" id="edit-user-id">
+
+                <div class="form-group full-width">
+                    <label class="form-label" for="edit-user-email">Email</label>
+                    <input type="email" id="edit-user-email" class="form-input" placeholder="Email" required disabled>
+                </div>
+
+                <div class="form-group full-width">
+                    <label class="form-label" for="edit-user-role">Roles</label>
+                    <select id="edit-user-role" class="form-select" required>
+                        <option value="">Roles</option>
+                        <option value="admin">Admin</option>
+                        <option value="user">User</option>
+                        <option value="viewer">Viewer</option>
+                    </select>
+                    <a class="form-link" onclick="alert('Roles define user permissions:\n\nAdmin - Full access to all features\nUser - Standard access to subscription and billing\nViewer - Read-only access')">What are roles?</a>
+                </div>
+
+                <div class="modal-actions">
+                    <button type="button" class="btn-cancel" onclick="closeEditUserModal()">Cancel</button>
+                    <button type="submit" class="btn-primary">Save</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- Remove User Confirmation Modal -->
+    <div id="remove-user-modal" class="modal">
+        <div class="modal-content" style="max-width: 500px;">
+            <h2 class="modal-header">Remove User</h2>
+            <p id="remove-user-message" style="color: #aaa; font-size: 15px; margin-bottom: 30px; line-height: 1.6;"></p>
+            <input type="hidden" id="remove-user-id">
+            <div class="modal-actions">
+                <button type="button" class="btn-cancel" onclick="closeRemoveUserModal()">Cancel</button>
+                <button type="button" class="btn-primary" onclick="confirmRemoveUser()">Remove</button>
+            </div>
+        </div>
+    </div>
+
+    <script src="api-client.js"></script>
+    <script>
+        // Load users on page load
+        document.addEventListener('DOMContentLoaded', async () => {
+            await loadUsers();
+        });
+
+        // Load users from API
+        async function loadUsers() {
+            const tableBody = document.getElementById('users-table-body');
+            const paginationText = document.getElementById('users-pagination-text');
+
+            try {
+                showLoading(tableBody);
+
+                const response = await fetch('http://localhost:3001/api/users');
+                if (!response.ok) {
+                    throw new Error('Failed to fetch users');
+                }
+
+                const users = await response.json();
+
+                if (!users || users.length === 0) {
+                    tableBody.innerHTML = `
+                        <div style="text-align: center; padding: 40px; color: #888; grid-column: 1 / -1;">
+                            No users found.
+                        </div>
+                    `;
+                    paginationText.textContent = '0-0 of 0';
+                    return;
+                }
+
+                // Render users
+                tableBody.innerHTML = users.map(user => `
+                    <div class="table-row">
+                        <div>${user.email}</div>
+                        <div><span class="pill-gray">${capitalizeRole(user.role)}</span></div>
+                        <div class="menu-icon" onclick="toggleUserMenu(event, '${user.id}')">
+                            ...
+                            <div class="dropdown-menu" id="menu-${user.id}">
+                                <div class="dropdown-item" onclick="openEditUserModal('${user.id}', '${user.email}', '${user.role}')">Edit</div>
+                                <div class="dropdown-item danger" onclick="deleteUser('${user.id}', '${user.email}')">Remove</div>
+                            </div>
+                        </div>
+                    </div>
+                `).join('');
+
+                // Update pagination
+                const total = users.length;
+                paginationText.textContent = `1-${total} of ${total}`;
+
+            } catch (error) {
+                console.error('Error loading users:', error);
+                showError(tableBody, 'Failed to load users. Make sure the API server is running.');
+            }
+        }
+
+        // Helper function to capitalize role
+        function capitalizeRole(role) {
+            if (!role) return 'User';
+            return role.charAt(0).toUpperCase() + role.slice(1).toLowerCase();
+        }
+
+        // Toggle user dropdown menu
+        function toggleUserMenu(event, userId) {
+            event.stopPropagation();
+            const menu = document.getElementById(`menu-${userId}`);
+
+            // Close all other menus
+            document.querySelectorAll('.dropdown-menu').forEach(m => {
+                if (m.id !== `menu-${userId}`) {
+                    m.classList.remove('show');
+                }
+            });
+
+            menu.classList.toggle('show');
+        }
+
+        // Close dropdown menus when clicking outside
+        document.addEventListener('click', () => {
+            document.querySelectorAll('.dropdown-menu').forEach(m => {
+                m.classList.remove('show');
+            });
+        });
+
+        // Add User Modal Functions
+        function openAddUserModal() {
+            document.getElementById('add-user-modal').classList.add('show');
+            document.body.classList.add('modal-open');
+        }
+
+        function closeAddUserModal() {
+            document.getElementById('add-user-modal').classList.remove('show');
+            document.body.classList.remove('modal-open');
+            document.getElementById('add-user-form').reset();
+        }
+
+        // Close modal when clicking outside
+        document.getElementById('add-user-modal').addEventListener('click', (e) => {
+            if (e.target === document.getElementById('add-user-modal')) {
+                closeAddUserModal();
+            }
+        });
+
+        // Handle add user form submission
+        document.getElementById('add-user-form').addEventListener('submit', async (e) => {
+            e.preventDefault();
+
+            const firstName = document.getElementById('first-name').value.trim();
+            const lastName = document.getElementById('last-name').value.trim();
+            const email = document.getElementById('user-email').value.trim();
+            const phone = document.getElementById('user-phone').value.trim();
+            const role = document.getElementById('user-role').value;
+
+            const userData = {
+                name: `${firstName} ${lastName}`,
+                email: email,
+                phone: phone,
+                role: role
+            };
+
+            try {
+                const response = await fetch('http://localhost:3001/api/users', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify(userData)
+                });
+
+                if (!response.ok) {
+                    throw new Error('Failed to create user');
+                }
+
+                const newUser = await response.json();
+                console.log('User created successfully:', newUser);
+
+                alert('User added successfully!');
+                closeAddUserModal();
+
+                // Reload users instead of page refresh
+                await loadUsers();
+            } catch (error) {
+                console.error('Error creating user:', error);
+                alert('Failed to add user. Please try again.');
+            }
+        });
+
+        // Edit User Modal Functions
+        function openEditUserModal(userId, email, role) {
+            document.getElementById('edit-user-id').value = userId;
+            document.getElementById('edit-user-email').value = email;
+            document.getElementById('edit-user-role').value = role;
+            document.getElementById('edit-user-modal').classList.add('show');
+            document.body.classList.add('modal-open');
+        }
+
+        function closeEditUserModal() {
+            document.getElementById('edit-user-modal').classList.remove('show');
+            document.body.classList.remove('modal-open');
+            document.getElementById('edit-user-form').reset();
+        }
+
+        // Close edit modal when clicking outside
+        document.getElementById('edit-user-modal').addEventListener('click', (e) => {
+            if (e.target === document.getElementById('edit-user-modal')) {
+                closeEditUserModal();
+            }
+        });
+
+        // Handle edit user form submission
+        document.getElementById('edit-user-form').addEventListener('submit', async (e) => {
+            e.preventDefault();
+
+            const userId = document.getElementById('edit-user-id').value;
+            const role = document.getElementById('edit-user-role').value;
+
+            const userData = {
+                role: role
+            };
+
+            try {
+                const response = await fetch(`http://localhost:3001/api/users/${userId}`, {
+                    method: 'PUT',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify(userData)
+                });
+
+                if (!response.ok) {
+                    throw new Error('Failed to update user');
+                }
+
+                const updatedUser = await response.json();
+                console.log('User updated successfully:', updatedUser);
+
+                alert('User updated successfully!');
+                closeEditUserModal();
+
+                // Reload users
+                await loadUsers();
+            } catch (error) {
+                console.error('Error updating user:', error);
+                alert('Failed to update user. Please try again.');
+            }
+        });
+
+        // Remove User Modal Functions
+        function deleteUser(userId, email) {
+            document.getElementById('remove-user-id').value = userId;
+            document.getElementById('remove-user-message').textContent = `Are you sure you want to remove ${email}?`;
+            document.getElementById('remove-user-modal').classList.add('show');
+            document.body.classList.add('modal-open');
+        }
+
+        function closeRemoveUserModal() {
+            document.getElementById('remove-user-modal').classList.remove('show');
+            document.body.classList.remove('modal-open');
+        }
+
+        // Close remove modal when clicking outside
+        document.getElementById('remove-user-modal').addEventListener('click', (e) => {
+            if (e.target === document.getElementById('remove-user-modal')) {
+                closeRemoveUserModal();
+            }
+        });
+
+        // Confirm and execute user removal
+        async function confirmRemoveUser() {
+            const userId = document.getElementById('remove-user-id').value;
+
+            try {
+                const response = await fetch(`http://localhost:3001/api/users/${userId}`, {
+                    method: 'DELETE'
+                });
+
+                if (!response.ok) {
+                    throw new Error('Failed to delete user');
+                }
+
+                console.log('User deleted successfully');
+                alert('User removed successfully!');
+                closeRemoveUserModal();
+
+                // Reload users
+                await loadUsers();
+            } catch (error) {
+                console.error('Error deleting user:', error);
+                alert('Failed to remove user. Please try again.');
+            }
+        }
+    </script>
 </body>
 </html>
