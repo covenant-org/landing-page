@@ -8,7 +8,7 @@ on:
 jobs:
   build:
     runs-on: ubuntu-latest
-    environment: ${{ github.ref == 'refs/heads/main' && 'main' }}
+    environment: ${{ github.ref == 'refs/heads/main' && 'main' || github.ref == 'refs/heads/stage' && 'stage' }}
 
     steps:
       - name: Checkout Repository
