@@ -350,7 +350,7 @@
 
             // Render orders
             tableBody.innerHTML = ordersToShow.map(order => `
-                <div class="table-row">
+                <div class="table-row" data-order-id="${order.id}">
                     <div class="order-date">${formatDate(order.order_date)}</div>
                     <div><span class="status-pill">${formatStatus(order.status)}</span></div>
                     <div class="items-cell">
@@ -383,6 +383,14 @@
                     </div>
                 </div>
             `).join('');
+
+            // Add click handlers to rows
+            document.querySelectorAll('.table-row').forEach(row => {
+                row.addEventListener('click', () => {
+                    const orderId = row.getAttribute('data-order-id');
+                    window.location.href = `order-summary.html?id=${orderId}`;
+                });
+            });
 
             // Update pagination text
             const total = filteredOrders.length;
