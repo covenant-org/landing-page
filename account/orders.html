@@ -213,41 +213,24 @@
                         <div></div>
                     </div>
 
-                    <div class="table-row">
-                        <div class="order-date">7/12/2022</div>
-                        <div><span class="status-pill">Shipped</span></div>
-                        <div class="items-cell">
-                            <div class="item-icon">
-                                <svg viewBox="0 0 24 24" stroke-width="2">
-                                    <path d="M6 2L3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"></path>
-                                    <line x1="3" y1="6" x2="21" y2="6"></line>
-                                    <path d="M16 10a4 4 0 0 1-8 0"></path>
-                                </svg>
-                            </div>
-                            <span class="item-name">Starlink Standard Actuated Kit</span>
-                        </div>
-                        <div class="order-number">ORD-55493D4-70292-45</div>
-                        <div class="tracking-number">
-                            ORD-55493D4-70292-45
-                            <svg class="link-icon" viewBox="0 0 24 24" fill="none" stroke-width="2">
-                                <path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path>
-                                <path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path>
-                            </svg>
-                        </div>
-                        <div class="delivery-date">-</div>
-                        <div class="arrow-icon">
-                            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2">
-                                <polyline points="9 18 15 12 9 6"></polyline>
-                            </svg>
-                        </div>
+                    <div id="orders-table-body">
+                        <!-- Orders will be loaded dynamically -->
                     </div>
 
                     <div class="table-footer">
-                        <div>Rows per page: 10 <span style="font-size: 8px; vertical-align: middle;">▼</span></div>
+                        <div>
+                            Rows per page:
+                            <select id="orders-rows-per-page" onchange="changeOrdersRowsPerPage(this.value)" style="background: transparent; border: 1px solid #333; color: white; padding: 2px 5px; margin: 0 5px; border-radius: 3px; cursor: pointer;">
+                                <option value="5">5</option>
+                                <option value="10" selected>10</option>
+                                <option value="20">20</option>
+                                <option value="50">50</option>
+                            </select>
+                        </div>
                         <div class="pagination-controls">
-                            <span>1-1 of 1</span>
-                            <span class="page-arrow">❮</span>
-                            <span class="page-arrow">❯</span>
+                            <span id="orders-pagination-text">0-0 of 0</span>
+                            <span class="page-arrow" onclick="previousOrdersPage()" style="cursor: pointer;">❮</span>
+                            <span class="page-arrow" onclick="nextOrdersPage()" style="cursor: pointer;">❯</span>
                         </div>
                     </div>
                 </div>
@@ -268,5 +251,140 @@
         </footer>
     </div>
 
+    <script src="api-client.js"></script>
+    <script>
+        // Pagination state
+        let currentOrdersPage = 1;
+        let ordersRowsPerPage = 10;
+        let allOrders = [];
+
+        // Load orders on page load
+        document.addEventListener('DOMContentLoaded', async () => {
+            await loadOrders();
+        });
+
+        // Load orders from API
+        async function loadOrders() {
+            const tableBody = document.getElementById('orders-table-body');
+            const paginationText = document.getElementById('orders-pagination-text');
+
+            try {
+                const response = await fetch('http://localhost:3001/api/orders');
+                if (!response.ok) {
+                    throw new Error('Failed to fetch orders');
+                }
+
+                allOrders = await response.json();
+
+                if (!allOrders || allOrders.length === 0) {
+                    tableBody.innerHTML = `
+                        <div style="text-align: center; padding: 40px; color: #888; grid-column: 1 / -1;">
+                            No orders found.
+                        </div>
+                    `;
+                    paginationText.textContent = '0-0 of 0';
+                    return;
+                }
+
+                // Render current page
+                renderOrdersPage();
+
+            } catch (error) {
+                console.error('Error loading orders:', error);
+                tableBody.innerHTML = `
+                    <div style="text-align: center; padding: 40px; color: #f88; grid-column: 1 / -1;">
+                        Failed to load orders. Make sure the API server is running.
+                    </div>
+                `;
+            }
+        }
+
+        // Render orders for the current page
+        function renderOrdersPage() {
+            const tableBody = document.getElementById('orders-table-body');
+            const paginationText = document.getElementById('orders-pagination-text');
+
+            const startIndex = (currentOrdersPage - 1) * ordersRowsPerPage;
+            const endIndex = Math.min(startIndex + ordersRowsPerPage, allOrders.length);
+            const ordersToShow = allOrders.slice(startIndex, endIndex);
+
+            // Render orders
+            tableBody.innerHTML = ordersToShow.map(order => `
+                <div class="table-row">
+                    <div class="order-date">${formatDate(order.order_date)}</div>
+                    <div><span class="status-pill">${formatStatus(order.status)}</span></div>
+                    <div class="items-cell">
+                        <div class="item-icon">
+                            <svg viewBox="0 0 24 24" stroke-width="2">
+                                <path d="M6 2L3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"></path>
+                                <line x1="3" y1="6" x2="21" y2="6"></line>
+                                <path d="M16 10a4 4 0 0 1-8 0"></path>
+                            </svg>
+                        </div>
+                        <span class="item-name">${order.item_name || 'N/A'}</span>
+                    </div>
+                    <div class="order-number">${order.order_number}</div>
+                    <div class="tracking-number">
+                        ${order.tracking_number || 'N/A'}
+                        ${order.tracking_url ? `
+                            <a href="${order.tracking_url}" target="_blank" style="display: inline-flex; align-items: center;">
+                                <svg class="link-icon" viewBox="0 0 24 24" fill="none" stroke-width="2">
+                                    <path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path>
+                                    <path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path>
+                                </svg>
+                            </a>
+                        ` : ''}
+                    </div>
+                    <div class="delivery-date">${order.estimated_delivery ? formatDate(order.estimated_delivery) : '-'}</div>
+                    <div class="arrow-icon">
+                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2">
+                            <polyline points="9 18 15 12 9 6"></polyline>
+                        </svg>
+                    </div>
+                </div>
+            `).join('');
+
+            // Update pagination text
+            const total = allOrders.length;
+            paginationText.textContent = `${startIndex + 1}-${endIndex} of ${total}`;
+        }
+
+        // Format date helper
+        function formatDate(dateString) {
+            if (!dateString) return 'N/A';
+            const date = new Date(dateString);
+            return `${date.getMonth() + 1}/${date.getDate()}/${date.getFullYear()}`;
+        }
+
+        // Format status helper
+        function formatStatus(status) {
+            if (!status) return 'Unknown';
+            return status.charAt(0).toUpperCase() + status.slice(1).toLowerCase();
+        }
+
+        // Change rows per page
+        function changeOrdersRowsPerPage(value) {
+            ordersRowsPerPage = parseInt(value);
+            currentOrdersPage = 1;
+            renderOrdersPage();
+        }
+
+        // Go to previous page
+        function previousOrdersPage() {
+            if (currentOrdersPage > 1) {
+                currentOrdersPage--;
+                renderOrdersPage();
+            }
+        }
+
+        // Go to next page
+        function nextOrdersPage() {
+            const totalPages = Math.ceil(allOrders.length / ordersRowsPerPage);
+            if (currentOrdersPage < totalPages) {
+                currentOrdersPage++;
+                renderOrdersPage();
+            }
+        }
+    </script>
 </body>
 </html>
