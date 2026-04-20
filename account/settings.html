@@ -1,0 +1,1183 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <link rel="icon" type="image/png" href="../favicon/favicon-96x96.png" sizes="96x96" />
+    <link rel="icon" type="image/svg+xml" href="../favicon/favicon.svg" />
+    <link rel="shortcut icon" href="../favicon/favicon.ico" />
+    <link rel="apple-touch-icon" sizes="180x180" href="../favicon/apple-touch-icon.png" />
+    <meta name="apple-mobile-web-app-title" content="Covenant" />
+    <link rel="manifest" href="../favicon/site.webmanifest" />
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Covenant - Settings</title>
+    <link rel="stylesheet" href="shared-nav.css">
+    <link rel="stylesheet" href="shared-tables.css">
+    <style>
+        /* Page-specific styles for settings */
+        .content-container {
+            width: 100%;
+        }
+
+        h1 {
+            font-size: 26px;
+            font-weight: 500;
+            margin-bottom: 4px;
+        }
+
+        .page-subtitle {
+            color: var(--text-muted);
+            font-size: 14px;
+            margin-bottom: 35px;
+        }
+
+        /* --- SECTION STYLING --- */
+        .section-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-end;
+            margin-bottom: 15px;
+            margin-top: 40px;
+        }
+        .section-header:first-of-type { margin-top: 0; }
+
+        .section-title {
+            font-size: 16px;
+            font-weight: 600;
+        }
+
+        .section-controls {
+            display: flex;
+            align-items: center;
+            gap: 20px;
+        }
+
+        .text-link {
+            font-size: 12px;
+            color: white;
+            text-decoration: none;
+            font-weight: 600;
+        }
+        .text-link:hover { text-decoration: underline; }
+
+        .btn-outline {
+            background: transparent;
+            border: 1px solid #444;
+            color: white;
+            padding: 8px 20px;
+            font-size: 12px;
+            font-weight: 600;
+            border-radius: 4px;
+            cursor: pointer;
+            transition: background 0.2s;
+        }
+        .btn-outline:hover { background: #222; }
+
+        /* --- PROFILE CARD --- */
+        .profile-card {
+            background-color: var(--card-bg);
+            border: 1px solid var(--card-border);
+            border-radius: 4px;
+            padding: 30px;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 30px;
+        }
+
+        .field-group {
+            margin-bottom: 20px;
+        }
+        .field-group:last-child { margin-bottom: 0; }
+
+        .label {
+            font-size: 12px;
+            color: var(--text-muted);
+            margin-bottom: 6px;
+            font-weight: 500;
+        }
+        .value {
+            font-size: 14px;
+            color: white;
+            line-height: 1.5;
+        }
+
+        .pill-gray {
+            display: inline-block;
+            background: #333;
+            padding: 4px 12px;
+            border-radius: 12px;
+            font-size: 11px;
+            font-weight: 600;
+            color: #ddd;
+        }
+
+        /* --- USERS TABLE - Page-specific grid layout --- */
+        .table-header {
+            display: grid;
+            grid-template-columns: 2fr 1fr 50px;
+        }
+
+        .table-row {
+            display: grid;
+            grid-template-columns: 2fr 1fr 50px;
+        }
+
+        .menu-icon {
+            text-align: center;
+            cursor: pointer;
+            color: #888;
+            font-weight: bold;
+            font-size: 18px;
+            letter-spacing: 1px;
+            position: relative;
+        }
+        .menu-icon:hover { color: white; }
+
+        /* Dropdown menu */
+        .dropdown-menu {
+            display: none;
+            position: absolute;
+            right: 0;
+            top: 100%;
+            background: #1a1a1a;
+            border: 1px solid #333;
+            border-radius: 4px;
+            min-width: 120px;
+            z-index: 100;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.5);
+        }
+
+        .dropdown-menu.show {
+            display: block;
+        }
+
+        .dropdown-item {
+            padding: 10px 16px;
+            color: white;
+            cursor: pointer;
+            font-size: 13px;
+            transition: background 0.2s;
+        }
+
+        .dropdown-item:hover {
+            background: #222;
+        }
+
+        .dropdown-item:first-child {
+            border-top-left-radius: 4px;
+            border-top-right-radius: 4px;
+        }
+
+        .dropdown-item:last-child {
+            border-bottom-left-radius: 4px;
+            border-bottom-right-radius: 4px;
+        }
+
+        .dropdown-item.danger {
+            color: #ff6b6b;
+        }
+
+        .dropdown-item.danger:hover {
+            background: #2a1515;
+        }
+
+        /* Mobile */
+        @media (max-width: 768px) {
+            .profile-card {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        /* --- ADD USER MODAL --- */
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.8);
+            z-index: 1000;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .modal.show {
+            display: flex;
+        }
+
+        .modal-content {
+            background: #1a1a1a;
+            border: 1px solid #333;
+            border-radius: 8px;
+            padding: 40px;
+            max-width: 600px;
+            width: 90%;
+            max-height: 90vh;
+            overflow-y: auto;
+        }
+
+        .modal-header {
+            font-size: 20px;
+            font-weight: 600;
+            margin-bottom: 30px;
+        }
+
+        .form-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+            margin-bottom: 20px;
+        }
+
+        .form-group {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .form-group.full-width {
+            grid-column: 1 / -1;
+        }
+
+        .form-label {
+            font-size: 13px;
+            color: #aaa;
+            margin-bottom: 8px;
+            font-weight: 500;
+        }
+
+        .form-input,
+        .form-select {
+            background: #0a0a0a;
+            border: 1px solid #333;
+            border-radius: 4px;
+            padding: 12px 16px;
+            color: white;
+            font-size: 14px;
+            font-family: inherit;
+        }
+
+        .form-input:focus,
+        .form-select:focus {
+            outline: none;
+            border-color: #555;
+        }
+
+        .form-select {
+            cursor: pointer;
+            appearance: none;
+            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 12 12'%3E%3Cpath fill='%23888' d='M6 9L1 4h10z'/%3E%3C/svg%3E");
+            background-repeat: no-repeat;
+            background-position: right 12px center;
+            padding-right: 36px;
+        }
+
+        .form-link {
+            font-size: 12px;
+            color: white;
+            text-decoration: underline;
+            margin-top: 8px;
+            cursor: pointer;
+        }
+
+        .form-consent {
+            font-size: 11px;
+            color: #888;
+            line-height: 1.6;
+            margin: 20px 0;
+            padding: 16px;
+            background: rgba(255, 255, 255, 0.02);
+            border-radius: 4px;
+        }
+
+        .modal-actions {
+            display: flex;
+            justify-content: flex-end;
+            gap: 12px;
+            margin-top: 30px;
+        }
+
+        .btn-cancel {
+            background: transparent;
+            border: 1px solid #444;
+            color: white;
+            padding: 10px 24px;
+            font-size: 13px;
+            font-weight: 600;
+            border-radius: 4px;
+            cursor: pointer;
+            transition: background 0.2s;
+        }
+
+        .btn-cancel:hover {
+            background: #222;
+        }
+
+        .btn-primary {
+            background: white;
+            border: none;
+            color: black;
+            padding: 10px 24px;
+            font-size: 13px;
+            font-weight: 600;
+            border-radius: 4px;
+            cursor: pointer;
+            transition: background 0.2s;
+        }
+
+        .btn-primary:hover {
+            background: #e0e0e0;
+        }
+
+        @media (max-width: 600px) {
+            .form-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="bg-effect"></div>
+
+    <aside>
+        <div class="sidebar-close"></div>
+        <a href="../index.html" class="sidebar-logo">COVENANT</a>
+        <nav class="sidebar-nav">
+            <a href="dashboard.html" class="nav-item">
+                <svg viewBox="0 0 24 24"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path><polyline points="9 22 9 12 15 12 15 22"></polyline></svg>
+                <span>Dashboard</span>
+            </a>
+            <a href="subscriptions.html" class="nav-item">
+                <svg viewBox="0 0 24 24"><line x1="2" y1="2" x2="22" y2="22"></line><path d="M17 7A9 9 0 0 0 7 17"></path></svg>
+                <span>Subscriptions</span>
+            </a>
+            <a href="orders.html" class="nav-item">
+                <svg viewBox="0 0 24 24"><path d="M6 2L3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"></path><line x1="3" y1="6" x2="21" y2="6"></line><path d="M16 10a4 4 0 0 1-8 0"></path></svg>
+                <span>Orders</span>
+            </a>
+            <a href="billing.html" class="nav-item">
+                <svg viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline><line x1="16" y1="13" x2="8" y2="13"></line><line x1="16" y1="17" x2="8" y2="17"></line><polyline points="10 9 9 9 8 9"></polyline></svg>
+                <span>Billing</span>
+            </a>
+            <a href="devices.html" class="nav-item">
+                <svg viewBox="0 0 24 24"><path d="M20.2 16.6L16 12.4a2.8 2.8 0 0 0-4 0l-2.4 2.4"></path><path d="M15 10l-1.4-1.4a2.8 2.8 0 0 0-4 0l-4.4 4.4a2 2 0 0 0 0 2.8l1.4 1.4"></path></svg>
+                <span>Devices</span>
+            </a>
+            <a href="settings.html" class="nav-item active">
+                <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="3"></circle><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"></path></svg>
+                <span>Settings</span>
+            </a>
+            <a href="#" class="nav-item">
+                <svg viewBox="0 0 24 24"><path d="M6 2L3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"></path><line x1="3" y1="6" x2="21" y2="6"></line><path d="M16 10a4 4 0 0 1-8 0"></path></svg>
+                <span>Shop</span>
+            </a>
+            <a href="#" class="nav-item">
+                <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"></circle><path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"></path><line x1="12" y1="17" x2="12.01" y2="17"></line></svg>
+                <span>Help Center</span>
+            </a>
+        </nav>
+    </aside>
+
+    <div class="layout-wrapper">
+        <header>
+            <div class="mobile-logo">COVENANT</div>
+            <nav class="header-nav">
+                <a href="#">Shop</a>
+                <a href="dashboard.html" class="active">Account</a>
+                <a href="#">Help Center</a>
+            </nav>
+            <div class="header-icons">
+                <svg class="header-icon" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2">
+                    <path d="M9 20a4 4 0 1 0 0-8 4 4 0 0 0 0 8z"></path>
+                    <path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"></path>
+                </svg>
+                <div style="width: 30px; height: 30px; background: #444; border-radius: 50%; display: flex; justify-content: center; align-items: center; font-size: 10px; font-weight: bold;">ME</div>
+                <div class="hamburger">
+                    <div></div>
+                    <div></div>
+                    <div></div>
+                </div>
+            </div>
+        </header>
+
+        <!-- Mobile Overlay -->
+        <div class="mobile-overlay"></div>
+
+        <main>
+            <div class="content-container">
+                <h1>Settings</h1>
+                <p class="page-subtitle">Marlon Espinosa Perez • ACC-581805-31013-52</p>
+
+                <div class="section-header">
+                    <h2 class="section-title">Profile</h2>
+                    <div class="section-controls">
+                        <a href="#" class="text-link">Notification Preferences</a>
+                        <button class="btn-outline" onclick="openEditProfileModal()">Edit Profile</button>
+                    </div>
+                </div>
+
+                <div class="profile-card">
+                    <div>
+                        <div class="field-group">
+                            <div class="label">Name</div>
+                            <div class="value" id="profile-display-name">Loading...</div>
+                        </div>
+                        <div class="field-group">
+                            <div class="label">Email</div>
+                            <div class="value" id="profile-display-email">Loading...</div>
+                        </div>
+                        <div class="field-group">
+                            <div class="label">Shipping Address</div>
+                            <div class="value" id="profile-display-address">Loading...</div>
+                        </div>
+                    </div>
+
+                    <div>
+                        <div class="field-group">
+                            <div class="label">Phone Number</div>
+                            <div class="value" id="profile-display-phone">Loading...</div>
+                        </div>
+                        <div class="field-group">
+                            <div class="label">Roles</div>
+                            <span class="pill-gray" id="profile-display-role">Loading...</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="section-header">
+                    <h2 class="section-title">Users</h2>
+                    <button class="btn-outline" onclick="openAddUserModal()">Add User</button>
+                </div>
+
+                <div class="table-container">
+                    <div class="table-header">
+                        <div>User</div>
+                        <div>Roles</div>
+                        <div></div>
+                    </div>
+
+                    <div id="users-table-body">
+                        <!-- Users will be loaded dynamically -->
+                    </div>
+
+                    <div class="table-footer">
+                        <div>
+                            Rows per page:
+                            <select id="users-rows-per-page" onchange="changeUsersRowsPerPage(this.value)" style="background: transparent; border: 1px solid #333; color: white; padding: 2px 5px; margin: 0 5px; border-radius: 3px; cursor: pointer;">
+                                <option value="5">5</option>
+                                <option value="10" selected>10</option>
+                                <option value="20">20</option>
+                                <option value="50">50</option>
+                            </select>
+                        </div>
+                        <div class="pagination-controls">
+                            <span id="users-pagination-text">0-0 of 0</span>
+                            <span class="page-arrow" onclick="previousUsersPage()" style="cursor: pointer;">❮</span>
+                            <span class="page-arrow" onclick="nextUsersPage()" style="cursor: pointer;">❯</span>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </main>
+
+        <footer>
+            <div class="footer-content">
+                <div class="footer-links">
+                    <a href="#">Privacy Policy</a>
+                    <a href="#">Terms of Service</a>
+                    <a href="#">Support</a>
+                </div>
+                <div class="footer-copyright">
+                    © 2025 Covenant. All rights reserved.
+                </div>
+            </div>
+        </footer>
+
+    </div>
+
+    <!-- Add User Modal -->
+    <div id="add-user-modal" class="modal">
+        <div class="modal-content">
+            <h2 class="modal-header">Add User</h2>
+            <form id="add-user-form">
+                <div class="form-grid">
+                    <div class="form-group">
+                        <label class="form-label" for="first-name">First Name</label>
+                        <input type="text" id="first-name" class="form-input" placeholder="First Name" required>
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label" for="last-name">Last Name</label>
+                        <input type="text" id="last-name" class="form-input" placeholder="Last Name" required>
+                    </div>
+                </div>
+
+                <div class="form-grid">
+                    <div class="form-group">
+                        <label class="form-label" for="user-email">Email</label>
+                        <input type="email" id="user-email" class="form-input" placeholder="Email" required>
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label" for="user-phone">Phone Number</label>
+                        <input type="tel" id="user-phone" class="form-input" placeholder="Phone Number">
+                    </div>
+                </div>
+
+                <div class="form-group full-width">
+                    <label class="form-label" for="user-role">Roles</label>
+                    <select id="user-role" class="form-select" required>
+                        <option value="">Roles</option>
+                        <option value="owner">Owner</option>
+                        <option value="admin">Admin</option>
+                        <option value="user">User</option>
+                        <option value="viewer">Viewer</option>
+                    </select>
+                    <a class="form-link" onclick="alert('Roles define user permissions:\n\nOwner - Full ownership and control of the organization\nAdmin - Full access to all features\nUser - Standard access to subscription and billing\nViewer - Read-only access')">What are roles?</a>
+                </div>
+
+                <div class="form-consent">
+                    By adding users, you affirm that you consent and have obtained their consent to share your personal information within the same account, as set forth in Starlink's Privacy Policy.
+                </div>
+
+                <div class="modal-actions">
+                    <button type="button" class="btn-cancel" onclick="closeAddUserModal()">Cancel</button>
+                    <button type="submit" class="btn-primary">Add User</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- Edit User Modal -->
+    <div id="edit-user-modal" class="modal">
+        <div class="modal-content">
+            <h2 class="modal-header">Edit User</h2>
+            <form id="edit-user-form">
+                <input type="hidden" id="edit-user-id">
+
+                <div class="form-group full-width">
+                    <label class="form-label" for="edit-user-email">Email</label>
+                    <input type="email" id="edit-user-email" class="form-input" placeholder="Email" required disabled>
+                </div>
+
+                <div class="form-group full-width">
+                    <label class="form-label" for="edit-user-role">Roles</label>
+                    <select id="edit-user-role" class="form-select" required>
+                        <option value="">Roles</option>
+                        <option value="owner">Owner</option>
+                        <option value="admin">Admin</option>
+                        <option value="user">User</option>
+                        <option value="viewer">Viewer</option>
+                    </select>
+                    <a class="form-link" onclick="alert('Roles define user permissions:\n\nOwner - Full ownership and control of the organization\nAdmin - Full access to all features\nUser - Standard access to subscription and billing\nViewer - Read-only access')">What are roles?</a>
+                </div>
+
+                <div class="modal-actions">
+                    <button type="button" class="btn-cancel" onclick="closeEditUserModal()">Cancel</button>
+                    <button type="submit" class="btn-primary">Save</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- Remove User Confirmation Modal -->
+    <div id="remove-user-modal" class="modal">
+        <div class="modal-content" style="max-width: 500px;">
+            <h2 class="modal-header">Remove User</h2>
+            <p id="remove-user-message" style="color: #aaa; font-size: 15px; margin-bottom: 30px; line-height: 1.6;"></p>
+            <input type="hidden" id="remove-user-id">
+            <div class="modal-actions">
+                <button type="button" class="btn-cancel" onclick="closeRemoveUserModal()">Cancel</button>
+                <button type="button" class="btn-primary" onclick="confirmRemoveUser()">Remove</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Edit Profile Modal -->
+    <div id="edit-profile-modal" class="modal">
+        <div class="modal-content" style="max-width: 700px;">
+            <h2 class="modal-header">Edit Profile</h2>
+            <form id="edit-profile-form">
+                <div class="form-grid">
+                    <div class="form-group">
+                        <label class="form-label" for="profile-first-name">First Name</label>
+                        <input type="text" id="profile-first-name" class="form-input" placeholder="First Name" required>
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label" for="profile-last-name">Last Name</label>
+                        <input type="text" id="profile-last-name" class="form-input" placeholder="Last Name" required>
+                    </div>
+                </div>
+
+                <div class="form-grid">
+                    <div class="form-group">
+                        <label class="form-label" for="profile-email">Email</label>
+                        <input type="email" id="profile-email" class="form-input" placeholder="Email" required>
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label" for="profile-phone">Phone Number</label>
+                        <input type="tel" id="profile-phone" class="form-input" placeholder="Phone Number">
+                    </div>
+                </div>
+
+                <div class="form-group full-width">
+                    <label class="form-label" for="profile-role">Roles</label>
+                    <select id="profile-role" class="form-select" required disabled>
+                        <option value="">Roles</option>
+                        <option value="owner">Owner</option>
+                        <option value="admin">Admin</option>
+                        <option value="user">User</option>
+                        <option value="viewer">Viewer</option>
+                    </select>
+                    <a class="form-link" onclick="alert('Roles define user permissions:\n\nOwner - Full ownership and control of the organization\nAdmin - Full access to all features\nUser - Standard access to subscription and billing\nViewer - Read-only access')">What are roles?</a>
+                </div>
+
+                <details style="margin: 30px 0; cursor: pointer;">
+                    <summary style="color: white; font-size: 13px; user-select: none;">
+                        ▸ For more information on how to enter your shipping address click here
+                    </summary>
+                    <div style="margin-top: 20px; padding-left: 20px; font-size: 12px; color: #888; line-height: 1.6;">
+                        Enter your complete shipping address where you want to receive orders and equipment. This address will be used for all future shipments.
+                    </div>
+                </details>
+
+                <div class="form-group full-width">
+                    <label class="form-label" for="profile-address-line1">Shipping Address Line 1 *</label>
+                    <input type="text" id="profile-address-line1" class="form-input" placeholder="Street address" required>
+                </div>
+
+                <div class="form-grid">
+                    <div class="form-group">
+                        <label class="form-label" for="profile-address-line2">Shipping Address Line 2 (Optional, E.G. Apt / Building)</label>
+                        <input type="text" id="profile-address-line2" class="form-input" placeholder="Apt, Suite, Building">
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label" for="profile-address-line3">Shipping Address Line 3 (Optional)</label>
+                        <input type="text" id="profile-address-line3" class="form-input" placeholder="Additional info">
+                    </div>
+                </div>
+
+                <div class="form-grid">
+                    <div class="form-group">
+                        <label class="form-label" for="profile-city">City</label>
+                        <input type="text" id="profile-city" class="form-input" placeholder="City" required>
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label" for="profile-state">State / Province</label>
+                        <input type="text" id="profile-state" class="form-input" placeholder="State" required>
+                    </div>
+                </div>
+
+                <div class="form-grid">
+                    <div class="form-group">
+                        <label class="form-label" for="profile-country">Country *</label>
+                        <input type="text" id="profile-country" class="form-input" placeholder="Country" required>
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label" for="profile-zip">Zip / Postal Code</label>
+                        <input type="text" id="profile-zip" class="form-input" placeholder="Postal Code" required>
+                    </div>
+                </div>
+
+                <p style="color: #888; font-size: 12px; margin: 20px 0;">
+                    Update will not impact previous orders.
+                </p>
+
+                <div class="modal-actions">
+                    <button type="button" class="btn-cancel" onclick="closeEditProfileModal()">Cancel</button>
+                    <button type="submit" class="btn-primary">Save</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <script src="api-client.js"></script>
+    <script>
+        // Pagination state
+        let currentUsersPage = 1;
+        let usersRowsPerPage = 10;
+        let allUsers = [];
+
+        // Load users and profile on page load
+        document.addEventListener('DOMContentLoaded', async () => {
+            await loadProfile();
+            await loadUsers();
+        });
+
+        // Load and display profile data
+        async function loadProfile() {
+            try {
+                const response = await fetch('http://localhost:3001/api/users/profile/owner');
+                if (!response.ok) {
+                    throw new Error('Failed to fetch profile data');
+                }
+
+                const profile = await response.json();
+
+                // Update profile display
+                document.getElementById('profile-display-name').textContent = profile.name || 'N/A';
+                document.getElementById('profile-display-email').textContent = profile.email || 'N/A';
+                document.getElementById('profile-display-phone').textContent = profile.phone || 'N/A';
+                document.getElementById('profile-display-role').textContent = capitalizeRole(profile.role);
+
+                // Format address
+                let addressLines = [];
+                if (profile.shipping_address_line1) {
+                    let line1 = profile.shipping_address_line1;
+                    if (profile.shipping_address_line2) {
+                        line1 += ', ' + profile.shipping_address_line2;
+                    }
+                    addressLines.push(line1);
+                }
+                if (profile.shipping_city || profile.shipping_state || profile.shipping_zip) {
+                    let line2 = '';
+                    if (profile.shipping_city) line2 += profile.shipping_city;
+                    if (profile.shipping_state) line2 += (line2 ? ', ' : '') + profile.shipping_state;
+                    if (profile.shipping_zip) line2 += ' ' + profile.shipping_zip;
+                    addressLines.push(line2);
+                }
+                if (profile.shipping_country) {
+                    addressLines.push(profile.shipping_country);
+                }
+
+                document.getElementById('profile-display-address').innerHTML =
+                    addressLines.length > 0 ? addressLines.join('<br>') : 'N/A';
+
+            } catch (error) {
+                console.error('Error loading profile:', error);
+                document.getElementById('profile-display-name').textContent = 'Error loading profile';
+            }
+        }
+
+        // Load users from API
+        async function loadUsers() {
+            const tableBody = document.getElementById('users-table-body');
+            const paginationText = document.getElementById('users-pagination-text');
+
+            try {
+                const response = await fetch('http://localhost:3001/api/users');
+                if (!response.ok) {
+                    throw new Error('Failed to fetch users');
+                }
+
+                allUsers = await response.json();
+
+                if (!allUsers || allUsers.length === 0) {
+                    tableBody.innerHTML = `
+                        <div style="text-align: center; padding: 40px; color: #888; grid-column: 1 / -1;">
+                            No users found.
+                        </div>
+                    `;
+                    paginationText.textContent = '0-0 of 0';
+                    return;
+                }
+
+                // Render current page
+                renderUsersPage();
+
+            } catch (error) {
+                console.error('Error loading users:', error);
+                tableBody.innerHTML = `
+                    <div style="text-align: center; padding: 40px; color: #f88; grid-column: 1 / -1;">
+                        Failed to load users. Make sure the API server is running.
+                    </div>
+                `;
+            }
+        }
+
+        // Render users for the current page
+        function renderUsersPage() {
+            const tableBody = document.getElementById('users-table-body');
+            const paginationText = document.getElementById('users-pagination-text');
+
+            const startIndex = (currentUsersPage - 1) * usersRowsPerPage;
+            const endIndex = Math.min(startIndex + usersRowsPerPage, allUsers.length);
+            const usersToShow = allUsers.slice(startIndex, endIndex);
+
+            // Render users
+            tableBody.innerHTML = usersToShow.map(user => `
+                <div class="table-row">
+                    <div>${user.email}</div>
+                    <div><span class="pill-gray">${capitalizeRole(user.role)}</span></div>
+                    <div class="menu-icon" onclick="toggleUserMenu(event, '${user.id}')">
+                        ...
+                        <div class="dropdown-menu" id="menu-${user.id}">
+                            <div class="dropdown-item" onclick="openEditUserModal('${user.id}', '${user.email}', '${user.role}')">Edit</div>
+                            <div class="dropdown-item danger" onclick="deleteUser('${user.id}', '${user.email}')">Remove</div>
+                        </div>
+                    </div>
+                </div>
+            `).join('');
+
+            // Update pagination text
+            const total = allUsers.length;
+            paginationText.textContent = `${startIndex + 1}-${endIndex} of ${total}`;
+        }
+
+        // Change rows per page
+        function changeUsersRowsPerPage(value) {
+            usersRowsPerPage = parseInt(value);
+            currentUsersPage = 1;
+            renderUsersPage();
+        }
+
+        // Go to previous page
+        function previousUsersPage() {
+            if (currentUsersPage > 1) {
+                currentUsersPage--;
+                renderUsersPage();
+            }
+        }
+
+        // Go to next page
+        function nextUsersPage() {
+            const totalPages = Math.ceil(allUsers.length / usersRowsPerPage);
+            if (currentUsersPage < totalPages) {
+                currentUsersPage++;
+                renderUsersPage();
+            }
+        }
+
+        // Helper function to capitalize role
+        function capitalizeRole(role) {
+            if (!role) return 'User';
+            return role.charAt(0).toUpperCase() + role.slice(1).toLowerCase();
+        }
+
+        // Toggle user dropdown menu
+        function toggleUserMenu(event, userId) {
+            event.stopPropagation();
+            const menu = document.getElementById(`menu-${userId}`);
+
+            // Close all other menus
+            document.querySelectorAll('.dropdown-menu').forEach(m => {
+                if (m.id !== `menu-${userId}`) {
+                    m.classList.remove('show');
+                }
+            });
+
+            menu.classList.toggle('show');
+        }
+
+        // Close dropdown menus when clicking outside
+        document.addEventListener('click', () => {
+            document.querySelectorAll('.dropdown-menu').forEach(m => {
+                m.classList.remove('show');
+            });
+        });
+
+        // Add User Modal Functions
+        function openAddUserModal() {
+            document.getElementById('add-user-modal').classList.add('show');
+            document.body.classList.add('modal-open');
+        }
+
+        function closeAddUserModal() {
+            document.getElementById('add-user-modal').classList.remove('show');
+            document.body.classList.remove('modal-open');
+            document.getElementById('add-user-form').reset();
+        }
+
+        // Close modal when clicking outside
+        document.getElementById('add-user-modal').addEventListener('click', (e) => {
+            if (e.target === document.getElementById('add-user-modal')) {
+                closeAddUserModal();
+            }
+        });
+
+        // Handle add user form submission
+        document.getElementById('add-user-form').addEventListener('submit', async (e) => {
+            e.preventDefault();
+
+            const firstName = document.getElementById('first-name').value.trim();
+            const lastName = document.getElementById('last-name').value.trim();
+            const email = document.getElementById('user-email').value.trim();
+            const phone = document.getElementById('user-phone').value.trim();
+            const role = document.getElementById('user-role').value;
+
+            const userData = {
+                name: `${firstName} ${lastName}`,
+                email: email,
+                phone: phone,
+                role: role
+            };
+
+            try {
+                const response = await fetch('http://localhost:3001/api/users', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify(userData)
+                });
+
+                if (!response.ok) {
+                    throw new Error('Failed to create user');
+                }
+
+                const newUser = await response.json();
+                console.log('User created successfully:', newUser);
+
+                alert('User added successfully!');
+                closeAddUserModal();
+
+                // Reload users instead of page refresh
+                await loadUsers();
+            } catch (error) {
+                console.error('Error creating user:', error);
+                alert('Failed to add user. Please try again.');
+            }
+        });
+
+        // Edit User Modal Functions
+        function openEditUserModal(userId, email, role) {
+            document.getElementById('edit-user-id').value = userId;
+            document.getElementById('edit-user-email').value = email;
+            document.getElementById('edit-user-role').value = role;
+            document.getElementById('edit-user-modal').classList.add('show');
+            document.body.classList.add('modal-open');
+        }
+
+        function closeEditUserModal() {
+            document.getElementById('edit-user-modal').classList.remove('show');
+            document.body.classList.remove('modal-open');
+            document.getElementById('edit-user-form').reset();
+        }
+
+        // Close edit modal when clicking outside
+        document.getElementById('edit-user-modal').addEventListener('click', (e) => {
+            if (e.target === document.getElementById('edit-user-modal')) {
+                closeEditUserModal();
+            }
+        });
+
+        // Handle edit user form submission
+        document.getElementById('edit-user-form').addEventListener('submit', async (e) => {
+            e.preventDefault();
+
+            const userId = document.getElementById('edit-user-id').value;
+            const role = document.getElementById('edit-user-role').value;
+
+            const userData = {
+                role: role
+            };
+
+            try {
+                const response = await fetch(`http://localhost:3001/api/users/${userId}`, {
+                    method: 'PUT',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify(userData)
+                });
+
+                if (!response.ok) {
+                    throw new Error('Failed to update user');
+                }
+
+                const updatedUser = await response.json();
+                console.log('User updated successfully:', updatedUser);
+
+                alert('User updated successfully!');
+                closeEditUserModal();
+
+                // Reload users
+                await loadUsers();
+            } catch (error) {
+                console.error('Error updating user:', error);
+                alert('Failed to update user. Please try again.');
+            }
+        });
+
+        // Remove User Modal Functions
+        function deleteUser(userId, email) {
+            document.getElementById('remove-user-id').value = userId;
+            document.getElementById('remove-user-message').textContent = `Are you sure you want to remove ${email}?`;
+            document.getElementById('remove-user-modal').classList.add('show');
+            document.body.classList.add('modal-open');
+        }
+
+        function closeRemoveUserModal() {
+            document.getElementById('remove-user-modal').classList.remove('show');
+            document.body.classList.remove('modal-open');
+        }
+
+        // Close remove modal when clicking outside
+        document.getElementById('remove-user-modal').addEventListener('click', (e) => {
+            if (e.target === document.getElementById('remove-user-modal')) {
+                closeRemoveUserModal();
+            }
+        });
+
+        // Confirm and execute user removal
+        async function confirmRemoveUser() {
+            const userId = document.getElementById('remove-user-id').value;
+
+            try {
+                const response = await fetch(`http://localhost:3001/api/users/${userId}`, {
+                    method: 'DELETE'
+                });
+
+                if (!response.ok) {
+                    throw new Error('Failed to delete user');
+                }
+
+                console.log('User deleted successfully');
+                alert('User removed successfully!');
+                closeRemoveUserModal();
+
+                // Reload users
+                await loadUsers();
+            } catch (error) {
+                console.error('Error deleting user:', error);
+                alert('Failed to remove user. Please try again.');
+            }
+        }
+
+        // Edit Profile Modal Functions
+        async function openEditProfileModal() {
+            try {
+                // Fetch the organization owner
+                const response = await fetch('http://localhost:3001/api/users/profile/owner');
+                if (!response.ok) {
+                    throw new Error('Failed to fetch profile data');
+                }
+
+                const profile = await response.json();
+
+                // Split name into first and last name
+                const nameParts = profile.name ? profile.name.split(' ') : ['', ''];
+                const firstName = nameParts[0] || '';
+                const lastName = nameParts.slice(1).join(' ') || '';
+
+                // Populate form fields
+                document.getElementById('profile-first-name').value = firstName;
+                document.getElementById('profile-last-name').value = lastName;
+                document.getElementById('profile-email').value = profile.email || '';
+                document.getElementById('profile-phone').value = profile.phone || '';
+                document.getElementById('profile-role').value = profile.role || 'user';
+                document.getElementById('profile-address-line1').value = profile.shipping_address_line1 || '';
+                document.getElementById('profile-address-line2').value = profile.shipping_address_line2 || '';
+                document.getElementById('profile-address-line3').value = ''; // Not in DB schema
+                document.getElementById('profile-city').value = profile.shipping_city || '';
+                document.getElementById('profile-state').value = profile.shipping_state || '';
+                document.getElementById('profile-country').value = profile.shipping_country || '';
+                document.getElementById('profile-zip').value = profile.shipping_zip || '';
+
+                // Store user ID for update
+                document.getElementById('edit-profile-form').dataset.userId = profile.id;
+
+                // Open modal
+                document.getElementById('edit-profile-modal').classList.add('show');
+                document.body.classList.add('modal-open');
+            } catch (error) {
+                console.error('Error loading profile:', error);
+                alert('Failed to load profile data');
+            }
+        }
+
+        function closeEditProfileModal() {
+            document.getElementById('edit-profile-modal').classList.remove('show');
+            document.body.classList.remove('modal-open');
+        }
+
+        // Close edit profile modal when clicking outside
+        document.getElementById('edit-profile-modal').addEventListener('click', (e) => {
+            if (e.target === document.getElementById('edit-profile-modal')) {
+                closeEditProfileModal();
+            }
+        });
+
+        // Handle edit profile form submission
+        document.getElementById('edit-profile-form').addEventListener('submit', async (e) => {
+            e.preventDefault();
+
+            const userId = e.target.dataset.userId;
+            const firstName = document.getElementById('profile-first-name').value.trim();
+            const lastName = document.getElementById('profile-last-name').value.trim();
+            const email = document.getElementById('profile-email').value.trim();
+            const phone = document.getElementById('profile-phone').value.trim();
+            const addressLine1 = document.getElementById('profile-address-line1').value.trim();
+            const addressLine2 = document.getElementById('profile-address-line2').value.trim();
+            const city = document.getElementById('profile-city').value.trim();
+            const state = document.getElementById('profile-state').value.trim();
+            const country = document.getElementById('profile-country').value.trim();
+            const zip = document.getElementById('profile-zip').value.trim();
+
+            const profileData = {
+                name: `${firstName} ${lastName}`,
+                email: email,
+                phone: phone,
+                shipping_address_line1: addressLine1,
+                shipping_address_line2: addressLine2,
+                shipping_city: city,
+                shipping_state: state,
+                shipping_country: country,
+                shipping_zip: zip
+            };
+
+            try {
+                const response = await fetch(`http://localhost:3001/api/users/${userId}`, {
+                    method: 'PUT',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify(profileData)
+                });
+
+                if (!response.ok) {
+                    throw new Error('Failed to update profile');
+                }
+
+                const updatedProfile = await response.json();
+                console.log('Profile updated successfully:', updatedProfile);
+
+                alert('Profile updated successfully!');
+                closeEditProfileModal();
+
+                // Reload both profile and users table to show updates
+                await loadProfile();
+                await loadUsers();
+            } catch (error) {
+                console.error('Error updating profile:', error);
+                alert('Failed to update profile. Please try again.');
+            }
+        });
+
+        // Mobile menu toggle
+        const hamburger = document.querySelector('.hamburger');
+        const sidebar = document.querySelector('aside');
+        const mobileOverlay = document.querySelector('.mobile-overlay');
+        const sidebarClose = document.querySelector('.sidebar-close');
+
+        hamburger.addEventListener('click', () => {
+            hamburger.classList.toggle('active');
+            sidebar.classList.toggle('mobile-open');
+            mobileOverlay.classList.toggle('active');
+        });
+
+        // Close mobile menu when clicking close button
+        sidebarClose.addEventListener('click', () => {
+            hamburger.classList.remove('active');
+            sidebar.classList.remove('mobile-open');
+            mobileOverlay.classList.remove('active');
+        });
+
+        // Close mobile menu when clicking overlay
+        mobileOverlay.addEventListener('click', () => {
+            hamburger.classList.remove('active');
+            sidebar.classList.remove('mobile-open');
+            mobileOverlay.classList.remove('active');
+        });
+
+        // Close mobile menu when clicking a nav item
+        const navItems = document.querySelectorAll('.nav-item');
+        navItems.forEach(item => {
+            item.addEventListener('click', () => {
+                hamburger.classList.remove('active');
+                sidebar.classList.remove('mobile-open');
+                mobileOverlay.classList.remove('active');
+            });
+        });
+    </script>
+</body>
+</html>
